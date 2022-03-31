@@ -9,22 +9,22 @@ book:
   date: "3/30/2022"
   chapters:
     - index.qmd
-    - part: syllabus.qmd
+    - part: syllabus/syllabus.qmd
       chapters: 
-        - specifications.qmd
-        - resources.qmd
-    - part: intro.qmd
+        - syllabus/specifications.qmd
+        - syllabus/resources.qmd
+    - part: chapters/intro.qmd
       chapters: 
-        - measurement.qmd
-        - random_graphs.qmd
-        - ranking_centrality.qmd
-        - clustering_community.qmd
-        - social_responsibility.qmd
-        - dynamics.qmd
+        - chapters/measurement.qmd
+        - chapters/random_graphs.qmd
+        - chapters/ranking_centrality.qmd
+        - chapters/clustering_community.qmd
+        - chapters/social_responsibility.qmd
+        - chapters/dynamics.qmd
   appendices: 
-    - additional_resources.qmd
-    - acknowledgements.qmd
-    - references.qmd
+    - appendices/additional_resources.qmd
+    - appendices/acknowledgements.qmd
+    - appendices/references.qmd
 
 
 bibliography: references.bib
