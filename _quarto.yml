@@ -1,0 +1,43 @@
+project:
+  type: book
+
+book:
+  title: "Math 168: <br><b>Introduction to Networks</b>"
+  author: "Phil Chodrow"
+  date: "3/30/2022"
+  chapters:
+    - index.qmd
+    - part: syllabus.qmd
+      chapters: 
+        - specifications.qmd
+        - resources.qmd
+    - part: intro.qmd
+      chapters: 
+        - measurement.qmd
+        - random_graphs.qmd
+        - ranking_centrality.qmd
+        - clustering_community.qmd
+        - social_responsibility.qmd
+        - dynamics.qmd
+  appendices: 
+    - additional_resources.qmd
+    - acknowledgements.qmd
+    - references.qmd
+
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    code-fold: true
+    number-depth: 2
+    suppress-bibliography: true
+    csl: chicago-fullnote-bibliography.csl
+
+
+execute: 
+  cache: true
+
+
+
