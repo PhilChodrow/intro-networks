@@ -1,5 +1,7 @@
 project:
   type: book
+  output-dir: docs
+
 
 book:
   title: "Math 168: <br><b>Introduction to Networks</b>"
