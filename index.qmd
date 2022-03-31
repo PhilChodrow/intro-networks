@@ -1,6 +1,5 @@
-# Welcome! {.unnumbered}
 
-This is the course website for MATH 168: Introduction to Networks at UCLA, as taught by Dr. Phil Chodrow, in Spring Quarter of 2022. 
+Welcome! This is the course website for MATH 168: Introduction to Networks at UCLA, as taught by Dr. Phil Chodrow, in Spring Quarter of 2022. 
 Its primary purpose is to house lecture notes and other course resources.
 
 ## Network Science {.unnumbered}
@@ -19,6 +18,7 @@ Here's an example of a simple network. The dots represent individuals, and are c
 #| out.width : '50%'
 #| cap-location: margin 
 
+# R code
 library(tidygraph)
 library(ggraph)
 g <- play_islands(2, 10, 0.7, 2)
@@ -51,5 +51,5 @@ Along the way, we'll build our mathematical toolboxes, especially those related 
 
 ### Figure Code {.unnumbered}
 
-This site includes figures, such as the one above, that I have generated with code. You can click the "View Source" button to the right to view the sourcefile for each page, including the code used to generate the figure. This code will often be in R, although I will make some effort to demonstrate some techniques with Python and NetworkX as well. 
+This site includes some figures, such as the one above, that I have generated with code. You can click the "Code" button right above the figure to view the code that created it. This code will often be in R, although I will make some effort to demonstrate some techniques with Python and NetworkX as well. 
 
