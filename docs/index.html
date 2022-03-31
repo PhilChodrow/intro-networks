@@ -243,11 +243,9 @@
         <nav id="TOC" role="doc-toc">
 <h2 id="toc-title">Table of contents</h2>
 <ul>
-<li><a href="#network-science" class="nav-link active" data-scroll-target="#network-science">Network Science</a>
-<ul class="collapse">
+<li><a href="#network-science" class="nav-link active" data-scroll-target="#network-science">Network Science</a></li>
 <li><a href="#this-course" class="nav-link" data-scroll-target="#this-course">This Course</a></li>
 <li><a href="#figure-code" class="nav-link" data-scroll-target="#figure-code">Figure Code</a></li>
-</ul></li>
 </ul>
 </nav>
     </div>
@@ -269,18 +267,20 @@
 <p>Network science is the interdisciplinary study of how systems are <strong>connected</strong> and what their connection structure implies about their <strong>behavior</strong> or <strong>function</strong>.</p>
 </blockquote>
 <p>Here’s an example of a simple network. The dots represent individuals, and are called <em>nodes</em>. The lines represent connections, and are called <em>edges</em>.</p>
-<div class="cell page-columns page-full" data-layout-align="center" data-hash="index_cache/html/community-example_3dcef3ca8697e7fee285534b6286cc82">
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="index_cache/html/community-example_4cb1f74346b7601286ca6911cd05dc40">
 <details>
 <summary>Code</summary>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R code</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">play_islands</span>(<span class="dv">2</span>, <span class="dv">10</span>, <span class="fl">0.7</span>, <span class="dv">2</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>g <span class="sc">%&gt;%</span> </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggraph</span>() <span class="sc">+</span> </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#73b9ee"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">play_islands</span>(<span class="dv">2</span>, <span class="dv">10</span>, <span class="fl">0.7</span>, <span class="dv">2</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>g <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggraph</span>() <span class="sc">+</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#73b9ee"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
 <div class="quarto-figure quarto-figure-center page-columns page-full">
@@ -299,8 +299,9 @@
 <li>If we imagine a <strong>dynamical process</strong> unfolding on this network, such as information propagation or disease spread, how might the behavior of that process be influenced by the structure of the network?</li>
 <li>If we were to disrupt this network by removing a node or an edge, how might its <strong>functionality</strong> change? (This depends very strongly on what the nodes and edges represent.)</li>
 </ul>
-<section id="this-course" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="this-course">This Course</h3>
+</section>
+<section id="this-course" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="this-course">This Course</h2>
 <p>In this course, we’ll study some of the primary questions we can ask about networks from a mathematical point of view. These questions include:</p>
 <ul>
 <li>What kind of things is it useful to <strong>measure</strong> in networks?</li>
@@ -310,13 +311,12 @@
 </ul>
 <p>Along the way, we’ll build our mathematical toolboxes, especially those related to linear algebra and probability.</p>
 </section>
-<section id="figure-code" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-code">Figure Code</h3>
+<section id="figure-code" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="figure-code">Figure Code</h2>
 <p>This site includes some figures, such as the one above, that I have generated with code. You can click the “Code” button right above the figure to view the code that created it. This code will often be in R, although I will make some effort to demonstrate some techniques with Python and NetworkX as well.</p>
 
 
 
-</section>
 </section>
 </main> <!-- /main -->
 <script type="application/javascript">

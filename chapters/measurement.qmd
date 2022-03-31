@@ -82,11 +82,49 @@ Now, $\mathbf{A}_n$ is the matrix of two cliques that have been "paired", with e
 #| message : FALSE 
 #| warning : FALSE 
 #| fig.align : 'center'
-#| out.width : 50%
+#| fig.width : 7
+#| fig.height : 3
+#| out.width : 70%
+#| aspect.ratio: 4
 #| cap-location: margin
-#| fig.cap : "A visualization of the 'paired cliques' example with 20 total nodes. Nodes in the first clique are represented by orange circles, and nodes in the second clique by blue squares."
+#| fig.cap : "A visualization of the 'paired cliques' example with 10 total nodes. Nodes in the first clique are represented by orange circles, and nodes in the second clique by blue squares."
 
-knitr::include_graphics("../img/paired-cliques.png")
+library(tidygraph)
+library(ggraph)
+library(tidyverse)
+
+colors <- c("#f5b895", "#0f4c81")
+
+n <- 5
+
+K <- create_complete(n)
+
+K <- K %>%
+	mutate(x = ifelse(row_number() <= 2, 0, 1),
+		   y = ifelse(row_number() %% 2 == 0, 0, 1))
+
+G <- bind_graphs(K, K) %>%
+	mutate(id = row_number()) %>%
+	mutate(x = ifelse(id > n, x + 2, x),
+				 group = round((row_number() <= n)),
+				 group = factor(group)) 
+
+G <- G %>%
+	bind_edges(tibble(from = 1:(n), to = 1:(n) + n))
+
+G %>% 
+    ggraph() +
+    geom_edge_link(start_cap = circle(3, 'mm'),
+                                end_cap = circle(4, 'mm'), alpha = .3) +
+    # geom_node_point(pch = 21, size = 3) +
+    geom_node_point(aes(fill = factor(group),  shape = factor(group)),  size = 5, color = "black") +
+    # guides(fill = guide_legend(title = "Group")) + 
+    scale_shape_manual(values = c(21, 22)) + 
+    scale_fill_manual(values = colors) +
+    guides(fill = "none", shape = "none") + 
+    theme(aspect.ratio = 1,
+            panel.background = element_rect(fill = "white"),
+            plot.background = element_rect(fill = "white")) 
 ```
 
 What kinds of information are contained in the first few eigenvectors of $\mathbf{A}_{2n}$? 
@@ -95,7 +133,7 @@ What kinds of information are contained in the first few eigenvectors of $\mathb
 
 **Exercise**: The vector $\mathbf{v} = (\mathbf{1}_n, - \mathbf{1}_n)$ is another eigenvector of $\mathbf{A}_{2n}$. What is its eigenvalue? 
 
-In fact, it's true that these are the two largest eigenvalues of $\mathbf{A}$. The first one isn't very interesting, but note that the second one actually separates the two cliques! 
+In fact, these are the two largest eigenvalues of $\mathbf{A}$. The first one isn't very interesting, but note that the second one actually separates the two cliques! 
 
 So, suppose we were given a graph where: 
 
@@ -108,9 +146,11 @@ In fact, the adjacency matrix isn't usually the optimal matrix to use for spectr
 
 ### Degrees {.unnumbered}
 
-The *degree* of a node is the number of edges attached to it: 
+The *degree* of a node is the number of edges attached to it. 
 
-$$k_i = \left|\left\{j:(i,j) \in E\right\}\right|\;.$$
+$$
+k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
+$$
 
 The degree is a fundamental quantity in many network analyses. Especially the *distribution of degrees* in the network can play a major role in both theory and applications. 
 
@@ -128,9 +168,11 @@ The Laplacian is often used to represent *(diffusive) flows* of quantities betwe
 
 $$
 \begin{align}
-[\mathbf{L}\mathbf{x}]_i &= \sum_{j} \left(d_{ij}x_j - a_{ij}x_j \right) \\ 
-&= \underbrace{k_ix_i}_{\text{flow out of }i} - \underbrace{\sum_{j} a_{ij}x_j}_{\text{flow into }i}\;.
-\end{align}$$
+    [\mathbf{L}\mathbf{x}]_i &= \sum_{j} \left(d_{ij}x_j - a_{ij}x_j \right) \\ 
+    &= \underbrace{k_ix_i}_{\text{flow out of }i} - \underbrace{\sum_{j} a_{ij}x_j}_{\text{flow into }i}\;.
+\end{align}
+$$
+
 
 The first term distributes the water $x_i$ at node $i$ to each of $i$'s $k_i$ neighbors, while the second term allows water to flow into node $i$ from each neighbor along each edge connecting them.
 
@@ -142,11 +184,11 @@ Modifications of this setup will become very important when we discuss random wa
 There are LOTS of matrices that can be associated to networks. There's no "right" one -- some are more useful than others for certain jobs. Throughout this course, we'll see examples of matrices that are well-suited to certain specific tasks, like ranking or clustering. If you're interested in searching around a bit, some other fun matrices are: 
 
 - The *nonbacktracking* or *Hashimoto* matrix. 
-- The modularity matrix. 
-- The random-walk matrix. 
-- The random-walk and symmetric normalized Laplacian matrices. 
-- The PageRank matrix. 
-- The node-edge incidence matrix.
+- The *modularity* matrix. 
+- The *random-walk transition* matrix. 
+- The random-walk and symmetric *normalized Laplacian* matrices. 
+- The *PageRank* matrix. 
+- The *node-edge incidence* matrix.
 
 And the list goes on! 
 
@@ -171,8 +213,58 @@ Newman Chapter 6 contains a nice introductory discussion of directed and weighte
 
 #### Network Size {.unnumbered}
 
-- Number of nodes 
-- Edge density 
+Here's a deceptively simple question: 
+
+> How big is a network? 
+
+There are *lots* of good ways to describe the size of a network. Here are two simple ones: 
+
+- The number of nodes $n$. 
+- The number of edges $m$. 
+
+**Exercise**: Show that $n$ and $m$ are related by the identity $nc = 2m$, where $c$ is the average node degree. 
+
+Here's a slightly more complex measure of network size. The *geodesic distance* between node $i$ and node $j$ is the length of the shortest walk $i \rightarrow j$. 
+
+```{r}
+#| message : FALSE 
+#| warning : FALSE 
+#| fig.align : 'center'
+#| out.width : 50%
+#| cap-location: margin
+#| fig.cap : "A simple graph with 20 nodes and 40 edges. While it can be difficult to navigate through even small graphs, note that some nodes are clearly close together, while others are far apart. <br><br> A geodesic (shortest path) is shown between two selected nodes. <br><br>There is one node that is not connected to any of its neighbors, and its distance to them is undefined. As a result, this graph has infinite diameter."
+
+library(tidygraph)
+library(igraph)
+library(ggraph)
+
+set.seed(1234)
+
+g <- erdos.renyi.game(20, 40, type = "gnm") %>%
+    as_tbl_graph()
+
+path <- shortest_paths(g, 5, 12)$vpath
+
+E(g, path=path[[1]])$on_path <- TRUE
+
+g <- g %>% 
+    as_tbl_graph() %>% 
+    activate(edges) %>% 
+    mutate(on_path = !is.na(on_path))
+
+g %>% 
+  ggraph() + 
+  geom_edge_link(aes(width = on_path), alpha = 0.7) + 
+  geom_node_point(size = 7, pch = 21, fill = "#73b9ee") + 
+  theme_void() + 
+  scale_edge_width_manual(values = c(.3, 2)) +  
+  guides(edge_color = "none", edge_width = "none")
+
+```
+
+
+
+
 - Diameter 
 
 #### Cluster Structure {.unnumbered} 
@@ -186,6 +278,8 @@ Newman Chapter 6 contains a nice introductory discussion of directed and weighte
 
 ### Looking Ahead {.unnumbered}
 
-> An important question to ask about many of these metrics is: *what counts as a large, surprising, or meaningful* value of a given metric? 
+An important question to ask about many of these metrics is:
+
+>  *What counts as a large, surprising, or meaningful* value of a given metric? 
 
 One way to address this question is to take some value and compare it to one that we believe to be small, unsurprising, or not meaningful. We often operationalize this by saying that "a random graph" would have some property, such as a low clustering coefficient. So, a high clustering coefficient is surprising, and suggests that the graph might not be "random." This motivation takes directly to the study of random graphs, which is one of the mathematical foundations of network science. 

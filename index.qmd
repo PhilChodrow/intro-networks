@@ -21,7 +21,9 @@ Here's an example of a simple network. The dots represent individuals, and are c
 # R code
 library(tidygraph)
 library(ggraph)
+
 g <- play_islands(2, 10, 0.7, 2)
+
 g %>% 
   ggraph() + 
   geom_edge_link(alpha = 0.5) + 
@@ -38,7 +40,7 @@ Here are some of the questions that a network scientist might ask about this net
 - If we were to disrupt this network by removing a node or an edge, how might its **functionality** change? (This depends very strongly on what the nodes and edges represent.) 
 
 
-### This Course {.unnumbered}
+## This Course {.unnumbered}
 
 In this course, we'll study some of the primary questions we can ask about networks from a mathematical point of view. These questions include: 
 
@@ -49,7 +51,7 @@ In this course, we'll study some of the primary questions we can ask about netwo
 
 Along the way, we'll build our mathematical toolboxes, especially those related to linear algebra and probability. 
 
-### Figure Code {.unnumbered}
+## Figure Code {.unnumbered}
 
 This site includes some figures, such as the one above, that I have generated with code. You can click the "Code" button right above the figure to view the code that created it. This code will often be in R, although I will make some effort to demonstrate some techniques with Python and NetworkX as well. 
 

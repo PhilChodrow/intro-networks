@@ -324,16 +324,51 @@ a_{ij} =
 \end{matrix}\right]\;.\]</span></p>
 <p>Here, <span class="math inline">\(\mathbf{I}_n\)</span> is the <span class="math inline">\(n\times n\)</span> identity matrix.</p>
 <p>Now, <span class="math inline">\(\mathbf{A}_n\)</span> is the matrix of two cliques that have been “paired”, with each node in one clique connected to exactly one node in the other clique. It looks a bit like this:</p>
-<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/unnamed-chunk-2_3ade65c8dafc17ad33b2e4a82e5e9887">
+<div class="cell page-columns page-full" data-layout-align="center" data-aspect.ratio="4" data-hash="measurement_cache/html/unnamed-chunk-2_121fe178f2ae5f42dee1b4a1222644b9">
 <details>
 <summary>Code</summary>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"../img/paired-cliques.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#f5b895"</span>, <span class="st">"#0f4c81"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="fu">create_complete</span>(n)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> K <span class="sc">%&gt;%</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">ifelse</span>(<span class="fu">row_number</span>() <span class="sc">&lt;=</span> <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">ifelse</span>(<span class="fu">row_number</span>() <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>G <span class="ot">&lt;-</span> <span class="fu">bind_graphs</span>(K, K) <span class="sc">%&gt;%</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">ifelse</span>(id <span class="sc">&gt;</span> n, x <span class="sc">+</span> <span class="dv">2</span>, x),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="fu">round</span>((<span class="fu">row_number</span>() <span class="sc">&lt;=</span> n)),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="fu">factor</span>(group)) </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>G <span class="ot">&lt;-</span> G <span class="sc">%&gt;%</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_edges</span>(<span class="fu">tibble</span>(<span class="at">from =</span> <span class="dv">1</span><span class="sc">:</span>(n), <span class="at">to =</span> <span class="dv">1</span><span class="sc">:</span>(n) <span class="sc">+</span> n))</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>G <span class="sc">%&gt;%</span> </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggraph</span>() <span class="sc">+</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_edge_link</span>(<span class="at">start_cap =</span> <span class="fu">circle</span>(<span class="dv">3</span>, <span class="st">'mm'</span>),</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                                <span class="at">end_cap =</span> <span class="fu">circle</span>(<span class="dv">4</span>, <span class="st">'mm'</span>), <span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># geom_node_point(pch = 21, size = 3) +</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">factor</span>(group),  <span class="at">shape =</span> <span class="fu">factor</span>(group)),  <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># guides(fill = guide_legend(title = "Group")) + </span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">21</span>, <span class="dv">22</span>)) <span class="sc">+</span> </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors) <span class="sc">+</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>, <span class="at">shape =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>),</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="../img/paired-cliques.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">A visualization of the ‘paired cliques’ example with 20 total nodes. Nodes in the first clique are represented by orange circles, and nodes in the second clique by blue squares.</figcaption><p></p>
+<p><img src="measurement_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">A visualization of the ‘paired cliques’ example with 10 total nodes. Nodes in the first clique are represented by orange circles, and nodes in the second clique by blue squares.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -341,7 +376,7 @@ a_{ij} =
 <p>What kinds of information are contained in the first few eigenvectors of <span class="math inline">\(\mathbf{A}_{2n}\)</span>?</p>
 <p><strong>Exercise</strong>: The vector of ones <span class="math inline">\(\mathbf{1}_{2n}\)</span> is an eigenvector of <span class="math inline">\(\mathbf{A}_{2n}\)</span>. What is its eigenvalue? How do we know whether it is the largest one?</p>
 <p><strong>Exercise</strong>: The vector <span class="math inline">\(\mathbf{v} = (\mathbf{1}_n, - \mathbf{1}_n)\)</span> is another eigenvector of <span class="math inline">\(\mathbf{A}_{2n}\)</span>. What is its eigenvalue?</p>
-<p>In fact, it’s true that these are the two largest eigenvalues of <span class="math inline">\(\mathbf{A}\)</span>. The first one isn’t very interesting, but note that the second one actually separates the two cliques!</p>
+<p>In fact, these are the two largest eigenvalues of <span class="math inline">\(\mathbf{A}\)</span>. The first one isn’t very interesting, but note that the second one actually separates the two cliques!</p>
 <p>So, suppose we were given a graph where:</p>
 <ul>
 <li>We knew that the graph had the paired-clique structure, but</li>
@@ -352,8 +387,10 @@ a_{ij} =
 </section>
 <section id="degrees" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="degrees">Degrees</h3>
-<p>The <em>degree</em> of a node is the number of edges attached to it:</p>
-<p><span class="math display">\[k_i = \left|\left\{j:(i,j) \in E\right\}\right|\;.\]</span></p>
+<p>The <em>degree</em> of a node is the number of edges attached to it.</p>
+<p><span class="math display">\[
+k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
+\]</span></p>
 <p>The degree is a fundamental quantity in many network analyses. Especially the <em>distribution of degrees</em> in the network can play a major role in both theory and applications.</p>
 <p><strong>Exercise</strong>: show that the diagonal entries of <span class="math inline">\(\mathbf{A}^2\)</span> give the degree of each node.</p>
 <p>We often collect the degrees into a diagonal matrix <span class="math inline">\(\mathbf{D}\)</span> whose diagonal entry <span class="math inline">\(d_{ii} = k_i\)</span> contains the degree of node <span class="math inline">\(i\)</span>.</p>
@@ -365,9 +402,10 @@ a_{ij} =
 <p>The Laplacian is often used to represent <em>(diffusive) flows</em> of quantities between nodes. To see why, suppose that I have some amount of water <span class="math inline">\(x_i\)</span> on each node <span class="math inline">\(i\)</span>, and that I collect this into a vector <span class="math inline">\(\mathbf{x}\)</span>. Now, consider the vector <span class="math inline">\(\mathbf{L}\mathbf{x}\)</span>.</p>
 <p><span class="math display">\[
 \begin{align}
-[\mathbf{L}\mathbf{x}]_i &amp;= \sum_{j} \left(d_{ij}x_j - a_{ij}x_j \right) \\
-&amp;= \underbrace{k_ix_i}_{\text{flow out of }i} - \underbrace{\sum_{j} a_{ij}x_j}_{\text{flow into }i}\;.
-\end{align}\]</span></p>
+    [\mathbf{L}\mathbf{x}]_i &amp;= \sum_{j} \left(d_{ij}x_j - a_{ij}x_j \right) \\
+    &amp;= \underbrace{k_ix_i}_{\text{flow out of }i} - \underbrace{\sum_{j} a_{ij}x_j}_{\text{flow into }i}\;.
+\end{align}
+\]</span></p>
 <p>The first term distributes the water <span class="math inline">\(x_i\)</span> at node <span class="math inline">\(i\)</span> to each of <span class="math inline">\(i\)</span>’s <span class="math inline">\(k_i\)</span> neighbors, while the second term allows water to flow into node <span class="math inline">\(i\)</span> from each neighbor along each edge connecting them.</p>
 <p>Modifications of this setup will become very important when we discuss random walks later in the course.</p>
 </section>
@@ -376,11 +414,11 @@ a_{ij} =
 <p>There are LOTS of matrices that can be associated to networks. There’s no “right” one – some are more useful than others for certain jobs. Throughout this course, we’ll see examples of matrices that are well-suited to certain specific tasks, like ranking or clustering. If you’re interested in searching around a bit, some other fun matrices are:</p>
 <ul>
 <li>The <em>nonbacktracking</em> or <em>Hashimoto</em> matrix.</li>
-<li>The modularity matrix.</li>
-<li>The random-walk matrix.</li>
-<li>The random-walk and symmetric normalized Laplacian matrices.</li>
-<li>The PageRank matrix.</li>
-<li>The node-edge incidence matrix.</li>
+<li>The <em>modularity</em> matrix.</li>
+<li>The <em>random-walk transition</em> matrix.</li>
+<li>The random-walk and symmetric <em>normalized Laplacian</em> matrices.</li>
+<li>The <em>PageRank</em> matrix.</li>
+<li>The <em>node-edge incidence</em> matrix.</li>
 </ul>
 <p>And the list goes on!</p>
 </section>
@@ -389,7 +427,7 @@ a_{ij} =
 <p>Newman Chapter 6 contains a nice introductory discussion of directed and weighted graphs. We won’t spend a lot of time on these at this stage of the course, but it’s worthwhile reading this material as it may be of interest as you think about projects.</p>
 </section>
 </section>
-<section id="measures-and-metrics" class="level2 unnumbered">
+<section id="measures-and-metrics" class="level2 unnumbered page-columns page-full">
 <h2 class="unnumbered anchored" data-anchor-id="measures-and-metrics">Measures and Metrics</h2>
 <section id="local-measures" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="local-measures">Local Measures</h3>
@@ -403,13 +441,60 @@ a_{ij} =
 </ul>
 </section>
 </section>
-<section id="global-measures" class="level3 unnumbered">
+<section id="global-measures" class="level3 unnumbered page-columns page-full">
 <h3 class="unnumbered anchored" data-anchor-id="global-measures">Global Measures</h3>
-<section id="network-size" class="level4 unnumbered">
+<section id="network-size" class="level4 unnumbered page-columns page-full">
 <h4 class="unnumbered anchored" data-anchor-id="network-size">Network Size</h4>
+<p>Here’s a deceptively simple question:</p>
+<blockquote class="blockquote">
+<p>How big is a network?</p>
+</blockquote>
+<p>There are <em>lots</em> of good ways to describe the size of a network. Here are two simple ones:</p>
 <ul>
-<li>Number of nodes</li>
-<li>Edge density</li>
+<li>The number of nodes <span class="math inline">\(n\)</span>.</li>
+<li>The number of edges <span class="math inline">\(m\)</span>.</li>
+</ul>
+<p><strong>Exercise</strong>: Show that <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> are related by the identity <span class="math inline">\(nc = 2m\)</span>, where <span class="math inline">\(c\)</span> is the average node degree.</p>
+<p>Here’s a slightly more complex measure of network size. The <em>geodesic distance</em> between node <span class="math inline">\(i\)</span> and node <span class="math inline">\(j\)</span> is the length of the shortest walk <span class="math inline">\(i \rightarrow j\)</span>.</p>
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/unnamed-chunk-4_6e4712cf46869b8f701801d21f81078e">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">erdos.renyi.game</span>(<span class="dv">20</span>, <span class="dv">40</span>, <span class="at">type =</span> <span class="st">"gnm"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tbl_graph</span>()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">shortest_paths</span>(g, <span class="dv">5</span>, <span class="dv">12</span>)<span class="sc">$</span>vpath</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(g, <span class="at">path=</span>path[[<span class="dv">1</span>]])<span class="sc">$</span>on_path <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> g <span class="sc">%&gt;%</span> </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tbl_graph</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">activate</span>(edges) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">on_path =</span> <span class="sc">!</span><span class="fu">is.na</span>(on_path))</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>g <span class="sc">%&gt;%</span> </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggraph</span>() <span class="sc">+</span> </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="fu">aes</span>(<span class="at">width =</span> on_path), <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#73b9ee"</span>) <span class="sc">+</span> </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span> </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_edge_width_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(.<span class="dv">3</span>, <span class="dv">2</span>)) <span class="sc">+</span>  </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">edge_color =</span> <span class="st">"none"</span>, <span class="at">edge_width =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="measurement_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">A simple graph with 20 nodes and 40 edges. While it can be difficult to navigate through even small graphs, note that some nodes are clearly close together, while others are far apart. <br><br> A geodesic (shortest path) is shown between two selected nodes. <br><br>There is one node that is not connected to any of its neighbors, and its distance to them is undefined. As a result, this graph has infinite diameter.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
 <li>Diameter</li>
 </ul>
 </section>
@@ -428,8 +513,9 @@ a_{ij} =
 </section>
 <section id="looking-ahead" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="looking-ahead">Looking Ahead</h3>
+<p>An important question to ask about many of these metrics is:</p>
 <blockquote class="blockquote">
-<p>An important question to ask about many of these metrics is: <em>what counts as a large, surprising, or meaningful</em> value of a given metric?</p>
+<p><em>What counts as a large, surprising, or meaningful</em> value of a given metric?</p>
 </blockquote>
 <p>One way to address this question is to take some value and compare it to one that we believe to be small, unsurprising, or not meaningful. We often operationalize this by saying that “a random graph” would have some property, such as a low clustering coefficient. So, a high clustering coefficient is surprising, and suggests that the graph might not be “random.” This motivation takes directly to the study of random graphs, which is one of the mathematical foundations of network science.</p>
 
