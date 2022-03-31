@@ -86,7 +86,7 @@ Now, $\mathbf{A}_n$ is the matrix of two cliques that have been "paired", with e
 #| cap-location: margin
 #| fig.cap : "A visualization of the 'paired cliques' example with 20 total nodes. Nodes in the first clique are represented by orange circles, and nodes in the second clique by blue squares."
 
-knitr::include_graphics("img/paired-cliques.png")
+knitr::include_graphics("../img/paired-cliques.png")
 ```
 
 What kinds of information are contained in the first few eigenvectors of $\mathbf{A}_{2n}$? 
