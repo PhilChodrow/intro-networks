@@ -1,6 +1,7 @@
 project:
   type: book
   output-dir: docs
+  
 
 
 book:
@@ -35,8 +36,8 @@ format:
     code-fold: true
     number-depth: 2
     suppress-bibliography: true
-    csl: chicago-fullnote-bibliography.csl
-
+    # csl: chicago-fullnote-bibliography.csl
+    callout-appearance: simple
 
 execute: 
   cache: true

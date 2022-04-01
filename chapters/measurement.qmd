@@ -4,14 +4,26 @@
 
 ## Networks and Matrices
 
-Formally, an **undirected graph** $G = (N, E)$ is a set of nodes $N$ and a set of edges $E\subseteq N\times N$. Each element of $E$ is an *unordered* pair of nodes in $N$. We'll focus on the case of *simple graphs,* in which there are no multi-edges or self-loops (see Newman 6.2 for discussion of these cases).  
+::: {.callout-note}
+
+An **undirected graph** $G = (N, E)$ is a set of nodes $N$ and a set of edges $E\subseteq N\times N$. Each element of $E$ is an *unordered* pair of nodes in $N$. An element of $E$ can be written $(i,j)$, where $i, j \in N$. In a **simple** undirected graph, $i \neq j$. 
+:::
+
+When $i = j$ for some element of $E$, this is called a *self-loop*. Simple graphs contain no self-loops. 
+
+::: {.column-margin}
+See Newman 6.2 for discussion of self-loops and other ways graphs can be non-simple. 
+:::
+
 
 Matrices are fundamental tools for studying networks. Why is that? The key point is that a graph is a collection of pairwise relationships encoded by $E$, and matrices are really good for describing pairwise relationships! 
 
 ### The Adjacency Matrix 
 
-Easily the most fundamental of the matrices associated to a graph $G$ is the adjacency matrix $\mathbf{A}$, with entries
+Easily the most fundamental of the matrices associated to a graph $G$ is the adjacency matrix 
 
+::: {.callout-note}
+The **adjacency matrix** $\mathbf{A}$ of a graph $G = (N,E)$ is an $n \times n$ matrix, where $n = \left|N\right|$. Its entries are 
 $$
 a_{ij} =
 \begin{cases}
@@ -19,12 +31,19 @@ a_{ij} =
     0 &\quad \mathrm{otherwise.}
 \end{cases}
 $$
+:::
 
 The reason the adjacency matrix is so important is that it is a lossless representation of the graph structure -- given knowledge of $\mathbf{A}$, you can fully reconstruct the graph. Not all matrices have this property. 
 
 #### Walks {.unnumbered}
 
-A *walk of length $k \geq 2$* in a graph is a set of edges $(i_1,j_1), (i_2,j_2), \ldots, (i_k,j_k)$ with the property that $i_\ell = j_{\ell-1}$ for each $2 \leq \ell \leq k$. This definition doesn't work for $k = 1$; by convention, a single edge $(i,j)$ is always considered a walk of length 1. 
+::: {.callout-note}
+
+A **walk** of length $k \geq 2$* in a graph is a set of edges $(i_1,j_1), (i_2,j_2), \ldots, (i_k,j_k)$ with the property that $i_\ell = j_{\ell-1}$ for each $2 \leq \ell \leq k$. We say that this is a walk *from $i_1$ to $j_k$*. 
+
+A single edge $(i,j)$ is always considered a walk of length 1 from $i$ to $j$. 
+
+:::
 
 A question that pops up a lot in network analysis is: 
 
@@ -34,13 +53,13 @@ The adjacency matrix gives a concise way to address this question. First, let's 
 
 > The $ij$ th entry of $\mathbf{A}^1$ counts the number of walks of length $1$ between nodes $i$ and $j$. 
 
-This turns out to generalize smoothly by induction. Let's try out this argument now. 
+This turns out to generalize smoothly by induction. 
 
-Suppose that $\mathbf{W}(k)$ is a matrix whose entry $w_{ij}(k)$ contains the number of walks between nodes $i$ and $j$ of length $k$. Then, $\mathbf{W}(k+1) = \mathbf{W}(k)\mathbf{A}$ has entries $w_{ij}(k+1)$ containing the number of walks of length $k+1$. 
+::: {.callout-tip}
+The $ij$-th entry of the matrix $\mathbf{A}^k$ contains the number of walks of length $k$ from $i$ to $j$. 
+:::
 
-The proof is fast: we just expand out the matrix product and interpret each term: 
-
-
+Here's a sketch of the proof. Suppose that $\mathbf{W}(k)$ is a matrix whose entry $w_{ij}(k)$ contains the number of walks between nodes $i$ and $j$ of length $k$. Then, $\mathbf{W}(k+1) = \mathbf{W}(k)\mathbf{A}$ has entries $w_{ij}(k+1)$ containing the number of walks of length $k+1$. To see this, expand the matrix product: 
 
 $$[\mathbf{W}(k)\mathbf{A}]_{ij} = \sum_{\ell \in N}w_{i\ell}(k)a_{\ell j}\;.$$
 
@@ -48,7 +67,12 @@ $$[\mathbf{W}(k)\mathbf{A}]_{ij} = \sum_{\ell \in N}w_{i\ell}(k)a_{\ell j}\;.$$
 cf. Newman's eq. 6.22
 :::
 
+::: {.callout-warning}
 **Exercise**: What's a *very fast* argument that this sum does indeed express the number of walks of length $k+1$ from $i$ to $j$? 
+:::
+
+Working through this exercise and applying induction, you can see that $\mathbf{W}(k) = \mathbf{A}^k$, which completes the proof. 
+
 
 ### A Linear Algebra Interlude {.unnumbered}
 
@@ -56,23 +80,27 @@ What kind of information does the matrix $\mathbf{A}$ hold about the graph? Well
 
 Let 
 
-$$\mathbf{K}_n = \left[\begin{matrix}
+$$
+\mathbf{K}_n = \left[\begin{matrix}
     0 & 1 & 1 & \cdots & 1 \\
     1 & 0 & 1 & \cdots & 1 \\
     1 & 1 & 0 & \cdots & 1 \\
     \vdots & \vdots &\vdots &\ddots & \vdots \\ 
-    1 & 1 & 1 & 0 \cdots 
-\end{matrix}\right]\;.$$
+    1 & 1 & 1 & 0 \cdots & 0
+\end{matrix}\right]\;.
+$$
 
 There are $n$ rows and $n$ columns. 
 
 The is the adjacency matrix of an *n-clique*: a graph on $n$ nodes in which all nodes are connected to each other. 
 
 Let's now consider the matrix 
-$$\mathbf{A}_{2n} = \left[\begin{matrix} 
+$$
+\mathbf{A}_{2n} = \left[\begin{matrix} 
     \mathbf{K}_n & \mathbf{I}_n \\ 
     \mathbf{I}_n & \mathbf{K}_n 
-\end{matrix}\right]\;.$$
+\end{matrix}\right]\;.
+$$
 
 Here, $\mathbf{I}_n$ is the $n\times n$ identity matrix. 
 
@@ -115,10 +143,9 @@ G <- G %>%
 G %>% 
     ggraph() +
     geom_edge_link(start_cap = circle(3, 'mm'),
-                                end_cap = circle(4, 'mm'), alpha = .3) +
-    # geom_node_point(pch = 21, size = 3) +
+                   end_cap = circle(4, 'mm'), 
+                   alpha = .3) +
     geom_node_point(aes(fill = factor(group),  shape = factor(group)),  size = 5, color = "black") +
-    # guides(fill = guide_legend(title = "Group")) + 
     scale_shape_manual(values = c(21, 22)) + 
     scale_fill_manual(values = colors) +
     guides(fill = "none", shape = "none") + 
@@ -129,9 +156,13 @@ G %>%
 
 What kinds of information are contained in the first few eigenvectors of $\mathbf{A}_{2n}$? 
 
+::: {.callout-warning}
 **Exercise**: The vector of ones $\mathbf{1}_{2n}$ is an eigenvector of $\mathbf{A}_{2n}$. What is its eigenvalue? How do we know whether it is the largest one?   
+:::
 
+::: {.callout-warning}
 **Exercise**: The vector $\mathbf{v} = (\mathbf{1}_n, - \mathbf{1}_n)$ is another eigenvector of $\mathbf{A}_{2n}$. What is its eigenvalue? 
+:::
 
 In fact, these are the two largest eigenvalues of $\mathbf{A}$. The first one isn't very interesting, but note that the second one actually separates the two cliques! 
 
@@ -142,27 +173,44 @@ So, suppose we were given a graph where:
 
 A way to solve this problem would be to compute the *second eigenvector* $\mathbf{v}$. The signs of $\mathbf{v}$ separate the two cliques. This idea is the foundation of many *spectral graph clustering* algorithms. 
 
-In fact, the adjacency matrix isn't usually the optimal matrix to use for spectral algorithms.[@nadakuditi2012graph] This is a deep and important story related to *random matrix theory*, which has many connections to network science. 
+In fact, the adjacency matrix isn't usually the optimal matrix to use for spectral algorithms. This is a deep and important story related to *random matrix theory*, which has many connections to network science. 
+
+::: {.column-margin}
+[@nadakuditi2012graph] 
+:::
 
 ### Degrees {.unnumbered}
 
-The *degree* of a node is the number of edges attached to it. 
-
+::: {.callout-note}
+The *degree* $k_i$ of a node $i$ is the number of edges attached to it. 
 $$
 k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 $$
+:::
 
 The degree is a fundamental quantity in many network analyses. Especially the *distribution of degrees* in the network can play a major role in both theory and applications. 
 
+::: {.callout-warning}
 **Exercise**: show that the diagonal entries of $\mathbf{A}^2$ give the degree of each node. 
+:::
 
 We often collect the degrees into a diagonal matrix $\mathbf{D}$ whose diagonal entry $d_{ii} = k_i$ contains the degree of node $i$. 
 
+::: {.callout-warning}
+**Exercise**: Show that $\sum_{i = 1}^n d_i = 2m$, where $m$ is the number of edges in $G$. 
+:::
+
 ### The Laplacian {.unnumbered}
+Another very important matrix for network representations is the *graph Laplacian matrix*. Actually, there are multiple matrices with claim to this name, but the one we'll usually focus on is the combinatorial Laplacian.
 
-Another very important matrix for network representations is the *graph Laplacian matrix*. Actually, there are multiple matrices with claim to this name, but the one we'll usually focus on is the *combinatorial Laplacian* $\mathbf{L} = \mathbf{D} - \mathbf{A}$. 
+::: {.callout-note}
+The **combinatorial Laplacian** $\mathbf{L}$ of a matrix is  $\mathbf{L} = \mathbf{D} - \mathbf{A}$. 
+:::
+ 
 
+::: {.callout-warning}
 **Exercise**: Given knowledge of the combinatorial Laplacian $\mathbf{L}$, is it possible to exactly reconstruct the graph?
+:::
 
 The Laplacian is often used to represent *(diffusive) flows* of quantities between nodes. To see why, suppose that I have some amount of water $x_i$ on each node $i$, and that I collect this into a vector $\mathbf{x}$. Now, consider the vector $\mathbf{L}\mathbf{x}$. 
 
@@ -176,7 +224,8 @@ $$
 
 The first term distributes the water $x_i$ at node $i$ to each of $i$'s $k_i$ neighbors, while the second term allows water to flow into node $i$ from each neighbor along each edge connecting them.
 
-Modifications of this setup will become very important when we discuss random walks later in the course. 
+The Laplacian matrix $\mathbf{L}$ will appear in several places throughout this course, when we consider random walks, graph partitioning, and dynamical systems. 
+
 
 
 ### Many More Matrices... {.unnumbered}
@@ -199,34 +248,29 @@ Newman Chapter 6 contains a nice introductory discussion of directed and weighte
 
 ## Measures and Metrics {.unnumbered}
 
+There are **lots** of questions we can ask about network data. Even in the setting of simple graphs, there are some very interesting questions with surprisingly complex answers. In this section, we'll consider some (not all) of the most important things to *measure* in networks. 
+
 ### Ideas Connected to Walks
 
-- Degree 
-- Components
-- Geodesics and Diameter
-- Betweenness Centrality
-- Katz Centrality
+Walks are a fundamental idea in networks. If we imagine networks as connecting things together, walks and walk counts are direct quantifications of how "connected" the network really is. Here are a few things we can measure about networks using walks. 
 
+#### Connected Components
 
-### Other Useful Graph Measures 
+::: {.callout-note}
+Two nodes $i$ and $j$ are **path-connected** if there exists a path $i \leftrightarrow j$. The set of nodes $j$ such that $i$ is path-connected to $j$ is called the **connected component** of $i$. A network is **connected** if it has only one connected component. 
+:::
 
-- Degree distributions
-- Clustering
-- Graph partitioning and cuts 
+::: {.callout-warning}
+**Exercise**: Show that the relation "$i$ is path-connected to $j$" is an equivalence relation on the set of nodes $N$. 
+:::
 
+Intuitively, a disconnected network is fragmented into two or more pieces. Almost all network analysis problems are most interesting and challenging when the network is connected, and so we'll often assume this in data analysis applications. Mathematically, however, the question of when certain models of networks become connected has a very rich theory that we'll see a small part of. 
 
-Here's a deceptively simple question: 
+#### Geodesics and Graph Diameter
 
-> How big is a network? 
-
-There are *lots* of good ways to describe the size of a network. Here are two simple ones: 
-
-- The number of nodes $n$. 
-- The number of edges $m$. 
-
-**Exercise**: Show that $n$ and $m$ are related by the identity $nc = 2m$, where $c$ is the average node degree. 
-
-Here's a slightly more complex measure of network size. The *geodesic distance* between node $i$ and node $j$ is the length of the shortest walk $i \rightarrow j$. 
+::: {.callout-note}
+The **length** of a walk is the number of edges it contains. A **geodesic path** (also called a **shortest path**) from $i$ to $j$ is a walk fom $i$ to $j$ of minimum length; i.e. a walk such that no other walk has shorter length. The length of a geodesic path is called the **(geodeisc) distance** between $i$ and $j$. If two nodes are not path-connected, their geodesic distance is undefined. 
+:::
 
 ```{r}
 #| message : FALSE 
@@ -234,7 +278,7 @@ Here's a slightly more complex measure of network size. The *geodesic distance* 
 #| fig.align : 'center'
 #| out.width : 50%
 #| cap-location: margin
-#| fig.cap : "A simple graph with 20 nodes and 40 edges. While it can be difficult to navigate through even small graphs, note that some nodes are clearly close together, while others are far apart. <br><br> A geodesic (shortest path) is shown between two selected nodes. <br><br>There is one node that is not connected to any of its neighbors, and its distance to them is undefined. As a result, this graph has infinite diameter."
+#| fig.cap : "A graph with 20 nodes and 40 edges. While it can be difficult to navigate through even small graphs, note that some nodes are clearly close together, while others are far apart. <br><br> A geodesic (shortest path) is shown between two selected nodes. <br><br>There is one node that is not connected to any of its neighbors, and its distance to them is undefined. As a result, this graph has undefined diameter."
 
 library(tidygraph)
 library(igraph)
@@ -263,18 +307,148 @@ g %>%
   guides(edge_color = "none", edge_width = "none")
 ```
 
+::: {.callout-note}
+The **diameter** of a graph is the length of the longest geodesic path it contains. 
+:::
+
+Another way to say this is that the diameter is the distance between the two nodes that are farthest away. 
+
+### Betweenness Centrality
+
+How *important* is a node? We'll come back to this question several times in the course. The idea of geodesic paths allows us to consider one approach to this question: 
+
+::: {.callout-caution}
+**Idea**: A node is important if you frequently have to go *through* it to get to other nodes. 
+:::
+
+This idea leads us to the idea of betweenness centrality. 
+
+::: {.callout-note}
+The **betweenness centrality** $b_i$ of a node $i$ is the number of geodesic paths in the graph that pass through node $i$. 
+:::
 
 
+```{r}
+#| message : FALSE 
+#| warning : FALSE 
+#| fig.align : 'center'
+#| out.width : 80%
+#| cap-location: margin
+#| fig.cap : "The famous Zachary Karate Club network [@zachary1977information]. The size of each node reflects its betweenness centrality."
 
-- Diameter 
 
-#### Cluster Structure {.unnumbered} 
+library(tidygraph)
+library(ggraph)
+library(igraph)
+library(tidyverse)
+library(igraphdata)
+data(karate)
 
-- Cut sizes
+g <- karate %>% 
+    as_tbl_graph() %>% 
+    mutate(btwn = centrality_betweenness())
 
-#### Hierarchy/Planarity {.unnumbered} 
+g %>% 
+    ggraph() +
+    geom_edge_link(alpha = 0.2) + 
+    geom_node_point(aes(size = btwn), pch = 21, fill = "#73b9ee") + 
+    theme_void() + 
+    guides(size = "none") + 
+    scale_size_continuous(range = c(3, 15))
+```
 
-- Linearity, minimum-violation ranking
+#### Katz Centrality
+
+Here's another centrality concept that is going to draw on our linear algebra skills a bit. 
+
+Recall that $\mathbf{A}^k$ has entries that count the total number of walks of length $k$ between two nodes. Here's an alternative idea of node importance: 
+
+::: {.callout-caution}
+A node $i$ is important when there are lots of short walks in the graph that lead to $i$. 
+:::
+
+This idea takes a bit more effort to operationalize mathematically. 
+
+First, the number of walks of length $k$ that lead to each node can be computed by the vector $\mathbf{v}(k) = \mathbf{A}^k\mathbf{1}_n$. Now, $v_i(k)$ gives the total number of $k$-walks that lead to node $i$. Now, the total number of walks of length $\ell$ or less leading to $i$ is $\sum_{k = 1}^{\ell} v_i(k)$. 
+
+Now, if we all $\ell \rightarrow \infty$, then we'll find that the total number of walks to $i$ is infinite. But we can make progress if we instead decide that *short* walks are more important than longer walks. This makes sense -- if I have to go on a long walk to find you, then you might be in a relatively remote, out-of-the-way location. 
+
+So, we'll add a *discount factor* $\alpha < 1$. A walk of length $k$ gets a discount of $\alpha^k$. The weighted number of walks to $i$ is $\sum_{k = 1}^{\infty} \alpha^kv_i(k)$. The vector containing this information for each node is the vector 
+
+$$
+\mathbf{v}(\alpha) = \sum_{k = 1}^{\infty} \alpha^k\mathbf{v}(k)\;. 
+$$ 
+
+Perhaps surprisingly, we're not stuck. Recall the definition of $\mathbf{v}(k)$, which lets us write 
+
+$$
+\mathbf{v}(\alpha) = \sum_{k = 1}^{\infty} \alpha^k\mathbf{A}^k\mathbf{1}_n = \left[\sum_{k = 1}^{\infty} (\alpha\mathbf{A})^k\right]\mathbf{1}_n\;. 
+$$ 
+
+Now we need a matrix trick. 
+
+::: {.callout-tip}
+If $\mathbf{B}\in \mathbb{R}^{n\times n}$ is a symmetric matrix and $\left|\lambda\right| < 1$ for any eigenvalue $\lambda$ of $\mathbf{B}$, then   
+$$
+\sum_{k = 1}^{\infty} \mathbf{B}^k = (\mathbf{I}_n - \mathbf{B})^{-1} - \mathbf{I}_n\;. 
+$$
+:::
+
+::: {.column-margin}
+Compare this theorem to the geometric series formula 
+$$
+\sum_{k = 1}^{\infty} r^k = (1 - r)^{-1} - 1
+$$
+for scalar $\left|r \right| < 1$. 
+:::
+
+We can use this result to compute $\mathbf{v}(\alpha)$. Provided that $\alpha$ is smaller than $\frac{1}{\left|\lambda\right|}$ for any eigenvalue $\lambda$ of $\mathbf{A}$, we have the *Katz centrality*. 
+
+::: {.callout-note}
+The **Katz centrality** [@katz1953new] of node $i$ with parameter $\alpha$ is the $i$th entry of the vector 
+$$
+\mathbf{v}(\alpha) = ((\mathbf{I}_n - \alpha\mathbf{A})^{-1}  - \mathbf{I}_n)\mathbf{1}_n\;. 
+$$
+:::
+
+
+```{r}
+#| message : FALSE 
+#| warning : FALSE 
+#| fig.align : 'center'
+#| out.width : 80%
+#| cap-location: margin
+#| fig.cap : "The Zachary Karate Club network [@zachary1977information]. The size of each node reflects its Katz centrality with α = 0.05."
+
+library(tidygraph)
+library(ggraph)
+library(igraph)
+library(tidyverse)
+library(igraphdata)
+data(karate)
+
+g <- karate %>% 
+    as_tbl_graph() %>% 
+    mutate(btwn = centrality_katz(alpha = .05))
+
+g %>% 
+    ggraph() +
+    geom_edge_link(alpha = 0.2) + 
+    geom_node_point(aes(size = btwn), pch = 21, fill = "#73b9ee") + 
+    theme_void() + 
+    guides(size = "none") + 
+    scale_size_continuous(range = c(3, 15))
+```
+
+The Katz centrality leads to less dramatic results, while still highlighting nodes that appear to be "in the center" of the graph. 
+
+### Other Useful Graph Measures 
+
+#### Degree Distributions
+
+#### Clustering
+
+#### Cuts and Graph Partitioning
 
 
 ### Looking Ahead {.unnumbered}
