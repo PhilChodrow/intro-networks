@@ -272,10 +272,10 @@
 <p><em>These lecture notes are based on Chapters 6 and 7 of Newman. They are a short set of highlights, and are not a substitute for actually reading these chapters! There will be content not covered in these notes that you’ll need for homework problems.</em></p>
 <section id="networks-and-matrices" class="level2 page-columns page-full" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="networks-and-matrices"><span class="header-section-number">1.1</span> Networks and Matrices</h2>
-<div class="callout-note callout callout-style-simple">
+<div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>An <strong>undirected graph</strong> <span class="math inline">\(G = (N, E)\)</span> is a set of nodes <span class="math inline">\(N\)</span> and a set of edges <span class="math inline">\(E\subseteq N\times N\)</span>. Each element of <span class="math inline">\(E\)</span> is an <em>unordered</em> pair of nodes in <span class="math inline">\(N\)</span>. An element of <span class="math inline">\(E\)</span> can be written <span class="math inline">\((i,j)\)</span>, where <span class="math inline">\(i, j \in N\)</span>. In a <strong>simple</strong> undirected graph, <span class="math inline">\(i \neq j\)</span>.</p>
@@ -290,10 +290,10 @@
 <section id="the-adjacency-matrix" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="the-adjacency-matrix">The Adjacency Matrix</h3>
 <p>Easily the most fundamental of the matrices associated to a graph <span class="math inline">\(G\)</span> is the adjacency matrix</p>
-<div class="callout-note callout callout-style-simple">
+<div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>The <strong>adjacency matrix</strong> <span class="math inline">\(\mathbf{A}\)</span> of a graph <span class="math inline">\(G = (N,E)\)</span> is an <span class="math inline">\(n \times n\)</span> matrix, where <span class="math inline">\(n = \left|N\right|\)</span>. Its entries are <span class="math display">\[
@@ -309,10 +309,10 @@ a_{ij} =
 <p>The reason the adjacency matrix is so important is that it is a lossless representation of the graph structure – given knowledge of <span class="math inline">\(\mathbf{A}\)</span>, you can fully reconstruct the graph. Not all matrices have this property.</p>
 <section id="walks" class="level4 unnumbered page-columns page-full">
 <h4 class="unnumbered anchored" data-anchor-id="walks">Walks</h4>
-<div class="callout-note callout callout-style-simple">
+<div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>A <strong>walk</strong> of length <span class="math inline">\(k \geq 2\)</span>* in a graph is a set of edges <span class="math inline">\((i_1,j_1), (i_2,j_2), \ldots, (i_k,j_k)\)</span> with the property that <span class="math inline">\(i_\ell = j_{\ell-1}\)</span> for each <span class="math inline">\(2 \leq \ell \leq k\)</span>. We say that this is a walk <em>from <span class="math inline">\(i_1\)</span> to <span class="math inline">\(j_k\)</span></em>.</p>
@@ -329,10 +329,10 @@ a_{ij} =
 <p>The <span class="math inline">\(ij\)</span> th entry of <span class="math inline">\(\mathbf{A}^1\)</span> counts the number of walks of length <span class="math inline">\(1\)</span> between nodes <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>.</p>
 </blockquote>
 <p>This turns out to generalize smoothly by induction.</p>
-<div class="callout-tip callout callout-style-simple">
+<div class="callout-tip callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>The <span class="math inline">\(ij\)</span>-th entry of the matrix <span class="math inline">\(\mathbf{A}^k\)</span> contains the number of walks of length <span class="math inline">\(k\)</span> from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span>.</p>
@@ -344,10 +344,10 @@ a_{ij} =
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>cf.&nbsp;Newman’s eq. 6.22</p>
-</div></div><div class="callout-warning callout callout-style-simple">
+</div></div><div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p><strong>Exercise</strong>: What’s a <em>very fast</em> argument that this sum does indeed express the number of walks of length <span class="math inline">\(k+1\)</span> from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span>?</p>
@@ -429,20 +429,20 @@ a_{ij} =
 </div>
 </div>
 <p>What kinds of information are contained in the first few eigenvectors of <span class="math inline">\(\mathbf{A}_{2n}\)</span>?</p>
-<div class="callout-warning callout callout-style-simple">
+<div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p><strong>Exercise</strong>: The vector of ones <span class="math inline">\(\mathbf{1}_{2n}\)</span> is an eigenvector of <span class="math inline">\(\mathbf{A}_{2n}\)</span>. What is its eigenvalue? How do we know whether it is the largest one?</p>
 </div>
 </div>
 </div>
-<div class="callout-warning callout callout-style-simple">
+<div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p><strong>Exercise</strong>: The vector <span class="math inline">\(\mathbf{v} = (\mathbf{1}_n, - \mathbf{1}_n)\)</span> is another eigenvector of <span class="math inline">\(\mathbf{A}_{2n}\)</span>. What is its eigenvalue?</p>
@@ -463,10 +463,10 @@ a_{ij} =
 </div></div></section>
 <section id="degrees" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="degrees">Degrees</h3>
-<div class="callout-note callout callout-style-simple">
+<div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>The <em>degree</em> <span class="math inline">\(k_i\)</span> of a node <span class="math inline">\(i\)</span> is the number of edges attached to it. <span class="math display">\[
@@ -476,10 +476,10 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 </div>
 </div>
 <p>The degree is a fundamental quantity in many network analyses. Especially the <em>distribution of degrees</em> in the network can play a major role in both theory and applications.</p>
-<div class="callout-warning callout callout-style-simple">
+<div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p><strong>Exercise</strong>: show that the diagonal entries of <span class="math inline">\(\mathbf{A}^2\)</span> give the degree of each node.</p>
@@ -487,10 +487,10 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 </div>
 </div>
 <p>We often collect the degrees into a diagonal matrix <span class="math inline">\(\mathbf{D}\)</span> whose diagonal entry <span class="math inline">\(d_{ii} = k_i\)</span> contains the degree of node <span class="math inline">\(i\)</span>.</p>
-<div class="callout-warning callout callout-style-simple">
+<div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p><strong>Exercise</strong>: Show that <span class="math inline">\(\sum_{i = 1}^n d_i = 2m\)</span>, where <span class="math inline">\(m\)</span> is the number of edges in <span class="math inline">\(G\)</span>.</p>
@@ -501,20 +501,20 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 <section id="the-laplacian" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="the-laplacian">The Laplacian</h3>
 <p>Another very important matrix for network representations is the <em>graph Laplacian matrix</em>. Actually, there are multiple matrices with claim to this name, but the one we’ll usually focus on is the combinatorial Laplacian.</p>
-<div class="callout-note callout callout-style-simple">
+<div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>The <strong>combinatorial Laplacian</strong> <span class="math inline">\(\mathbf{L}\)</span> of a matrix is <span class="math inline">\(\mathbf{L} = \mathbf{D} - \mathbf{A}\)</span>.</p>
 </div>
 </div>
 </div>
-<div class="callout-warning callout callout-style-simple">
+<div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p><strong>Exercise</strong>: Given knowledge of the combinatorial Laplacian <span class="math inline">\(\mathbf{L}\)</span>, is it possible to exactly reconstruct the graph?</p>
@@ -557,20 +557,20 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 <p>Walks are a fundamental idea in networks. If we imagine networks as connecting things together, walks and walk counts are direct quantifications of how “connected” the network really is. Here are a few things we can measure about networks using walks.</p>
 <section id="connected-components" class="level4">
 <h4 class="anchored" data-anchor-id="connected-components">Connected Components</h4>
-<div class="callout-note callout callout-style-simple">
+<div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>Two nodes <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are <strong>path-connected</strong> if there exists a path <span class="math inline">\(i \leftrightarrow j\)</span>. The set of nodes <span class="math inline">\(j\)</span> such that <span class="math inline">\(i\)</span> is path-connected to <span class="math inline">\(j\)</span> is called the <strong>connected component</strong> of <span class="math inline">\(i\)</span>. A network is <strong>connected</strong> if it has only one connected component.</p>
 </div>
 </div>
 </div>
-<div class="callout-warning callout callout-style-simple">
+<div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p><strong>Exercise</strong>: Show that the relation “<span class="math inline">\(i\)</span> is path-connected to <span class="math inline">\(j\)</span>” is an equivalence relation on the set of nodes <span class="math inline">\(N\)</span>.</p>
@@ -581,10 +581,10 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 </section>
 <section id="geodesics-and-graph-diameter" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="geodesics-and-graph-diameter">Geodesics and Graph Diameter</h4>
-<div class="callout-note callout callout-style-simple">
+<div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>The <strong>length</strong> of a walk is the number of edges it contains. A <strong>geodesic path</strong> (also called a <strong>shortest path</strong>) from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span> is a walk fom <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span> of minimum length; i.e.&nbsp;a walk such that no other walk has shorter length. The length of a geodesic path is called the <strong>(geodeisc) distance</strong> between <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>. If two nodes are not path-connected, their geodesic distance is undefined.</p>
@@ -629,26 +629,26 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-simple">
+<div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The <strong>diameter</strong> of a graph is the length of the longest geodesic path it contains.</p>
+<p>The <strong>diameter</strong> of a graph is the longest length of geodesic paths across all pairs of nodes. If the graph is disconnected, the diameter is undefined.</p>
 </div>
 </div>
 </div>
-<p>Another way to say this is that the diameter is the distance between the two nodes that are farthest away.</p>
+<p>Another way to say this is that, in a connected graph, the diameter is the distance between the two nodes that are farthest away.</p>
 </section>
 </section>
 <section id="betweenness-centrality" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="betweenness-centrality">Betweenness Centrality</h3>
 <p>How <em>important</em> is a node? We’ll come back to this question several times in the course. The idea of geodesic paths allows us to consider one approach to this question:</p>
-<div class="callout-caution callout callout-style-simple">
+<div class="callout-caution callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p><strong>Idea</strong>: A node is important if you frequently have to go <em>through</em> it to get to other nodes.</p>
@@ -656,10 +656,10 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 </div>
 </div>
 <p>This idea leads us to the idea of betweenness centrality.</p>
-<div class="callout-note callout callout-style-simple">
+<div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>The <strong>betweenness centrality</strong> <span class="math inline">\(b_i\)</span> of a node <span class="math inline">\(i\)</span> is the number of geodesic paths in the graph that pass through node <span class="math inline">\(i\)</span>.</p>
@@ -701,10 +701,10 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 <h4 class="anchored" data-anchor-id="katz-centrality">Katz Centrality</h4>
 <p>Here’s another centrality concept that is going to draw on our linear algebra skills a bit.</p>
 <p>Recall that <span class="math inline">\(\mathbf{A}^k\)</span> has entries that count the total number of walks of length <span class="math inline">\(k\)</span> between two nodes. Here’s an alternative idea of node importance:</p>
-<div class="callout-caution callout callout-style-simple">
+<div class="callout-caution callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>A node <span class="math inline">\(i\)</span> is important when there are lots of short walks in the graph that lead to <span class="math inline">\(i\)</span>.</p>
@@ -723,10 +723,10 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 \mathbf{v}(\alpha) = \sum_{k = 1}^{\infty} \alpha^k\mathbf{A}^k\mathbf{1}_n = \left[\sum_{k = 1}^{\infty} (\alpha\mathbf{A})^k\right]\mathbf{1}_n\;.
 \]</span></p>
 <p>Now we need a matrix trick.</p>
-<div class="callout-tip callout callout-style-simple">
+<div class="callout-tip callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>If <span class="math inline">\(\mathbf{B}\in \mathbb{R}^{n\times n}\)</span> is a symmetric matrix and <span class="math inline">\(\left|\lambda\right| &lt; 1\)</span> for any eigenvalue <span class="math inline">\(\lambda\)</span> of <span class="math inline">\(\mathbf{B}\)</span>, then<br>
@@ -742,10 +742,10 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 \sum_{k = 1}^{\infty} r^k = (1 - r)^{-1} - 1
 \]</span> for scalar <span class="math inline">\(\left|r \right| &lt; 1\)</span>.</p>
 </div></div><p>We can use this result to compute <span class="math inline">\(\mathbf{v}(\alpha)\)</span>. Provided that <span class="math inline">\(\alpha\)</span> is smaller than <span class="math inline">\(\frac{1}{\left|\lambda\right|}\)</span> for any eigenvalue <span class="math inline">\(\lambda\)</span> of <span class="math inline">\(\mathbf{A}\)</span>, we have the <em>Katz centrality</em>.</p>
-<div class="callout-note callout callout-style-simple">
+<div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p>The <strong>Katz centrality</strong> <span class="citation" data-cites="katz1953new">(<a href="../appendices/references.html#ref-katz1953new" role="doc-biblioref">Katz 1953</a>)</span> of node <span class="math inline">\(i\)</span> with parameter <span class="math inline">\(\alpha\)</span> is the <span class="math inline">\(i\)</span>th entry of the vector <span class="math display">\[

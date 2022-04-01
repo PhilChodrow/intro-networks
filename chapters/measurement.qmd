@@ -308,10 +308,10 @@ g %>%
 ```
 
 ::: {.callout-note}
-The **diameter** of a graph is the length of the longest geodesic path it contains. 
+The **diameter** of a graph is the longest length of geodesic paths across all pairs of nodes. If the graph is disconnected, the diameter is undefined. 
 :::
 
-Another way to say this is that the diameter is the distance between the two nodes that are farthest away. 
+Another way to say this is that, in a connected graph, the diameter is the distance between the two nodes that are farthest away. 
 
 ### Betweenness Centrality
 

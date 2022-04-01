@@ -1,2 +1,5 @@
 /.quarto/
 *.DS_Store
+syllabus/*.html
+chapters/*.html
+appendices/*.html

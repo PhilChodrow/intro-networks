@@ -38,6 +38,7 @@ format:
     suppress-bibliography: true
     # csl: chicago-fullnote-bibliography.csl
     callout-appearance: simple
+    callout-icon: false
 
 execute: 
   cache: true
