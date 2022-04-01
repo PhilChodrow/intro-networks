@@ -199,19 +199,21 @@ Newman Chapter 6 contains a nice introductory discussion of directed and weighte
 
 ## Measures and Metrics {.unnumbered}
 
-### Local Measures {.unnumbered}
+### Ideas Connected to Walks
 
-#### Node Importance  {.unnumbered}
+- Degree 
+- Components
+- Geodesics and Diameter
+- Betweenness Centrality
+- Katz Centrality
 
-- Degree
-- Betweenness centrality
-- Clustering coefficients 
+
+### Other Useful Graph Measures 
+
 - Degree distributions
+- Clustering
+- Graph partitioning and cuts 
 
-
-### Global Measures {.unnumbered}
-
-#### Network Size {.unnumbered}
 
 Here's a deceptively simple question: 
 
@@ -259,7 +261,6 @@ g %>%
   theme_void() + 
   scale_edge_width_manual(values = c(.3, 2)) +  
   guides(edge_color = "none", edge_width = "none")
-
 ```
 
 

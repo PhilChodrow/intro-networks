@@ -255,8 +255,8 @@
 </ul></li>
 <li><a href="#measures-and-metrics" class="nav-link" data-scroll-target="#measures-and-metrics">Measures and Metrics</a>
 <ul class="collapse">
-<li><a href="#local-measures" class="nav-link" data-scroll-target="#local-measures">Local Measures</a></li>
-<li><a href="#global-measures" class="nav-link" data-scroll-target="#global-measures">Global Measures</a></li>
+<li><a href="#ideas-connected-to-walks" class="nav-link" data-scroll-target="#ideas-connected-to-walks">Ideas Connected to Walks</a></li>
+<li><a href="#other-useful-graph-measures" class="nav-link" data-scroll-target="#other-useful-graph-measures">Other Useful Graph Measures</a></li>
 <li><a href="#looking-ahead" class="nav-link" data-scroll-target="#looking-ahead">Looking Ahead</a></li>
 </ul></li>
 </ul>
@@ -429,22 +429,23 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 </section>
 <section id="measures-and-metrics" class="level2 unnumbered page-columns page-full">
 <h2 class="unnumbered anchored" data-anchor-id="measures-and-metrics">Measures and Metrics</h2>
-<section id="local-measures" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="local-measures">Local Measures</h3>
-<section id="node-importance" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="node-importance">Node Importance</h4>
+<section id="ideas-connected-to-walks" class="level3">
+<h3 class="anchored" data-anchor-id="ideas-connected-to-walks">Ideas Connected to Walks</h3>
 <ul>
 <li>Degree</li>
-<li>Betweenness centrality</li>
-<li>Clustering coefficients</li>
-<li>Degree distributions</li>
+<li>Components</li>
+<li>Geodesics and Diameter</li>
+<li>Betweenness Centrality</li>
+<li>Katz Centrality</li>
 </ul>
 </section>
-</section>
-<section id="global-measures" class="level3 unnumbered page-columns page-full">
-<h3 class="unnumbered anchored" data-anchor-id="global-measures">Global Measures</h3>
-<section id="network-size" class="level4 unnumbered page-columns page-full">
-<h4 class="unnumbered anchored" data-anchor-id="network-size">Network Size</h4>
+<section id="other-useful-graph-measures" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="other-useful-graph-measures">Other Useful Graph Measures</h3>
+<ul>
+<li>Degree distributions</li>
+<li>Clustering</li>
+<li>Graph partitioning and cuts</li>
+</ul>
 <p>Here’s a deceptively simple question:</p>
 <blockquote class="blockquote">
 <p>How big is a network?</p>
@@ -456,7 +457,7 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 </ul>
 <p><strong>Exercise</strong>: Show that <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> are related by the identity <span class="math inline">\(nc = 2m\)</span>, where <span class="math inline">\(c\)</span> is the average node degree.</p>
 <p>Here’s a slightly more complex measure of network size. The <em>geodesic distance</em> between node <span class="math inline">\(i\)</span> and node <span class="math inline">\(j\)</span> is the length of the shortest walk <span class="math inline">\(i \rightarrow j\)</span>.</p>
-<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/unnamed-chunk-4_6e4712cf46869b8f701801d21f81078e">
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/unnamed-chunk-4_a38ceb72a695abcd1490b7d61580f2ba">
 <details>
 <summary>Code</summary>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span>
@@ -497,7 +498,6 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 <ul>
 <li>Diameter</li>
 </ul>
-</section>
 <section id="cluster-structure" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="cluster-structure">Cluster Structure</h4>
 <ul>
