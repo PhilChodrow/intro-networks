@@ -1,4 +1,4 @@
-* 
+*
 !docs
 !chapters/*.qmd
 !syllabus/*.qmd
@@ -11,3 +11,5 @@
 *.qmd
 *.bib
 
+
+/.quarto/
