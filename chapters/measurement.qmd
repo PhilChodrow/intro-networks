@@ -1,12 +1,16 @@
-# Measuring Networks {#measurement}
+# Measuring Networks {#sec-measurement}
 
 *These lecture notes are based on Chapters 6 and 7 of Newman. They are a short set of highlights, and are not a substitute for actually reading these chapters! There will be content not covered in these notes that you'll need for homework problems.* 
 
 ## Networks and Matrices
 
 ::: {.callout-note}
+::: {#def-graph}
+
+## Undirected Graph
 
 An **undirected graph** $G = (N, E)$ is a set of nodes $N$ and a set of edges $E\subseteq N\times N$. Each element of $E$ is an *unordered* pair of nodes in $N$. An element of $E$ can be written $(i,j)$, where $i, j \in N$. In a **simple** undirected graph, $i \neq j$. 
+:::
 :::
 
 When $i = j$ for some element of $E$, this is called a *self-loop*. Simple graphs contain no self-loops. 
@@ -23,6 +27,10 @@ Matrices are fundamental tools for studying networks. Why is that? The key point
 Easily the most fundamental of the matrices associated to a graph $G$ is the adjacency matrix 
 
 ::: {.callout-note}
+::: {#def-adjacency-matrix}
+
+## Adjacency Matrix
+
 The **adjacency matrix** $\mathbf{A}$ of a graph $G = (N,E)$ is an $n \times n$ matrix, where $n = \left|N\right|$. Its entries are 
 $$
 a_{ij} =
@@ -32,17 +40,20 @@ a_{ij} =
 \end{cases}
 $$
 :::
+:::
 
 The reason the adjacency matrix is so important is that it is a lossless representation of the graph structure -- given knowledge of $\mathbf{A}$, you can fully reconstruct the graph. Not all matrices have this property. 
 
 #### Walks {.unnumbered}
 
 ::: {.callout-note}
+::: {#def-walks}
 
 A **walk** of length $k \geq 2$* in a graph is a set of edges $(i_1,j_1), (i_2,j_2), \ldots, (i_k,j_k)$ with the property that $i_\ell = j_{\ell-1}$ for each $2 \leq \ell \leq k$. We say that this is a walk *from $i_1$ to $j_k$*. 
 
 A single edge $(i,j)$ is always considered a walk of length 1 from $i$ to $j$. 
 
+:::
 :::
 
 A question that pops up a lot in network analysis is: 
@@ -104,18 +115,14 @@ $$
 
 Here, $\mathbf{I}_n$ is the $n\times n$ identity matrix. 
 
-Now, $\mathbf{A}_n$ is the matrix of two cliques that have been "paired", with each node in one clique connected to exactly one node in the other clique. It looks a bit like this: 
+Now, $\mathbf{A}_n$ is the matrix of two cliques that have been "paired", with each node in one clique connected to exactly one node in the other clique. A small example is shown in @fig-paired-cliques. 
 
 ```{r}
 #| message : FALSE 
 #| warning : FALSE 
-#| fig.align : 'center'
-#| fig.width : 7
-#| fig.height : 3
-#| out.width : 70%
-#| aspect.ratio: 4
-#| cap-location: margin
+#| column: margin
 #| fig.cap : "A visualization of the 'paired cliques' example with 10 total nodes. Nodes in the first clique are represented by orange circles, and nodes in the second clique by blue squares."
+#| label : fig-paired-cliques
 
 library(tidygraph)
 library(ggraph)
@@ -145,7 +152,7 @@ G %>%
     geom_edge_link(start_cap = circle(3, 'mm'),
                    end_cap = circle(4, 'mm'), 
                    alpha = .3) +
-    geom_node_point(aes(fill = factor(group),  shape = factor(group)),  size = 5, color = "black") +
+    geom_node_point(aes(fill = factor(group),  shape = factor(group)),  size = 10, color = "black") +
     scale_shape_manual(values = c(21, 22)) + 
     scale_fill_manual(values = colors) +
     guides(fill = "none", shape = "none") + 
@@ -182,10 +189,15 @@ In fact, the adjacency matrix isn't usually the optimal matrix to use for spectr
 ### Degrees {.unnumbered}
 
 ::: {.callout-note}
+::: {#def-degree}
+
+## Degree
+
 The *degree* $k_i$ of a node $i$ is the number of edges attached to it. 
 $$
 k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 $$
+:::
 :::
 
 The degree is a fundamental quantity in many network analyses. Especially the *distribution of degrees* in the network can play a major role in both theory and applications. 
@@ -204,7 +216,12 @@ We often collect the degrees into a diagonal matrix $\mathbf{D}$ whose diagonal 
 Another very important matrix for network representations is the *graph Laplacian matrix*. Actually, there are multiple matrices with claim to this name, but the one we'll usually focus on is the combinatorial Laplacian.
 
 ::: {.callout-note}
-The **combinatorial Laplacian** $\mathbf{L}$ of a matrix is  $\mathbf{L} = \mathbf{D} - \mathbf{A}$. 
+::: {#def-laplacian}
+
+## Combinatorial Graph Laplacian
+
+The **combinatorial Laplacian** $\mathbf{L}$ of a graph with adjacency matrix $\mathbf{A}$ is  $\mathbf{L} = \mathbf{D} - \mathbf{A}$. 
+:::
 :::
  
 
@@ -257,7 +274,12 @@ Walks are a fundamental idea in networks. If we imagine networks as connecting t
 #### Connected Components
 
 ::: {.callout-note}
+::: {#def-connected}
+
+## Connected Components
+
 Two nodes $i$ and $j$ are **path-connected** if there exists a path $i \leftrightarrow j$. The set of nodes $j$ such that $i$ is path-connected to $j$ is called the **connected component** of $i$. A network is **connected** if it has only one connected component. 
+:::
 :::
 
 ::: {.callout-warning}
@@ -269,14 +291,19 @@ Intuitively, a disconnected network is fragmented into two or more pieces. Almos
 #### Geodesics and Graph Diameter
 
 ::: {.callout-note}
+::: {#def-geodesic-path}
+
+## Geodesic Paths
+
 The **length** of a walk is the number of edges it contains. A **geodesic path** (also called a **shortest path**) from $i$ to $j$ is a walk fom $i$ to $j$ of minimum length; i.e. a walk such that no other walk has shorter length. The length of a geodesic path is called the **(geodeisc) distance** between $i$ and $j$. If two nodes are not path-connected, their geodesic distance is undefined. 
+:::
 :::
 
 ```{r}
 #| message : FALSE 
 #| warning : FALSE 
 #| fig.align : 'center'
-#| out.width : 50%
+#| out.width : 60%
 #| cap-location: margin
 #| fig.cap : "A graph with 20 nodes and 40 edges. While it can be difficult to navigate through even small graphs, note that some nodes are clearly close together, while others are far apart. <br><br> A geodesic (shortest path) is shown between two selected nodes. <br><br>There is one node that is not connected to any of its neighbors, and its distance to them is undefined. As a result, this graph has undefined diameter."
 
@@ -313,7 +340,7 @@ The **diameter** of a graph is the longest length of geodesic paths across all p
 
 Another way to say this is that, in a connected graph, the diameter is the distance between the two nodes that are farthest away. 
 
-### Betweenness Centrality
+#### Betweenness Centrality
 
 How *important* is a node? We'll come back to this question several times in the course. The idea of geodesic paths allows us to consider one approach to this question: 
 
@@ -324,9 +351,15 @@ How *important* is a node? We'll come back to this question several times in the
 This idea leads us to the idea of betweenness centrality. 
 
 ::: {.callout-note}
+::: {#def-betweenness}
+
+## Betweenness Centrality
+
 The **betweenness centrality** $b_i$ of a node $i$ is the number of geodesic paths in the graph that pass through node $i$. 
 :::
+:::
 
+@fig-betweenness shows a network with nodes sized according to their betweenness centrality. 
 
 ```{r}
 #| message : FALSE 
@@ -335,7 +368,7 @@ The **betweenness centrality** $b_i$ of a node $i$ is the number of geodesic pat
 #| out.width : 80%
 #| cap-location: margin
 #| fig.cap : "The famous Zachary Karate Club network [@zachary1977information]. The size of each node reflects its betweenness centrality."
-
+#| label: fig-betweenness
 
 library(tidygraph)
 library(ggraph)
@@ -405,12 +438,13 @@ for scalar $\left|r \right| < 1$.
 We can use this result to compute $\mathbf{v}(\alpha)$. Provided that $\alpha$ is smaller than $\frac{1}{\left|\lambda\right|}$ for any eigenvalue $\lambda$ of $\mathbf{A}$, we have the *Katz centrality*. 
 
 ::: {.callout-note}
+::: {#def-katz}
 The **Katz centrality** [@katz1953new] of node $i$ with parameter $\alpha$ is the $i$th entry of the vector 
 $$
 \mathbf{v}(\alpha) = ((\mathbf{I}_n - \alpha\mathbf{A})^{-1}  - \mathbf{I}_n)\mathbf{1}_n\;. 
 $$
 :::
-
+:::
 
 ```{r}
 #| message : FALSE 
@@ -419,6 +453,7 @@ $$
 #| out.width : 80%
 #| cap-location: margin
 #| fig.cap : "The Zachary Karate Club network [@zachary1977information]. The size of each node reflects its Katz centrality with α = 0.05."
+#| label : fig-katz
 
 library(tidygraph)
 library(ggraph)
@@ -440,15 +475,242 @@ g %>%
     scale_size_continuous(range = c(3, 15))
 ```
 
-The Katz centrality leads to less dramatic results, while still highlighting nodes that appear to be "in the center" of the graph. 
+As shown in @fig-katz, the Katz centrality leads to less dramatic results, while still highlighting nodes that appear to be "in the center" of the graph. 
 
-### Other Useful Graph Measures 
+### Triadic Closure (Transitivity)
 
-#### Degree Distributions
+Think of two of your friends. Are they friends with each other? This kind of "coincidence" happens quite frequently in social networks. Let's look at two ways to quantify this effect. 
 
-#### Clustering
+In graph terms, when you think of two of your friends, you are thinking of two edges connected to you in your social network, and asking whether there exists a third edge that creates a *triangle*.  So, we have a situation like that shown in  @fig-transitivity.
 
-#### Cuts and Graph Partitioning
+::: {.column-margin}
+```{r}
+#| message : FALSE 
+#| warning : FALSE 
+#| fig.align : 'center'
+#| out.width : 70%
+#| fig.cap : "Triadic closure. The two solid edge form a *wedge* (a possible triangle). The dashed edge turns the *wedge* into a (realized) triangle."
+#| column: margin
+#| label: fig-transitivity
+
+library(ggraph)
+library(tidyverse)
+library(tidygraph)
+
+tbl_graph(
+    edges = tibble(
+        from = c(1, 1, 3), 
+        to = c(2, 3, 2),
+        q = c(FALSE, FALSE, TRUE)
+        )
+    ) %>% 
+    ggraph() + 
+    geom_edge_link(aes(edge_linetype = q), alpha = 0.6, edge_width = 3) + 
+    geom_node_point(pch = 21, fill = "#73b9ee", size = 15) + 
+    theme_void() + 
+    guides(edge_linetype = "none")
+```
+
+:::
+
+When the dotted line "closes the triangle," we often call this "closing the triangle.* The phrase *triadic closure,* also sometimes called *transitivity*, refers 
+to the existence of large numbers of closed triangles in many social networks. 
+
+How do we quantify triadic closure? There's a simple approach to this: 
+
+::: {.callout-note}
+::: {#def-local-clustering}
+
+## Local Clustering
+
+The **local clustering coefficient** $C_i$ measures the proportion of possible triangles connected to $i$ that are realized. If $i \sim j$ means "$i$ and $j$ are connected, then we can write this as 
+
+$$
+C_i = \frac{\sum_{j, \ell \sim i} a_{j\ell}}{\binom{k_i}{2}}
+$$
+
+*Remember: $k_i$ is the degree (number of neighbors) of node $i$*. 
+:::
+:::
+
+In this definition, the denominator is the number of pairs of neighbors of node $i$. We can think of this as counting the number of *possible* triangles. The numerator is then the number of *realized triangles*. The local clustering coefficient is always a number between 0 and 1. 
+
+::: {.callout-caution}
+**Exercise**: Write the numerator in terms of the adjacency matrix $\mathbf{A}$. 
+
+*Hint*: a triangle is a special kind of walk of length $3$. 
+:::
+
+The local clustering coefficient tells us about the rate of triadic closure around a specific node $i$. There is also a *global* clustering coefficient that quantifies the rate of triadic closure in the entire network. The idea is the same: it's the proportion of possible triangles that are actualized: 
+
+::: {.callout-note}
+::: {#def-global-clustering}
+
+## Global Clustering
+
+The **global clustering coefficient** of a graph is 
+$$
+\frac{\text{Number of triangles} \times 3}{\text{Number of wedges}}
+$$
+Here, a **wedge** is a possible triangle, like the solid lines shown in the figure above. 
+:::
+:::
+
+The reason for the factor of 3 in the numerator is that the same triangle can be formed from 3 different wedges.
+
+::: {.column-margin}
+cf. Newman p. 184
+:::
+
+::: {.callout-warning}
+It is **not** the case that the global clustering coefficient can be obtained by averaging the local clustering coefficients! 
+::: 
+
+The prevalence of triadic closure in many real-world networks motivated one of the first mega-papers in network science, which proposed a mathematical model of networks that included clustering [@watts1998collective]. A sample from this model is shown in @fig-small-world. This paper has now been cited 48,000 times over 24 years. 
+
+```{r}
+#| message : FALSE 
+#| warning : FALSE 
+#| fig.align : 'center'
+#| out.width : 80%
+#| cap-location: margin
+#| fig.cap : "A small network sampled from the small-world model of Watts and Strogatz [@watts1998collective]. This model generates graphs with high clustering coefficients. You can likely pick out a large number of triangles by eye."
+#| label: fig-small-world
+
+library(igraph)
+library(ggraph)
+
+g <- sample_smallworld(1, 20, 3, 0.05)
+
+g %>% 
+    ggraph() +
+    geom_edge_link(alpha = 0.2) + 
+    geom_node_point(pch = 21, fill = "#73b9ee", size = 6) + 
+    theme_void() + 
+    guides(size = "none")
+```
+
+
+
+### Community Structure and Graph Cuts
+
+Many networks display what is sometimes called **community structure**. There isn't really a formal definition of community structure, but it refers broadly to the idea that a graph can often be divided into multiple parts. Here's an example of a graph with community structure: 
+
+```{r}
+#| fig.cap: "A network with 20 nodes. This network displays one of many common properties in real-world networks, called *community structure*. In this case, the network is clustered into two densely interconnected 'communities' that are only loosely connected to each other. Community structure often accompanies phenomena such as echo chambers in online media."
+#| message : FALSE 
+#| warning : FALSE 
+#| fig.align : 'center'
+#| out.width : '60%'
+#| cap-location: margin 
+
+# R code
+library(tidygraph)
+library(ggraph)
+
+set.seed(1234)
+
+g <- play_islands(2, 10, 0.7, 2)
+
+g %>% 
+  ggraph() + 
+  geom_edge_link(alpha = 0.5) + 
+  geom_node_point(size = 7, pch = 21, fill = "#73b9ee", color = "black") + 
+  theme_void()
+```
+
+You might be able to visually separate this graph into two pieces. Heuristically, what we're looking for is lots of edges **within** each piece, but few edges **between** the pieces. 
+
+Let's formalize this a bit. 
+
+::: {.callout-note}
+::: {#def-clustering}
+
+## Clustering
+
+A **clustering** $(C_1,\ldots,C_\ell)$ of a graph is a partition of the nodes: 
+
+$$
+N = \bigcup_{j = 1}^{\ell} C_j\;, \quad C_j \cup C_{j'} = \emptyset\;.
+$$
+
+We'll write the cluster holding node $i$ as $c_i$. 
+
+:::
+:::
+
+*Note*: "clustering" here is confusingly and totally unrelated to the "clustering coefficients" from before. 
+
+::: {.callout-note}
+::: {#def-cut}
+
+## Cut Size
+
+The **cut size** of a clustering is the number of edges that connect nodes in different clusters: 
+
+$$
+\mathrm{Cut}(C_1,\ldots,C_\ell) = \frac{1}{2}\sum_{i \neq j} a_{ij}\mathbb{1}[c_i \neq c_j]
+$$
+:::
+:::
+
+The reason for the factor $1/2$ is that we don't need to count the edges $(i,j)$ and $(j,i)$ separately -- it's the same edge! 
+
+An important special case arises when we aim to partition a graph into two clusters. In this case, we can write the cut size in terms of our friend, the combinatorial graph Laplacian.
+
+Let $\mathbf{s} \in \mathbb{R}^n$ be the vector with entries
+
+$$
+s_i = \begin{cases}+1 &\quad i \in C_1 \\ -1 &\quad i \in C_2\end{cases}\;.
+$$
+
+
+
+::: {.callout-tip}
+::: {#thm-cut}
+
+## Laplacian Formula for Cuts
+
+We have $\mathrm{Cut}(C_1,C_2) = \frac{1}{4}\mathbf{s}^T\mathbf{L}\mathbf{s}$.
+:::
+:::
+
+::: {.callout-tip}
+::: {.proof}
+To prove this, let's start by just computing $\mathbf{x}^T\mathbf{L}\mathbf{x}$ for arbitrary $\mathbf{x} \in \mathbb{R}^n$. We need to recall the definition of $\mathbf{L}$ from @def-laplacian. 
+We have 
+$$
+\begin{aligned}
+\mathbf{x}^T\mathbf{L}\mathbf{x} &= \mathbf{x}^T(\mathbf{D} - \mathbf{A})\mathbf{x} \\ 
+&= \mathbf{x}^T\mathbf{D}\mathbf{x}^T - \mathbf{x}^T\mathbf{A}\mathbf{x} \\ 
+&= \sum_{i\in N} k_{i} x_i^2 - \sum_{i,j \in N} a_{ij}x_ix_j \\ 
+&= \frac{1}{2}\left(\sum_{i\in N} k_{i} x_i^2 - 2\sum_{i,j \in N} a_{ij}x_ix_j - \sum_{j\in N} k_{j} x_j^2\right) \\ 
+&= \frac{1}{2}\left(\sum_{i,j\in N} a_{ij} x_i^2 - 2\sum_{i,j \in N} a_{ij}x_ix_j - \sum_{i,j\in N} a_{ij} x_j^2\right) \\ 
+&= \frac{1}{2}\sum_{i,j \in N}a_{ij}(x_i - x_j)^2\;.
+\end{aligned}
+$$
+
+Let's use this formula to evaluate $\mathbf{s}^T\mathbf{L}\mathbf{s}$: 
+
+$$
+\begin{aligned}
+\mathbf{s}^T\mathbf{L}\mathbf{s} &= \sum_{i,j \in N}a_{ij}(s_i - s_j)^2 \\ 
+&= \sum_{i,j \in N}a_{ij}(s_i - s_j)^2 \\ 
+&= 4 \sum_{i,j \in N}a_{ij}\mathbb{1}[c_i \neq c_j]\;.
+\end{aligned}
+$$
+
+In that last line, we've used the fact that 
+$$
+(s_i - s_j)^2 = \begin{cases}
+    2^2 &\quad c_i \neq c_j \\ 
+    0 &\quad \text{othewrise}
+\end{cases} \quad = \mathbb{1}[c_i \neq c_j]\;.
+$$
+
+So, we're done! 
+:::
+:::
 
 
 ### Looking Ahead {.unnumbered}

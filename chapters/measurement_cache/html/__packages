@@ -1,6 +1,5 @@
 base
 tidygraph
-igraph
 ggplot2
 ggraph
 tidyverse
@@ -11,4 +10,5 @@ purrr
 dplyr
 stringr
 forcats
+igraph
 igraphdata
