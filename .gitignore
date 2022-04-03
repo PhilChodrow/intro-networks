@@ -1,12 +1,13 @@
-chapters
-!chapters/*.qmd
+/*
 
-syllabus
-!syllabus/*.qmd
+!*.qmd
 
-appendices
-!appendices/*.qmd
+!docs
 
-index_cache
+
+
+
 
 .DS_Store
+
+
