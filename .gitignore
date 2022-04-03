@@ -1,15 +1,12 @@
-*
-!docs
+chapters
 !chapters/*.qmd
+
+syllabus
 !syllabus/*.qmd
+
+appendices
 !appendices/*.qmd
 
-!.quarto
-!.gitattributes
-!.nojekyll
-!*.csl
-*.qmd
-*.bib
+index_cache
 
-
-/.quarto/
+.DS_Store
