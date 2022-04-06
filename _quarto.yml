@@ -40,6 +40,9 @@ format:
     # csl: chicago-fullnote-bibliography.csl
     callout-appearance: simple
     callout-icon: false
+    reference-location: margin
+    citation-location: margin
+    cap-location: margin
 
 execute: 
   cache: true

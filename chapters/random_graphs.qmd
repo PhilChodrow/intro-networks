@@ -1,3 +1,182 @@
 # Random Graphs: Erdős–Rényi
 
-Coming soon!
+A random graph is a probability distribution over graphs. In this set of lecture notes, we'll begin our exploration of several random graphs. 
+
+## Why Random Graphs?
+
+Why should we even study random graphs? There are a few reasons!
+
+### Random Graphs as Insightful Models
+
+Random graphs allow us to build our intuition and skills in the study of networks. In many simple random graphs, quantities of interest (clustering coefficients, diameters, etc) can be calculated with pencil and paper. This allows us to build mathematical insight into the structure of many real-world models, without the need for detailed simulations. 
+
+### Random Graphs as Mathematical Puzzles
+
+Many properties of even simple random graphs are still under investigation by research mathematicians. While some properties can be calculated simply, others require extremely sophisticated machinery in order to understand. There are many mathematicians who spend their careers studying random graphs, and their cousins, random matrices. 
+
+### Random Graphs as Null Hypotheses
+
+Suppose that you compute the global clustering coefficient (@def-global-clustering) of a graph and find it to be $0.31$. How do we interpret that? Is that high? Low? In this case, we should ask: *compared to what?* Random graphs allow us one way to make a comparison: that clustering coefficient is "high" if it's larger than the clustering coefficient in a suitably chosen, comparable random graph. How to choose a comparable random graph is an important question, and the answer is not always clear! 
+
+In this way, random graphs often serve as the *null hypothesis*, in exactly the same way you might have heard of the null hypothesis for other kinds of statistical tests. 
+
+### Random Graphs and Statistical Inference
+
+Many statistical algorithms for tasks like graph clustering, ranking, and prediction come from random graph models. The idea, generally speaking, is to imagine that we observe a graph, and then try to make the best educated guess possible about the model that generated that graph. This is classical statistical inference, and we'll see a few examples later in the course. 
+
+## The Erdős–Rényi Model
+
+The model of @erdHos1960evolution is the simplest and most fundamental model of a random graph. Our primary interest in the ER model is for mathematical insight and null modeling. The ER model is *mostly* understood in its major mathematical properties, and it's almost never used in statistical inference. [The ER model is, however, a building block of models that *are* used in statistical inference. The [stochastic blockmodel](https://en.wikipedia.org/wiki/Stochastic_block_model), for example, is often used for graph clustering and community detection. In its simplest form, it's a bunch of ER graphs glued together.]{.aside}
+
+::: {.callout-note}
+::: {#def-ER}
+
+## Erdős–Rényi Random Graph
+
+An *Erdős–Rényi random graph* with $n$ nodes and connection probability $p$, written $G(n,p)$, is a random graph constructed by placing an edge with probability $p$ between each pair of distinct nodes. 
+
+:::
+:::
+
+We can imagine visiting each possible pair of edges $(i,j)$ and flipping a coin with probability of heads $p$. If heads, we add $(i,j) \in E$; otherwise, we don't. 
+
+::: {.callout-caution}
+**Exercise**: Let $i$ be a fixed node in a $G(n,p)$ graph, and let $K_i$ be its (random) degree. Show that $K_i$ has binomial distribution with success probability $p$ and $n-1$ trials. 
+:::
+
+::: {.callout-caution}
+**Exercise**: Show that $\mathbb{E}[K_i] = p(n-1)$. 
+:::
+
+### Clustering Coefficient
+
+Recall that both local and global clustering coefficients were defined in terms of a ratio of realized triangles to possible triangles. 
+Analyzing ratios using probability theory can get tricky, but we can get a pretty reliable picture of things by computing the expectations of the numerator and denominator separately. 
+
+Let's take the global clustering coefficient (@def-global-clustering). For this, we need to compute the total number of triangles, and the total number of wedges. 
+
+How many triangles are there? Well, there are $\binom{n}{3}$ ways to choose 3 nodes from all the possibilities, and the probability that all three edges exist to form the triangle is $p^3$. 
+So, in expectation, there are $\binom{n}{3}p^3$ triangles in the graph. 
+
+How many wedges are there? Well, each triple of nodes contains three possible wedges, and the probability of any given wedge existing is $p^2$. 
+So, the expected number of wedges is $\binom{n}{3}p^2$. Our estimate for the expected clustering coefficient is that it should be *about* $p$, although we have been fast and loose with several mathematical details to arrive at this conclusion. 
+
+## Sparsity
+
+We are very often interested in the *sparse* Erdős–Rényi model. Intuitively, the idea of sparsity is that there are not very many edges in comparison to the number of nodes. 
+
+::: {.callout-note}
+::: {#def-sparse-ER}
+We say that a $G(n,p)$ graph is **sparse** when $p = c/(n-1)$ for some constant $c$. 
+:::
+:::
+
+A consequence of sparsity is that $\mathbb{E}[K_i] = c$; i.e. the expected degree of a node in sparse $G(n,p)$ is constant. When studying sparse $G(n,p)$, we are almost always interested in the case $n\rightarrow \infty$. 
+
+
+### Clustering
+
+What does this imply for our estimation of the global clustering coefficient from before? Well, we expect the global clustering coefficient to be *about* $p$, and if $p = c/(n-1)$, then $p \rightarrow 0$. 
+
+[The need to move beyond the ER model to develop sparse graphs with clustering coefficients was part of the motivation of @watts1998collective, a famous paper that introduced the "small world model."]{.aside}
+
+> Sparse Erdős–Rényi graphs have vanishing clustering coefficients. 
+
+### Cycles and Local Tree-Likeness
+
+::: {.callout-note}
+::: {#def-cycle}
+A **cycle** is a walk that does not repeat edges and ends at the same node that it begins. 
+:::
+:::
+
+A triangle is an example of a cycle of length $3$. 
+
+::: {.callout-tip}
+::: {#thm-rare-cycles}
+In the sparse $G(n,p)$ model, for any length $k$, the probability that there exists a cycle of length $k$ attached to node $i$ shrinks to 0 as $n \rightarrow \infty$. 
+:::
+:::
+
+You'll prove a generalization of @thm-rare-cycles in an upcoming homework problem. 
+
+Graphs in which cycles are very rare are often called *locally tree-like*. A tree is a graph without cycles; if cycles are very rare, then we can often use techniques that are normally guaranteed to only work on trees without running into (too much) trouble. 
+
+
+### Path Lengths
+
+How far apart are two nodes in $G(n,p)$? Again, exactly computing the length of geodesic paths involves some challenging mathematical detail. [See @riordan2010diameter and references therein.]{.aside} However, we can get a big-picture view of the situation by asking a slightly different question: 
+
+> Given two nodes $i$ and $j$, what is the expected number of paths of length $k$ between them?
+
+Call the number of $k$-paths between $i$ and $j$ $R(k)$. Let $r(k) = \mathbb{E}[R(k)]$. Let's estimate $r(k)$. 
+
+First, we know that $r(1) = p$. For higher values of $k$, we'll use the following idea: in order for there to be a path of length $k$ from $i$ to $j$, there must be a node $\ell$ such that: 
+
+- There exists a path from $i$ to $\ell$ of length $k-1$. In expectation, there are $r(k-1)$ of these. 
+- There exists a path from $\ell$ to $j$ of length $1$. This happens with probability $p$. 
+
+There are $n-2$ possibilities for $\ell$ (excluding $i$ and $j$), and so we obtain the  relation
+
+$$
+r(k) = (n-2)p r(k-1)\;. 
+$$
+
+Proceeding inductively and approximating $n-2 \approx n-1$ for $n$ large, we have the relation 
+
+$$
+r(k) \approx (n-1)^{k-1}p^{k-1}r(1) = c^{k-1}p
+$$ {#eq-path-expectation}
+
+in the sparse ER model. 
+
+Using this result, let's ask a new question: 
+
+> What path length $k$ do I need to allow to be confident that there's a path between nodes $i$ and $j$? 
+
+Well, suppose we want there to be $q$ paths. Then, we can solve $q = c^{k-1}p$ for $k$, which gives us: 
+
+$$
+\begin{aligned}
+q &= c^{k-1}p \\ 
+\log q &= (k-1)\log c + \log p \\ 
+\log q &= (k-1)\log c + \log c - \log n \\ 
+\frac{\log q + \log n}{\log c} &= k
+\end{aligned}
+$$
+
+Here, I've also approximated $\log n-1 \approx \log n$ for $n$ large. 
+
+So, supposing that I want there to be at least one path in expectation ($q = 1$), I need to allow $k = \frac{\log n}{\log c}$. This is pretty short, actually! For example, the population of the world is about $8\times 10^9$, and Newman estimates that an average individual knows around 1,000 other people; that is, $c = 10^3$ in the world social network. This seems a little high to me (maybe I'm antisocial), but the resulting value of $k$ here is around 3.3. 
+
+In other words, this calculation suggests that, if the world were an ER network, it would be the case that any two individuals would be pretty likely to have at least one path between them of length no longer than $4$. 
+
+More formal calculations regarding the diameter of the ER graph confirm that the diameter of the ER graph grows slowly as a function of $n$, even in relatively sparse cases. 
+
+### A Caveat
+
+If you spend some time looking at @eq-path-expectation, you might find yourself wondering:
+
+> Hey, what happens if $c \leq 1$?  
+
+Indeed, something *very* interesting happens here. 
+Let's assume $c < 1$ (i.e. we're ignoring the case $c = 1$), and estimate the expected number of paths between $i$ and $j$ of *any* length. Using @eq-path-expectation, we get 
+
+$$
+\mathbb{E}\left[\sum_{k = 1}^{\infty} R(k)\right] = \sum_{k = 1}^\infty c^{k-1}p = \sum_{k = 0}^\infty c^kp = \frac{p}{1-c}\;.
+$$
+
+If we now use Markov's inequality, we find that the probability that there is a path of *any* length between nodes $i$ and $j$ is no larger than 
+
+$$
+\frac{p}{1-c} = \frac{c}{(1-c)(n-1)}\rightarrow 0\;. 
+$$
+
+So, this suggests that, if $c < 1$, any two nodes are likely to be disconnected! On the other hand, if $c > 1$, we've argued that we can make $k$ large enough to have high probability of a path of length $k$ between those nodes. 
+
+So, what's special about $c = 1$? This question brings us to one of the first and most beautiful results in the theory of random graphs, and we'll discuss it in a coming section.  
+
+
+
+
+

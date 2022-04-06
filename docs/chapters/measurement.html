@@ -433,11 +433,11 @@ a_{ij} =
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
-<div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-paired-cliques" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<div class="no-row-height column-margin column-container page-columns page-full"><div class="cell-output-display page-columns page-full">
+<div id="fig-paired-cliques" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="measurement_files/figure-html/fig-paired-cliques-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">Figure 1.1: A visualization of the ‘paired cliques’ example with 10 total nodes. Nodes in the first clique are represented by orange circles, and nodes in the second clique by blue squares.</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 1.1: A visualization of the ‘paired cliques’ example with 10 total nodes. Nodes in the first clique are represented by orange circles, and nodes in the second clique by blue squares.</figcaption><p></p>
 </figure>
 </div>
 </div></div></div>
@@ -694,7 +694,7 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 </div>
 </div>
 <p><a href="#fig-betweenness">Figure&nbsp;<span>1.2</span></a> shows a network with nodes sized according to their betweenness centrality.</p>
-<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/fig-betweenness_3dde79daa33e2aeb06a4f89d081994f7">
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/fig-betweenness_8ce051dfe07561a3a79d06605dc9d274">
 <details>
 <summary>Code</summary>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span>
@@ -824,9 +824,7 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 <h3 class="anchored" data-anchor-id="triadic-closure-transitivity">Triadic Closure (Transitivity)</h3>
 <p>Think of two of your friends. Are they friends with each other? This kind of “coincidence” happens quite frequently in social networks. Let’s look at two ways to quantify this effect.</p>
 <p>In graph terms, when you think of two of your friends, you are thinking of two edges connected to you in your social network, and asking whether there exists a third edge that creates a <em>triangle</em>. So, we have a situation like that shown in <a href="#fig-transitivity">Figure&nbsp;<span>1.4</span></a>.</p>
-
-<div class="no-row-height column-margin column-container"><div class="">
-<div class="cell" data-layout-align="center" data-hash="measurement_cache/html/fig-transitivity_c0111d26953589b86c822e307c0ae592">
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/fig-transitivity_6ba636cce7da7166cade4e7e85bd7ce3">
 <details>
 <summary>Code</summary>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
@@ -846,16 +844,16 @@ k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span> </span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">edge_linetype =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<div id="fig-transitivity" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="measurement_files/figure-html/fig-transitivity-1.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">Figure 1.4: Triadic closure. The two solid edge form a <em>wedge</em> (a possible triangle). The dashed edge turns the <em>wedge</em> into a (realized) triangle.</figcaption><p></p>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-transitivity" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="measurement_files/figure-html/fig-transitivity-1.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 1.4: Triadic closure. The two solid edge form a <em>wedge</em> (a possible triangle). The dashed edge turns the <em>wedge</em> into a (realized) triangle.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-</div></div><p>When the dotted line “closes the triangle,” we often call this “closing the triangle.* The phrase <em>triadic closure,</em> also sometimes called <em>transitivity</em>, refers to the existence of large numbers of closed triangles in many social networks.</p>
+<p>When the dotted line “closes the triangle,” we often call this “closing the triangle.* The phrase <em>triadic closure,</em> also sometimes called <em>transitivity</em>, refers to the existence of large numbers of closed triangles in many social networks.</p>
 <p>How do we quantify triadic closure? There’s a simple approach to this:</p>
 <div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
@@ -916,7 +914,7 @@ C_i = \frac{\sum_{j, \ell \sim i} a_{j\ell}}{\binom{k_i}{2}}
 </div>
 </div>
 <p>The prevalence of triadic closure in many real-world networks motivated one of the first mega-papers in network science, which proposed a mathematical model of networks that included clustering <span class="citation" data-cites="watts1998collective">(<a href="../appendices/references.html#ref-watts1998collective" role="doc-biblioref">Watts and Strogatz 1998</a>)</span>. A sample from this model is shown in <a href="#fig-small-world">Figure&nbsp;<span>1.5</span></a>. This paper has now been cited 48,000 times over 24 years.</p>
-<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/fig-small-world_c6b52700ea8b7db067ef607ceca49f7b">
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/fig-small-world_05b3d4930faa741f3179067c7f2d224a">
 <details>
 <summary>Code</summary>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
@@ -935,7 +933,7 @@ C_i = \frac{\sum_{j, \ell \sim i} a_{j\ell}}{\binom{k_i}{2}}
 <div id="fig-small-world" class="quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="measurement_files/figure-html/fig-small-world-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 1.5: A small network sampled from the small-world model of Watts and Strogatz <span class="citation" data-cites="watts1998collective">(<a href="../appendices/references.html#ref-watts1998collective" role="doc-biblioref">Watts and Strogatz 1998</a>)</span>. This model generates graphs with high clustering coefficients. You can likely pick out a large number of triangles by eye.</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 1.5: A small network sampled from the small-world model of <span class="citation" data-cites="watts1998collective">Watts and Strogatz (<a href="../appendices/references.html#ref-watts1998collective" role="doc-biblioref">1998</a>)</span>. This model generates graphs with high clustering coefficients. You can likely pick out a large number of triangles by eye.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -981,7 +979,7 @@ C_i = \frac{\sum_{j, \ell \sim i} a_{j\ell}}{\binom{k_i}{2}}
 <div id="def-clustering" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1.12 (Clustering) </strong></span>A <strong>clustering</strong> <span class="math inline">\((C_1,\ldots,C_\ell)\)</span> of a graph is a partition of the nodes:</p>
 <p><span class="math display">\[
-N = \bigcup_{j = 1}^{\ell} C_j\;, \quad C_j \cup C_{j'} = \emptyset\;.
+N = \bigcup_{j = 1}^{\ell} C_j\;, \quad C_j \cap C_{j'} = \emptyset\;.
 \]</span></p>
 <p>We’ll write the cluster holding node <span class="math inline">\(i\)</span> as <span class="math inline">\(c_i\)</span>.</p>
 </div>
@@ -1051,7 +1049,7 @@ s_i = \begin{cases}+1 &amp;\quad i \in C_1 \\ -1 &amp;\quad i \in C_2\end{cases}
 <p>In that last line, we’ve used the fact that <span class="math display">\[
 (s_i - s_j)^2 = \begin{cases}
     2^2 &amp;\quad c_i \neq c_j \\
-    0 &amp;\quad \text{othewrise}
+    0 &amp;\quad \text{otherwise}
 \end{cases} \quad = \mathbb{1}[c_i \neq c_j]\;.
 \]</span></p>
 <p>So, we’re done!</p>

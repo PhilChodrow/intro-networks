@@ -366,7 +366,6 @@ The **betweenness centrality** $b_i$ of a node $i$ is the number of geodesic pat
 #| warning : FALSE 
 #| fig.align : 'center'
 #| out.width : 80%
-#| cap-location: margin
 #| fig.cap : "The famous Zachary Karate Club network [@zachary1977information]. The size of each node reflects its betweenness centrality."
 #| label: fig-betweenness
 
@@ -483,14 +482,13 @@ Think of two of your friends. Are they friends with each other? This kind of "co
 
 In graph terms, when you think of two of your friends, you are thinking of two edges connected to you in your social network, and asking whether there exists a third edge that creates a *triangle*.  So, we have a situation like that shown in  @fig-transitivity.
 
-::: {.column-margin}
+
 ```{r}
 #| message : FALSE 
 #| warning : FALSE 
 #| fig.align : 'center'
-#| out.width : 70%
+#| out.width : 30%
 #| fig.cap : "Triadic closure. The two solid edge form a *wedge* (a possible triangle). The dashed edge turns the *wedge* into a (realized) triangle."
-#| column: margin
 #| label: fig-transitivity
 
 library(ggraph)
@@ -511,7 +509,6 @@ tbl_graph(
     guides(edge_linetype = "none")
 ```
 
-:::
 
 When the dotted line "closes the triangle," we often call this "closing the triangle.* The phrase *triadic closure,* also sometimes called *transitivity*, refers 
 to the existence of large numbers of closed triangles in many social networks. 
@@ -574,7 +571,7 @@ The prevalence of triadic closure in many real-world networks motivated one of t
 #| fig.align : 'center'
 #| out.width : 80%
 #| cap-location: margin
-#| fig.cap : "A small network sampled from the small-world model of Watts and Strogatz [@watts1998collective]. This model generates graphs with high clustering coefficients. You can likely pick out a large number of triangles by eye."
+#| fig.cap : "A small network sampled from the small-world model of @watts1998collective. This model generates graphs with high clustering coefficients. You can likely pick out a large number of triangles by eye."
 #| label: fig-small-world
 
 library(igraph)
@@ -631,7 +628,7 @@ Let's formalize this a bit.
 A **clustering** $(C_1,\ldots,C_\ell)$ of a graph is a partition of the nodes: 
 
 $$
-N = \bigcup_{j = 1}^{\ell} C_j\;, \quad C_j \cup C_{j'} = \emptyset\;.
+N = \bigcup_{j = 1}^{\ell} C_j\;, \quad C_j \cap C_{j'} = \emptyset\;.
 $$
 
 We'll write the cluster holding node $i$ as $c_i$. 
@@ -704,7 +701,7 @@ In that last line, we've used the fact that
 $$
 (s_i - s_j)^2 = \begin{cases}
     2^2 &\quad c_i \neq c_j \\ 
-    0 &\quad \text{othewrise}
+    0 &\quad \text{otherwise}
 \end{cases} \quad = \mathbb{1}[c_i \neq c_j]\;.
 $$
 

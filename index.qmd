@@ -16,7 +16,6 @@ Here's an example of a simple network. The dots represent individuals, and are c
 #| warning : FALSE 
 #| fig.align : 'center'
 #| out.width : '50%'
-#| cap-location: margin 
 
 # R code
 library(tidygraph)
