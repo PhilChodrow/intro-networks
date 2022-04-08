@@ -17,7 +17,6 @@ book:
     - part: chapters/intro.qmd
       chapters: 
         - chapters/measurement.qmd
-        - chapters/random_graph_tools.qmd
         - chapters/random_graphs.qmd
         - chapters/ranking_centrality.qmd
         - chapters/clustering_community.qmd

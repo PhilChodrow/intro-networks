@@ -116,11 +116,16 @@ First, we know that $r(1) = p$. For higher values of $k$, we'll use the followin
 - There exists a path from $i$ to $\ell$ of length $k-1$. In expectation, there are $r(k-1)$ of these. 
 - There exists a path from $\ell$ to $j$ of length $1$. This happens with probability $p$. 
 
-There are $n-2$ possibilities for $\ell$ (excluding $i$ and $j$), and so we obtain the  relation
+There are $n-2$ possibilities for $\ell$ (excluding $i$ and $j$), and so we obtain the approximate relation
 
 $$
-r(k) = (n-2)p r(k-1)\;. 
+r(k) \approx (n-2)p r(k-1)\;. 
 $$
+
+
+:::{.callout-warning}
+Why is this an approximation? Well, some of the paths between $i$ and $\ell$ that are counted in $r(k-1)$ could actually include the edge $(j, \ell)$ *already*. An example is $(i,j), (j,\ell)$. In this case, the presence of edge $(j,\ell)$ is not independent of the presence of the path between $i$ and $\ell$. The derivation above implicitly treats these two events as independent. Again, because *cycles are rare in large, sparse ER*, this effect is small when $k$ is small. 
+:::
 
 Proceeding inductively and approximating $n-2 \approx n-1$ for $n$ large, we have the relation 
 
@@ -174,7 +179,129 @@ $$
 
 So, this suggests that, if $c < 1$, any two nodes are likely to be disconnected! On the other hand, if $c > 1$, we've argued that we can make $k$ large enough to have high probability of a path of length $k$ between those nodes. 
 
-So, what's special about $c = 1$? This question brings us to one of the first and most beautiful results in the theory of random graphs, and we'll discuss it in a coming section.  
+So, what's special about $c = 1$? This question brings us to one of the first and most beautiful results in the theory of random graphs. To get there, let's study in a bit more detail the sizes of the *connected components* of the ER graph. 
+
+## Component Sizes and the Branching Process Approximation
+
+We're now going to ask ourselves about the size of a "typical" component in the Erdős–Rényi model. In particular, we're going to be interested in whether there exists a component that fills up "most" of the graph, or whether components tend to be vanishingly small in relation to the overall graph size. 
+
+Our first tool for thinking about this question is the *branching process approximation.* Informally, a branching process is a process of *random generational growth*. We'll get to a formal mathematical definition in a moment, but the easiest way to get insight is to look at a diagram: 
+
+
+```{r}
+#| echo: false
+#| out.width: 70%
+#| cap-location: margin
+#| fig.cap: "[Image source](http://mytechroad.com/markov-chain-branching-process/)."
+knitr::include_graphics("http://1.bp.blogspot.com/-Y59SK92Nd0c/VIoqelzfc8I/AAAAAAAAAdA/XAQB5yDStUc/s1600/eg1.PNG")
+```
+
+We start with a single entity, $X_0$. Then, $X_0$ has a random number of "offspring": $X_1$ in total. Then, each of those $X_1$ offspring has some offspring of their own; the total number of these offspring is $X_2$. The process continues infinitely, although there is always a chance that at some point no more offspring are produced. In this case, we often say that the process "dies out."  
+
+
+::: {.column-margin}
+Some of this exposition in this section draws on [these notes](https://www.stat.berkeley.edu/users/aldous/Networks/lec2.pdf) by David Aldous. 
+:::
+
+
+::: {.callout-note}
+::: {#def-branching-process}
+
+##  Branching Process
+
+Let $p$ be a probability distribution on $\mathbb{Z}$, called the **offspring distribution**.  
+
+A **branching process** with distribution $p$ is a sequence of random variables $X_0, X_1,,X_2\ldots$ such that $X_0 = 1$ and, for $t \geq 1$,  
+
+$$
+X_t = \sum_{i = 1}^{X_{t-1}} Y_i\;,
+$$
+
+where each $Y_i$ is distributed i.i.d. according to $p$. 
+:::
+:::
+
+::: {.column-margin}
+Technically, this is a *Galton-Watson* branching process, named after the two authors who first proposed it [@watson1875probability]. <br> <br> **History note**: Galton, one of the founders of modern statistics, was a eugenicist. The cited paper is explicit about its eugenicist motivation: the guiding question was about whether certain family names associated with well-to-do aristocrats were giving way to less elite surnames. 
+:::
+
+### Application to Erdős–Rényi 
+
+Branching processes create *trees* -- graphs without cycles. The reason that branching processes are helpful when thinking about Erdős–Rényi models is that *cycles are rare in Erdős–Rényi random graphs*. So, if we can understand the behavior of branching processes, then we can learn something about the Erdős–Rényi random graph as well. 
+
+Here's the particular form of the branching process approximation that we will use: 
+
+
+:::{.callout-note}
+:::{#def-branching-approx}
+
+## Branching Process Approximation for ER Component Sizes
+
+Sample a single node $j$ at random from a large, sparse ER graph  with mean degree $c$, and let $S$ be the size (number of nodes) of the component in which $j$ lies. Note that $S$ is random: it depends both on $j$ and on the realization of the ER graph. 
+
+Then, $S$ is distributed approximately as $T$, where $T = \sum_{i = 0}^{\infty}X_t$ is the total number of offspring in a GW branching process with offspring distribution $\text{Poisson}(c)$. 
+:::
+:::
+
+The idea behind this approximation is: 
+
+- We start at $j$, which has $\text{Poisson}(c)$ (as you proved in HW). 
+- Each of these neighbors also has $\text{Poisson}(c)$ *new* neighbors, and so on. 
+- We keep visiting new neighbors until we run out, and add up the number of neighbors we've visited to obtain $S$.  
+- Since *cycles are rare in ER*, we are unlikely to double-count any nodes (doing so would create a cycle), and so this whole process *also* approximately describes $T$ in a branching process with a $\text{Poisson}(c)$ offpsring distribution. 
+
+:::{.callout-important}
+**Exercise**: In the second generation, we get to a new node by following an edge. For that reason, shouldn't the number of *new* edges be $\text{Poisson}(c-1)$ rather than $\text{Poisson}(c-1)$? Why or why not? 
+:::
+
+### The Subcritical Case
+
+The mean of a $\text{Poisson}(c)$ random variable is again $c$. As you'll show in homework, this implies that $X_t$, the number of offspring in generation $t$, satisfies $\mathbb{E}[X_t] = c^{t}$. It follows that, when $c < 1$, $\mathbb{E}[T] = \frac{1}{1-c}$. 
+
+Now using Markov's inequality, we obtain the following results: 
+
+::: {.callout-tip}
+
+In a $\text{Poisson}(c)$ branching process with $c < 1$, 
+$$\mathbb{P}(X_t > 0) \leq c^t\;.$$ 
+:::
+
+So, the probability that the branching process hasn't yet "died out" decays exponentially with timestep $t$. In other words, the branching process becomes very likely to die out very quickly. 
+
+::: {.callout-tip}
+
+In a $\text{Poisson}(c)$ branching process with $c < 1$, 
+$$\mathbb{P}(T > a) \leq \frac{1}{a}\frac{1}{1-c}$$
+:::
+
+In particular, for $a$ very large, we are guaranteed that $\mathbb{P}(T > a)$ is very small. 
+
+Summing up, when $c < 1$, the GW branching process dies out quickly and contains a relatively small number of nodes: $\frac{1}{1-c}$ in expectation. [In this setting, the branching process is called *subcritical*.]{.aside}
+
+#### Back to ER
+
+If we now translate back to the Erdős–Rényi random graph, the branching process approximation now suggests the following heuristic: 
+
+::: {.callout-note}
+**Heuristic**: In a sparse ER random graph with mean $c < 1$, the expected size of a component containing a randomly selected node is roughly $\frac{1}{1-c}$. 
+
+In particular, since this quantity is independent of $n$, we find that the *fraction* of the graph occupied by this component is $\frac{1}{n}\frac{1}{1-c}$ and therefore vanishes as $n\rightarrow \infty$. 
+:::
+
+For this reason, we say that subcritical ER contains only *small* connected components, in the sense that each component contains approximately 0\% of the graph as $n$ grows large. 
+
+This explains our result from earlier about path lengths. The probability that any two nodes have a path between them is the same as the probability that they are *on the same connected component*. But if every connected component is small, then the probability that two nodes occupy the same one is vanishes. 
+
+### The Giant Component
+
+
+
+
+
+
+
+
+
 
 
 
