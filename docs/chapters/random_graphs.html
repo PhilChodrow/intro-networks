@@ -11,6 +11,69 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
 
   <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -517,18 +580,169 @@ X_t = \sum_{i = 1}^{X_{t-1}} Y_i\;,
 <div class="callout-body-container">
 <p><strong>Heuristic</strong>: In a sparse ER random graph with mean <span class="math inline">\(c &lt; 1\)</span>, the expected size of a component containing a randomly selected node is roughly <span class="math inline">\(\frac{1}{1-c}\)</span>.</p>
 <p>In particular, since this quantity is independent of <span class="math inline">\(n\)</span>, we find that the <em>fraction</em> of the graph occupied by this component is <span class="math inline">\(\frac{1}{n}\frac{1}{1-c}\)</span> and therefore vanishes as <span class="math inline">\(n\rightarrow \infty\)</span>.</p>
+<p>We can also turn this into a statement about probabilities: Markov’s inequality implies that, if <span class="math inline">\(S\)</span> is the size of a component containing a randomly selected node,</p>
+<p><span class="math display">\[
+\mathbb{P}(S/n &gt; a) \rightarrow 0
+\]</span></p>
+<p>for any constant <span class="math inline">\(a &gt; 0\)</span>. In other words, for large <span class="math inline">\(n\)</span>, the largest component is always vanishingly small in relation to the graph as a whole.</p>
 </div>
 </div>
 </div>
+<p>Let’s check this experimentally. The following code block computes the size of the component in an ER graph containing a random node, and averages the result across many realizations. The experimental result is quite close to the theoretical prediction.</p>
+<div class="cell" data-hash="random_graphs_cache/html/unnamed-chunk-4_2c6b50090f1bd7957bf08e0fe44f0b01">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> component_size_of_node(n, c):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.fast_gnp_random_graph(n, c<span class="op">/</span>n)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(nx.node_connected_component(G, <span class="dv">1</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="fl">0.8</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sizes <span class="op">=</span> [component_size_of_node(<span class="dv">5000</span>, c) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>)]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">Average over experiments is </span><span class="sc">{</span>np<span class="sc">.</span>mean(sizes)<span class="sc">:.2f}</span><span class="ss">.</span><span class="ch">\n</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">Theoretical expectation is </span><span class="sc">{</span><span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>c)<span class="sc">:.2f}</span><span class="ss">.</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-stdout">
+<pre><code>
+Average over experiments is 4.86.
+
+Theoretical expectation is 5.00.</code></pre>
+</div>
+</div>
+<p>Note that the expected (and realized) component size is very small, even though the graph contains 5,000 nodes!</p>
 <p>For this reason, we say that subcritical ER contains only <em>small</em> connected components, in the sense that each component contains approximately 0% of the graph as <span class="math inline">\(n\)</span> grows large.</p>
 <p>This explains our result from earlier about path lengths. The probability that any two nodes have a path between them is the same as the probability that they are <em>on the same connected component</em>. But if every connected component is small, then the probability that two nodes occupy the same one is vanishes.</p>
 </section>
 </section>
-<section id="the-giant-component" class="level3">
+<section id="the-giant-component" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="the-giant-component">The Giant Component</h3>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-giant-component" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.6 (Giant Component) </strong></span>We say that <span class="math inline">\(G(n,p)\)</span> has a <strong>giant component</strong> if <span class="math display">\[
+\mathbb{P}(S/n &gt; a) \rightarrow b
+\]</span> for some constant <span class="math inline">\(b &gt; 0\)</span>.</p>
+<p>Intuitively, this means that there is a possibility of a connected component that takes up a nonzero fraction of the graph.</p>
+</div>
+</div>
+</div>
+</div>
+<p>So far, we’ve argued using the branching process approximation that there is no giant component in the Erdős–Rényi model with <span class="math inline">\(c &lt; 1\)</span>. The theory of branching processes also suggests to us that there <em>could</em> be a giant component when <span class="math inline">\(c &gt; 1\)</span>.</p>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="aside">The proof of this fact is usually done in terms of <em>generating functions</em> and is beyond our scope, but you can <a href="https://en.wikipedia.org/wiki/Branching_process#Extinction_problem_for_a_Galton_Watson_process">check Wikipedia</a> for an outline.</span></div></div>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Fact</strong>: when <span class="math inline">\(c &gt; 1\)</span>, there is a nonzero probability that the <span class="math inline">\(\text{Poisson}(c)\)</span> branching process continues forever; that is, never goes extinct.</p>
+</div>
+</div>
+</div>
+<div class="page-columns page-full"><p>Using our correspondence between components of the ER model and branching processes, this suggests that, if we pick a random node, the component it is in has the potential to be very large. In fact (and this requires some advanced probability to prove formally), when <span class="math inline">\(c &gt; 1\)</span>, there <em>is</em> a giant component. This is our first example of a phase transition. </p><div class="no-row-height column-margin column-container"><span class="aside">It is also possible to prove that, with high probability, there is only one giant component; Newman does this in 11.5.1.</span></div></div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-giant-component" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.7 (Phase Transition) </strong></span></p>
+<p>A <strong>phase transition</strong> is a qualitative change in response to a small variation in a quantitative parameter.</p>
+</div>
+</div>
+</div>
+</div>
+<p>Examples of phase transitions include freezing, in which a liquid undergoes a qualitative change into a solid in response to a small variation in temperature.</p>
+<section id="size-of-the-giant-component" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="size-of-the-giant-component">Size of the Giant Component</h4>
+<div class="page-columns page-full"><p>Perhaps surprisingly, while it’s difficult to prove that there is a giant component, it’s not hard at all to estimate its size. </p><div class="no-row-height column-margin column-container"><span class="aside">This argument is reproduced from Newman, pages 349-350</span></div></div>
+<p>Let <span class="math inline">\(S\)</span> be the size of the giant component in an Erdős–Rényi random graph, assuming there is one. Then, <span class="math inline">\(s = S/n\)</span> is the probability that a randomly selected node is in the giant component. Let <span class="math inline">\(u = 1 - s\)</span> be the probability that a given node is <em>not</em> in the giant component.</p>
+<p>Let’s take a random node <span class="math inline">\(i\)</span>, and ask it the probability that it’s in the giant component. Well, one answer to that question is just “<span class="math inline">\(u\)</span>.” On the other hand, we can <em>also</em> answer that question by looking at <span class="math inline">\(i\)</span>’s neighbors. If <span class="math inline">\(i\)</span> is not in the giant component, then it can’t be connected to any node that is in the giant component. So, for each other node <span class="math inline">\(j\neq i\)</span>, it must be the case that either:</p>
+<ol type="1">
+<li><span class="math inline">\(i\)</span> is not connected to <span class="math inline">\(j\)</span>. This happens with probability <span class="math inline">\(1-p\)</span>.</li>
+<li><span class="math inline">\(i\)</span> is connected to <span class="math inline">\(j\)</span>, but <span class="math inline">\(j\)</span> is not in the giant component either. <span class="math inline">\(i\)</span> is connected to <span class="math inline">\(j\)</span> with probability <span class="math inline">\(p\)</span>, and <span class="math inline">\(j\)</span> is not in the giant component with probability <span class="math inline">\(u\)</span>.</li>
+</ol>
+<p>There are <span class="math inline">\(n-1\)</span> nodes other than <span class="math inline">\(i\)</span>, and so the probability that <span class="math inline">\(i\)</span> is not connected to any other node in the giant component is <span class="math inline">\((1 - p + pu)^{n-1}\)</span>. We therefore have the equation</p>
+<p><span class="math display">\[
+u = (1 - p + pu)^{n-1}\;.
+\]</span></p>
+<p>Let’s take the righthand side and use <span class="math inline">\(p = c/(n-1)\)</span>: <span class="math display">\[
+\begin{aligned}
+    u &amp;= (1 - p(1-u))^{n-1} \\
+      &amp;= \left(1 - \frac{c(1-u)}{n-1}\right)^{n-1}\;.
+\end{aligned}
+\]</span> This is a good time to go back to precalculus and remember the limit definition of the function <span class="math inline">\(e^x\)</span>: <span class="math display">\[
+e^x = \lim_{n \rightarrow \infty}\left(1 + \frac{x}{n}\right)^{n}\;.
+\]</span> Since we are allowing <span class="math inline">\(n\)</span> to grow large in our application, we approximate</p>
+<p><span class="math display">\[
+u \approx e^{-c(1-u)}\;.
+\]</span> So, now we have a description of the fraction of nodes that <em>aren’t</em> in the giant component. We can get a description of how many nodes <em>are</em> in the giant component by substituting <span class="math inline">\(s = 1-u\)</span>, after which we get the equation we’re really after: <span id="eq-giant-component-size"><span class="math display">\[
+s = 1- e^{-cs}
+\qquad(2.2)\]</span></span></p>
+<p>This equation doesn’t have a closed-form solution for <span class="math inline">\(s\)</span>, but we can still plot it and compare the result to simulations (<a href="#fig-giant-component">Figure&nbsp;<span>2.1</span></a>). Not bad!</p>
+<div class="cell page-columns page-full" data-hash="random_graphs_cache/html/fig-giant-component_f06054ed5f81a0aa2add175a487c523d">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># experiment: compute the size of the largest connected </span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># component as a function of graph size for a range of mean degrees. </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> largest_component(n, p):</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.fast_gnp_random_graph(n, p)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    S <span class="op">=</span> <span class="bu">max</span>(nx.connected_components(G), key<span class="op">=</span><span class="bu">len</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(S) <span class="op">/</span> n</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">50000</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> np.repeat(np.linspace(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="dv">11</span>), <span class="dv">10</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> np.array([largest_component(n, c<span class="op">/</span>n) <span class="cf">for</span> c <span class="kw">in</span> C])</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># theory: prediction based on Newman 11.16</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">.001</span>, <span class="fl">.6</span>, <span class="dv">101</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>C_theory <span class="op">=</span> <span class="op">-</span>np.log(<span class="dv">1</span><span class="op">-</span>S)<span class="op">/</span>S</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the results to compare</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.plot(C_theory, </span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>         S, </span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>         color <span class="op">=</span> <span class="st">"black"</span>, </span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>         label <span class="op">=</span> <span class="st">"Theoretical prediction"</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>plt.scatter(C, </span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            U, </span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            label <span class="op">=</span> <span class="st">"Experiment"</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>plt.gca().<span class="bu">set</span>(xlabel <span class="op">=</span> <span class="st">"Mean degree"</span>, </span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>              ylabel <span class="op">=</span> <span class="st">"Proportion of graph in largest component"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-giant-component" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="random_graphs_files/figure-html/fig-giant-component-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 2.1: Each point gives the fraction of an ER graph with 50,000 nodes occupied by the largest component. The mean degree is on the horizontal axis. The black line gives the theoretical prediction of <a href="#eq-giant-component-size">Equation&nbsp;<span>2.2</span></a>.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 
+</section>
 </section>
 </section>
 </main> <!-- /main -->
