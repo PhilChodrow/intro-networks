@@ -373,6 +373,42 @@
 <blockquote class="blockquote">
 <p>Sparse Erdős–Rényi graphs have vanishing clustering coefficients.</p>
 </blockquote>
+<p><a href="#fig-clustering-decay">Figure&nbsp;<span>2.1</span></a> shows how the global clustering coefficient of a sparse Erdős–Rényi random graph decays as we increase <span class="math inline">\(n\)</span>. Although the estimate that the global clustering coefficient should be equal to <span class="math inline">\(p\)</span> was somewhat informal, experimentally it works quite well.</p>
+<div class="cell page-columns page-full" data-hash="random_graphs_cache/html/fig-clustering-decay_73d20f34697790c2e2ca9165f528becf">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> np.repeat(<span class="dv">2</span><span class="op">**</span>np.arange(<span class="dv">5</span>, <span class="dv">15</span>), <span class="dv">10</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> global_clustering(n, c):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.fast_gnp_random_graph(n, c<span class="op">/</span>(n<span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> nx.transitivity(G)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> [global_clustering(n, c) <span class="cf">for</span> n <span class="kw">in</span> N]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>theory <span class="op">=</span> ax.plot(N, c<span class="op">/</span>(N<span class="op">-</span><span class="dv">1</span>), color <span class="op">=</span> <span class="st">"black"</span>, label <span class="op">=</span> <span class="st">"Estimate"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>exp <span class="op">=</span> ax.scatter(N, T, label <span class="op">=</span> <span class="st">"Experiments"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>semil <span class="op">=</span> ax.semilogx()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> ax.<span class="bu">set</span>(xlabel <span class="op">=</span> <span class="st">"Number of nodes"</span>, </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>       ylabel <span class="op">=</span> <span class="st">"Global clustering coefficient"</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-clustering-decay" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="random_graphs_files/figure-html/fig-clustering-decay-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 2.1: Each point gives the global clustering coefficient of an ER graph with mean degree <span class="math inline">\(c = 5\)</span> and specified number of nodes. The black line gives the estimate <span class="math inline">\(T = p = c/(n-1)\)</span> for the clustering coefficient that we computed earlier. The function <code>nx.fast_gnp_random_graph()</code> is a special function from NetworkX for generating ER random graphs quickly; you’ll learn about how it works in an upcoming homework assignment.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="cycles-and-local-tree-likeness" class="level3">
 <h3 class="anchored" data-anchor-id="cycles-and-local-tree-likeness">Cycles and Local Tree-Likeness</h3>
@@ -477,7 +513,7 @@ q &amp;= c^{k-1}p \\
 <h2 data-number="2.4" class="anchored" data-anchor-id="component-sizes-and-the-branching-process-approximation"><span class="header-section-number">2.4</span> Component Sizes and the Branching Process Approximation</h2>
 <p>We’re now going to ask ourselves about the size of a “typical” component in the Erdős–Rényi model. In particular, we’re going to be interested in whether there exists a component that fills up “most” of the graph, or whether components tend to be vanishingly small in relation to the overall graph size.</p>
 <p>Our first tool for thinking about this question is the <em>branching process approximation.</em> Informally, a branching process is a process of <em>random generational growth</em>. We’ll get to a formal mathematical definition in a moment, but the easiest way to get insight is to look at a diagram:</p>
-<div class="cell page-columns page-full" data-hash="random_graphs_cache/html/unnamed-chunk-2_37588aa65e8a1cee65f4b6d2990a2041">
+<div class="cell page-columns page-full" data-hash="random_graphs_cache/html/unnamed-chunk-3_ff940a46daf59fb4aeaebbc2b1a7f8d6">
 <div class="cell-output-display page-columns page-full">
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -594,29 +630,29 @@ X_t = \sum_{i = 1}^{X_{t-1}} Y_i\;,
 </div>
 </div>
 <p>Let’s check this experimentally. The following code block computes the size of the component in an ER graph containing a random node, and averages the result across many realizations. The experimental result is quite close to the theoretical prediction.</p>
-<div class="cell" data-hash="random_graphs_cache/html/unnamed-chunk-4_2c6b50090f1bd7957bf08e0fe44f0b01">
+<div class="cell" data-hash="random_graphs_cache/html/unnamed-chunk-5_5c2f16b08ee03b43e7ea93205c3c0434">
 <details>
 <summary>Code</summary>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> component_size_of_node(n, c):</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.fast_gnp_random_graph(n, c<span class="op">/</span>n)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(nx.node_connected_component(G, <span class="dv">1</span>))</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="fl">0.8</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sizes <span class="op">=</span> [component_size_of_node(<span class="dv">5000</span>, c) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>)]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">Average over experiments is </span><span class="sc">{</span>np<span class="sc">.</span>mean(sizes)<span class="sc">:.2f}</span><span class="ss">.</span><span class="ch">\n</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">Theoretical expectation is </span><span class="sc">{</span><span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>c)<span class="sc">:.2f}</span><span class="ss">.</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> component_size_of_node(n, c):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.fast_gnp_random_graph(n, c<span class="op">/</span>(n<span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(nx.node_connected_component(G, <span class="dv">1</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="fl">0.8</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>sizes <span class="op">=</span> [component_size_of_node(<span class="dv">5000</span>, c) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>)]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ss">Average over experiments is </span><span class="sc">{</span>np<span class="sc">.</span>mean(sizes)<span class="sc">:.2f}</span><span class="ss">.</span><span class="ch">\n</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ss">Theoretical expectation is </span><span class="sc">{</span><span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>c)<span class="sc">:.2f}</span><span class="ss">.</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-stdout">
 <pre><code>
-Average over experiments is 4.86.
+Average over experiments is 5.45.
 
 Theoretical expectation is 5.00.</code></pre>
 </div>
@@ -696,52 +732,52 @@ u \approx e^{-c(1-u)}\;.
 \]</span> So, now we have a description of the fraction of nodes that <em>aren’t</em> in the giant component. We can get a description of how many nodes <em>are</em> in the giant component by substituting <span class="math inline">\(s = 1-u\)</span>, after which we get the equation we’re really after: <span id="eq-giant-component-size"><span class="math display">\[
 s = 1- e^{-cs}
 \qquad(2.2)\]</span></span></p>
-<p>This equation doesn’t have a closed-form solution for <span class="math inline">\(s\)</span>, but we can still plot it and compare the result to simulations (<a href="#fig-giant-component">Figure&nbsp;<span>2.1</span></a>). Not bad!</p>
+<p>This equation doesn’t have a closed-form solution for <span class="math inline">\(s\)</span>, but we can still plot it and compare the result to simulations (<a href="#fig-giant-component">Figure&nbsp;<span>2.2</span></a>). Not bad!</p>
 <div class="cell page-columns page-full" data-hash="random_graphs_cache/html/fig-giant-component_6d8a7ac841a7bf42d35760d34ba0865f">
 <details>
 <summary>Code</summary>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># experiment: compute the size of the largest connected </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># component as a function of graph size for a range of mean degrees. </span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> largest_component(n, p):</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.fast_gnp_random_graph(n, p)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    S <span class="op">=</span> <span class="bu">max</span>(nx.connected_components(G), key<span class="op">=</span><span class="bu">len</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(S) <span class="op">/</span> n</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">50000</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> np.repeat(np.linspace(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="dv">11</span>), <span class="dv">10</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> np.array([largest_component(n, c<span class="op">/</span>(n<span class="op">-</span><span class="dv">1</span>)) <span class="cf">for</span> c <span class="kw">in</span> C])</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># theory: prediction based on Newman 11.16</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">.001</span>, <span class="fl">.6</span>, <span class="dv">101</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>C_theory <span class="op">=</span> <span class="op">-</span>np.log(<span class="dv">1</span><span class="op">-</span>S)<span class="op">/</span>S</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the results to compare</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.plot(C_theory, </span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>         S, </span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>         color <span class="op">=</span> <span class="st">"black"</span>, </span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>         label <span class="op">=</span> <span class="st">"Theoretical prediction"</span>)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>plt.scatter(C, </span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            U, </span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            label <span class="op">=</span> <span class="st">"Experiment"</span>)</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>plt.gca().<span class="bu">set</span>(xlabel <span class="op">=</span> <span class="st">"Mean degree"</span>, </span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>              ylabel <span class="op">=</span> <span class="st">"Proportion of graph in largest component"</span>)</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># experiment: compute the size of the largest connected </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># component as a function of graph size for a range of mean degrees. </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> largest_component(n, p):</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.fast_gnp_random_graph(n, p)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    S <span class="op">=</span> <span class="bu">max</span>(nx.connected_components(G), key<span class="op">=</span><span class="bu">len</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(S) <span class="op">/</span> n</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">50000</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> np.repeat(np.linspace(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="dv">11</span>), <span class="dv">10</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> np.array([largest_component(n, c<span class="op">/</span>(n<span class="op">-</span><span class="dv">1</span>)) <span class="cf">for</span> c <span class="kw">in</span> C])</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># theory: prediction based on Newman 11.16</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">.001</span>, <span class="fl">.6</span>, <span class="dv">101</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>C_theory <span class="op">=</span> <span class="op">-</span>np.log(<span class="dv">1</span><span class="op">-</span>S)<span class="op">/</span>S</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the results to compare</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>plt.plot(C_theory, </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>         S, </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>         color <span class="op">=</span> <span class="st">"black"</span>, </span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>         label <span class="op">=</span> <span class="st">"Theoretical prediction"</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>plt.scatter(C, </span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>            U, </span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            label <span class="op">=</span> <span class="st">"Experiment"</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>plt.gca().<span class="bu">set</span>(xlabel <span class="op">=</span> <span class="st">"Mean degree"</span>, </span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>              ylabel <span class="op">=</span> <span class="st">"Proportion of graph in largest component"</span>)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
 <div id="fig-giant-component" class="quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="random_graphs_files/figure-html/fig-giant-component-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 2.1: Each point gives the fraction of an ER graph with 50,000 nodes occupied by the largest component. The mean degree is on the horizontal axis. The black line gives the theoretical prediction of <a href="#eq-giant-component-size">Equation&nbsp;<span>2.2</span></a>.</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 2.2: Each point gives the fraction of an ER graph with 50,000 nodes occupied by the largest component. The mean degree is on the horizontal axis. The black line gives the theoretical prediction of <a href="#eq-giant-component-size">Equation&nbsp;<span>2.2</span></a>.</figcaption><p></p>
 </figure>
 </div>
 </div>

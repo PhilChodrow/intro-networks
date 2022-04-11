@@ -82,6 +82,40 @@ What does this imply for our estimation of the global clustering coefficient fro
 
 > Sparse Erdős–Rényi graphs have vanishing clustering coefficients. 
 
+@fig-clustering-decay shows how the global clustering coefficient of a sparse Erdős–Rényi random graph decays as we increase $n$. Although the estimate that the global clustering coefficient should be equal to $p$ was somewhat informal, experimentally it works quite well. 
+
+```{python}
+#| fig.cap : "Each point gives the global clustering coefficient of an ER graph with mean degree $c = 5$ and specified number of nodes. The black line gives the estimate $T = p = c/(n-1)$ for the clustering coefficient that we computed earlier. The function `nx.fast_gnp_random_graph()` is a special function from NetworkX for generating ER random graphs quickly; you'll learn about how it works in an upcoming homework assignment."
+#| out.width : 80%
+#| cap-location: margin
+#| label: fig-clustering-decay
+
+import networkx as nx
+from matplotlib import pyplot as plt
+import numpy as np
+
+c = 5
+N = np.repeat(2**np.arange(5, 15), 10)
+
+def global_clustering(n, c):
+    G = nx.fast_gnp_random_graph(n, c/(n-1))
+    return nx.transitivity(G)
+
+T = [global_clustering(n, c) for n in N]
+
+fig, ax = plt.subplots(1)
+
+theory = ax.plot(N, c/(N-1), color = "black", label = "Estimate")
+
+exp = ax.scatter(N, T, label = "Experiments")
+semil = ax.semilogx()
+labels = ax.set(xlabel = "Number of nodes", 
+       ylabel = "Global clustering coefficient")
+plt.show()
+```
+
+
+
 ### Cycles and Local Tree-Likeness
 
 ::: {.callout-note}
@@ -303,7 +337,7 @@ import networkx as nx
 import numpy as np
 
 def component_size_of_node(n, c):
-    G = nx.fast_gnp_random_graph(n, c/n)
+    G = nx.fast_gnp_random_graph(n, c/(n-1))
     return len(nx.node_connected_component(G, 1))
 
 c = 0.8
