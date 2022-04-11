@@ -18,6 +18,7 @@ book:
       chapters: 
         - chapters/measurement.qmd
         - chapters/random_graphs.qmd
+        - chapters/degree_sequences.qmd
         - chapters/ranking_centrality.qmd
         - chapters/clustering_community.qmd
         - chapters/social_responsibility.qmd

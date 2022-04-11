@@ -423,7 +423,7 @@ def largest_component(n, p):
 
 n = 50000
 C = np.repeat(np.linspace(0.5, 1.5, 11), 10)
-U = np.array([largest_component(n, c/n) for c in C])
+U = np.array([largest_component(n, c/(n-1)) for c in C])
 
 # theory: prediction based on Newman 11.16
 
@@ -443,6 +443,8 @@ plt.scatter(C,
 
 plt.gca().set(xlabel = "Mean degree", 
               ylabel = "Proportion of graph in largest component")
+
+plt.legend()
 
 ```
 
