@@ -396,6 +396,33 @@ A **phase transition** is a qualitative change in response to a small variation 
 
 Examples of phase transitions include freezing, in which a liquid undergoes a qualitative change into a solid in response to a small variation in temperature. 
 
+@fig-giant-component-illustration shows  two sparse ER random graphs on either side of the $c = 1$ transition. We observe an apparent change in qualitative behavior between the two cases. 
+
+```{python}
+#| fig.cap : "Two sparse ER graphs with 500 nodes and varying mean degree."
+#| out.width : 100%
+#| cap-location: margin
+#| label: fig-giant-component-illustration
+#| fig-width: 8
+#| fig-height: 4
+
+import networkx as nx
+from matplotlib import pyplot as plt
+
+fig, axarr = plt.subplots(1, 2)
+
+n = 500
+c = [0.7, 1.3]
+
+for i in range(2):
+    G = nx.fast_gnp_random_graph(n, c[i]/(n-1))
+    nx.draw(G, ax = axarr[i], node_size = 1)
+    axarr[i].set(title = f"c = {c[i]}")
+```
+
+
+
+
 #### Size of the Giant Component
 
 Perhaps surprisingly, while it's difficult to prove that there is a giant component, it's not hard at all to estimate its size. 
