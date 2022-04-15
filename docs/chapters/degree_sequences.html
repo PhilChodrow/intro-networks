@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="quarto-0.9.165">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Math 168: Introduction to Networks - 3&nbsp; Random Graphs: Degree Sequences</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+
+  <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+  <script src="../site_libs/quarto-nav/headroom.min.js"></script>
+  <script src="../site_libs/clipboard/clipboard.min.js"></script>
+  <meta name="quarto:offset" content="../">
+  <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+  <script src="../site_libs/quarto-search/fuse.min.js"></script>
+  <script src="../site_libs/quarto-search/quarto-search.js"></script>
+  <link href="../chapters/ranking_centrality.html" rel="next">
+  <link href="../chapters/random_graphs.html" rel="prev">
+  <script src="../site_libs/quarto-html/quarto.js"></script>
+  <script src="../site_libs/quarto-html/popper.min.js"></script>
+  <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+  <script src="../site_libs/quarto-html/anchor.min.js"></script>
+  <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+  <link id="quarto-text-highlighting-styles" href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+  <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+  <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+  <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script id="quarto-search-options" type="application/json">{
+    "location": "sidebar",
+    "copy-button": false,
+    "collapse-after": 3,
+    "panel-placement": "start",
+    "type": "textbox",
+    "limit": 20,
+    "language": {
+      "search-no-results-text": "No results",
+      "search-matching-documents-text": "matching documents",
+      "search-copy-link-title": "Copy link to search",
+      "search-hide-matches-text": "Hide additional matches",
+      "search-more-match-text": "more match in this document",
+      "search-more-matches-text": "more matches in this document",
+      "search-clear-button-title": "Clear",
+      "search-detached-cancel-button-title": "Cancel",
+      "search-submit-button-title": "Submit"
+    }
+  }</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body class="floating slimcontent">
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Random Graphs: Degree Sequences</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Math 168: <br><b>Introduction to Networks</b></a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Network Science</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="../syllabus/syllabus.html" class="sidebar-item-text sidebar-link">Syllabus</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus/specifications.html" class="sidebar-item-text sidebar-link">Standard Specifications</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus/resources.html" class="sidebar-item-text sidebar-link">Health, Wellbeing, and Equity</a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="../chapters/intro.html" class="sidebar-item-text sidebar-link">Lecture Notes</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/measurement.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Measuring Networks</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/random_graphs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Random Graphs: Erdős–Rényi</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/degree_sequences.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Random Graphs: Degree Sequences</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/ranking_centrality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Ranking and Centrality</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/clustering_community.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Clustering and Community Detection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/social_responsibility.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Networks and Social Responsibility</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/dynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dynamics on Networks</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Appendices</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/additional_resources.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Network Science Resources</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/acknowledgements.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Acknowledgements</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Table of contents</h2>
+<ul>
+<li><a href="#the-configuration-model" class="nav-link active" data-scroll-target="#the-configuration-model"> <span class="header-section-number">3.1</span> The Configuration Model</a>
+<ul class="collapse">
+<li><a href="#moments-of-the-degree-sequence" class="nav-link" data-scroll-target="#moments-of-the-degree-sequence">Moments of the Degree Sequence</a></li>
+<li><a href="#configuration-models-with-constant-moments" class="nav-link" data-scroll-target="#configuration-models-with-constant-moments">Configuration Models with Constant Moments</a></li>
+<li><a href="#branching-process-approximation-for-giant-components" class="nav-link" data-scroll-target="#branching-process-approximation-for-giant-components">Branching Process Approximation for Giant Components</a></li>
+<li><a href="#friendship-paradox" class="nav-link" data-scroll-target="#friendship-paradox">Friendship Paradox</a></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+<header id="title-block-header" class="quarto-title-block default">
+
+<div class="quarto-title"><h1 class="title d-none d-lg-block display-7"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Random Graphs: Degree Sequences</span></h1></div></header>
+
+<p>A limitation of the Erdős–Rényi model is that it always generates graphs whose degree distributions are approximately Poisson. This isn’t very flexible, and most real-world networks have very different-looking degree sequences. In this set of lecture notes, we’ll discuss two more classes of random graph that emphasize the important role played by the <em>degrees</em> of nodes in determining graph structure.</p>
+<section id="the-configuration-model" class="level2 page-columns page-full" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="the-configuration-model"><span class="header-section-number">3.1</span> The Configuration Model</h2>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-configuration-model" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.1 (Configuration Model) </strong></span>A graph with <span class="math inline">\(n\)</span> nodes has <strong>degree sequence</strong> <span class="math inline">\(\mathbf{k} \in \mathbb{Z}^n_+\)</span> if each node <span class="math inline">\(i\)</span> has degree <span class="math inline">\(k_i\)</span>.</p>
+<p>A <strong>configuration model random graph</strong> with degree sequence <span class="math inline">\(\mathbf{k}\in \mathbb{Z}^n_+\)</span> is a random graph sampled uniformly at random from the set of all graphs with degree sequence <span class="math inline">\(\mathbf{k}\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="page-columns page-full"><p>While sampling from the Erdős–Rényi model was as easy as flipping <span class="math inline">\(\binom{n}{2}\)</span> weighted coins, sampling from the configuration model is actually rather challenging. A classical approach for sampling from the configuration model is to perform a <em>stub-matching</em> algorithm. Here’s how it works.</p><div class="no-row-height column-margin column-container"><span class="aside">See <span class="citation" data-cites="fosdick2018configuring">Fosdick et al. (<a href="../appendices/references.html#ref-fosdick2018configuring" role="doc-biblioref">2018</a>)</span> for a comprehensive discussion.</span></div></div>
+<ol type="1">
+<li>First, each node is assigned <span class="math inline">\(k_i\)</span> <em>stubs</em> or <em>half-edges.</em></li>
+<li>Until there are no more stubs left:
+<ul>
+<li>Two stubs are selected uniformly at random and matched, creating an edge.</li>
+</ul></li>
+</ol>
+<p>The stub-matching algorithm can produce multi-edges and self-loops, which can cause the graph to not be simple. However, it can be proven <span class="citation" data-cites="bollobas1980probabilistic">(<a href="../appendices/references.html#ref-bollobas1980probabilistic" role="doc-biblioref">Bollobás 1980</a>)</span> that, when the graph is sparse, the expected number of multi-edges and self-loops does not grow with network size. One can, as a result, show these structures are <em>rare</em>, and can often be ignored in arguments.</p>
+<section id="moments-of-the-degree-sequence" class="level3">
+<h3 class="anchored" data-anchor-id="moments-of-the-degree-sequence">Moments of the Degree Sequence</h3>
+<p>Let <span class="math inline">\(p_k\)</span> be the proportion of nodes with degree <span class="math inline">\(k\)</span> in a configuration model. Then, <span class="math inline">\(p_kn\)</span> is the <em>number</em> of nodes with degree <span class="math inline">\(k\)</span>. The <em>mean degree</em> is <span class="math inline">\(\langle k \rangle \triangleq \sum_{i \in N} k p_k\)</span>. More generally, the <span class="math inline">\(\ell\)</span>th moment of the degree sequence is <span class="math inline">\(\langle k^{\ell} \rangle \triangleq \sum_{i \in N}k^\ell p_k\)</span>.</p>
+</section>
+<section id="configuration-models-with-constant-moments" class="level3">
+<h3 class="anchored" data-anchor-id="configuration-models-with-constant-moments">Configuration Models with Constant Moments</h3>
+<p>Recall that, in the case of Erdős–Rényi random graphs, we called a sequence of models <strong>sparse</strong> if the mean degree <span class="math inline">\(c\)</span> did not increase as a function of <span class="math inline">\(n\)</span>. Here, we use a similar working definition</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>A sequence of configuration model random graphs has <strong>constant moments</strong> if the moments <span class="math inline">\(\langle k^\ell \rangle\)</span> converge to constants as <span class="math inline">\(n\)</span> grows large, for each finite <span class="math inline">\(\ell\)</span>.</p>
+</div>
+</div>
+</div>
+<p>We’ll assume that we’re considering configuration models with constant moments. This assumption justifies “large <span class="math inline">\(n\)</span>” reasoning of the same type we did with Erdős–Rényi random graphs.</p>
+</section>
+<section id="branching-process-approximation-for-giant-components" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="branching-process-approximation-for-giant-components">Branching Process Approximation for Giant Components</h3>
+<div class="page-columns page-full"><p>Recall that the <strong>branching process approximation</strong>  in Erdős–Rényi random graphs suggests that the size of the component containing a uniformly sampled node has expected size approximately <span class="math inline">\(1 / (1-c)\)</span>, where <span class="math inline">\(c\)</span> is the average degree. On the other hand, when <span class="math inline">\(c &gt; 1\)</span>, the branching process approximation suggests that the component containing a uniformly sampled node could be very large indeed.</p><div class="no-row-height column-margin column-container"><span class="aside"><a href="random_graphs.html#def-branching-approx">Definition&nbsp;<span>2.5</span></a></span></div></div>
+<p>We can perform a similar kind of analysis for the configuration model. There is only one new thing to figure out.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-edge-biased-degree-distribution" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.2 (Edge-Biased Degree Distribution) </strong></span>In a configuration model random graph, consider the following random process:</p>
+<ol type="1">
+<li>First, choose an <em>edge</em> uniformly at random.</li>
+<li>Then, take one of the nodes attached to this edge and log its degree <span class="math inline">\(K\)</span>.</li>
+</ol>
+<p>The random variable <span class="math inline">\(K-1\)</span> is distributed according to the <strong>edge-biased degree distribution</strong> of the graph.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-important callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Exercise</strong>: show that the edge-biased degree distribution is <span class="math inline">\(q_k \triangleq \mathbb{P}(K = k) = \frac{kp_k}{\langle k \rangle}\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-excess-degree-distribution" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.3 (Excess degree distribution) </strong></span></p>
+<p>In a configuration model random graph, if <span class="math inline">\(K\)</span> is distributed according to the edge-biased degree distribution, the variable <span class="math inline">\(H = K-1\)</span> is distributed according to the <strong>excess degree distribution.</strong></p>
+</div>
+</div>
+</div>
+</div>
+<p>The reason to care about the excess degree distribution is that it answers the following question:</p>
+<blockquote class="blockquote">
+<p>Suppose I follow an edge in a configuration model random graph, arriving at node <span class="math inline">\(i\)</span>. How many <strong>additional</strong> edges are attached to node <span class="math inline">\(i\)</span>?</p>
+</blockquote>
+<p>This is an important question, because it is precisely the question that we used to determine whether the branching process would die out quickly or continue forever in the case of the Erdős–Rényi random graph. The same heuristic works here:</p>
+<div class="callout-tip callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="thm-configuration-giant-component" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 3.1 (Giant component in configuration models) </strong></span></p>
+<p>The configuration model with constant moments has a giant component as <span class="math inline">\(n\)</span> grows large if <span class="math inline">\(\mathbb{E}[H] &gt; 1\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="page-columns page-full"><p>Indeed, this result can be formally proven by rigorous arguments, although these are beyond our scope here. </p><div class="no-row-height column-margin column-container"><span class="aside"><span class="citation" data-cites="molloy1995critical">Molloy and Reed (<a href="../appendices/references.html#ref-molloy1995critical" role="doc-biblioref">1995</a>)</span></span></div></div>
+<div class="callout-important callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Exercise</strong>: Show that <span class="math inline">\(\mathbb{E}[H] = \frac{\langle k^2 \rangle - \langle k \rangle}{\langle k \rangle}\)</span>. Infer that the criterion <span class="math inline">\(\mathbb{E}[H] &gt; 1\)</span> in <a href="#thm-configuration-giant-component">Theorem&nbsp;<span>3.1</span></a> is equivalent to the criterion <span class="math display">\[
+\langle k^2 \rangle - 2\langle k \rangle &gt; 0\;.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="friendship-paradox" class="level3">
+<h3 class="anchored" data-anchor-id="friendship-paradox">Friendship Paradox</h3>
+<p>The “friendship paradox” refers to the observation which is commonly phrased as:</p>
+<blockquote class="blockquote">
+<p>Your friends have more friends than you do.</p>
+</blockquote>
+<p>This is only true in a statistical sense: <em>on average</em>, in a graph, if you check the degree of each node and compare that to the mean degree of its neighbors, you’ll find that the average neighbor degree is higher than the average original degree.</p>
+<p>The math here is that the neighbor degree nothing other than the degree of a node that we reached by following an edge. That is, its distribution is the edge-biased degree distribution. The mean of this distribution is <span class="math inline">\(\mu = \langle k^2 \rangle/\langle k \rangle\)</span>. The Cauchy-Schwartz inequality implies that <span class="math inline">\(\langle k^2 \rangle \geq \langle k \rangle^2\)</span>, which in turn implies that <span class="math inline">\(\mu \geq k\)</span>.</p>
+
+
+
+</section>
+</section>
+</main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/random_graphs.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Random Graphs: Erdős–Rényi</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/ranking_centrality.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Ranking and Centrality</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+</body></html>

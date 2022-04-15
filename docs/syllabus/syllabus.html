@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="quarto-0.9.165">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Math 168: Introduction to Networks - Syllabus</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+
+  <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+  <script src="../site_libs/quarto-nav/headroom.min.js"></script>
+  <script src="../site_libs/clipboard/clipboard.min.js"></script>
+  <meta name="quarto:offset" content="../">
+  <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+  <script src="../site_libs/quarto-search/fuse.min.js"></script>
+  <script src="../site_libs/quarto-search/quarto-search.js"></script>
+  <link href="../syllabus/specifications.html" rel="next">
+  <link href="../index.html" rel="prev">
+  <script src="../site_libs/quarto-html/quarto.js"></script>
+  <script src="../site_libs/quarto-html/popper.min.js"></script>
+  <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+  <script src="../site_libs/quarto-html/anchor.min.js"></script>
+  <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+  <link id="quarto-text-highlighting-styles" href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+  <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+  <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+  <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script id="quarto-search-options" type="application/json">{
+    "location": "sidebar",
+    "copy-button": false,
+    "collapse-after": 3,
+    "panel-placement": "start",
+    "type": "textbox",
+    "limit": 20,
+    "language": {
+      "search-no-results-text": "No results",
+      "search-matching-documents-text": "matching documents",
+      "search-copy-link-title": "Copy link to search",
+      "search-hide-matches-text": "Hide additional matches",
+      "search-more-match-text": "more match in this document",
+      "search-more-matches-text": "more matches in this document",
+      "search-clear-button-title": "Clear",
+      "search-detached-cancel-button-title": "Cancel",
+      "search-submit-button-title": "Submit"
+    }
+  }</script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body class="floating">
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Syllabus</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Math 168: <br><b>Introduction to Networks</b></a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Network Science</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="../syllabus/syllabus.html" class="sidebar-item-text sidebar-link active">Syllabus</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus/specifications.html" class="sidebar-item-text sidebar-link">Standard Specifications</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus/resources.html" class="sidebar-item-text sidebar-link">Health, Wellbeing, and Equity</a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="../chapters/intro.html" class="sidebar-item-text sidebar-link">Lecture Notes</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/measurement.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Measuring Networks</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/random_graphs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Random Graphs: Erdős–Rényi</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/degree_sequences.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Random Graphs: Degree Sequences</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/ranking_centrality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Ranking and Centrality</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/clustering_community.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Clustering and Community Detection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/social_responsibility.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Networks and Social Responsibility</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/dynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dynamics on Networks</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Appendices</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/additional_resources.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Network Science Resources</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/acknowledgements.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Acknowledgements</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Table of contents</h2>
+<ul>
+<li><a href="#nice-to-meet-you" class="nav-link active" data-scroll-target="#nice-to-meet-you">Nice to Meet You!</a>
+<ul class="collapse">
+<li><a href="#how-to-address-me" class="nav-link" data-scroll-target="#how-to-address-me">How to Address Me</a></li>
+<li><a href="#more-faqs" class="nav-link" data-scroll-target="#more-faqs">More FAQs</a></li>
+</ul></li>
+<li><a href="#guiding-principles" class="nav-link" data-scroll-target="#guiding-principles">Guiding Principles</a></li>
+<li><a href="#learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a>
+<ul class="collapse">
+<li><a href="#official-course-description" class="nav-link" data-scroll-target="#official-course-description">Official Course Description</a></li>
+<li><a href="#your-preparation" class="nav-link" data-scroll-target="#your-preparation">Your Preparation</a></li>
+<li><a href="#course-environment" class="nav-link" data-scroll-target="#course-environment">Course Environment</a></li>
+</ul></li>
+<li><a href="#course-details" class="nav-link" data-scroll-target="#course-details">Course Details</a>
+<ul class="collapse">
+<li><a href="#required-textbook" class="nav-link" data-scroll-target="#required-textbook">Required Textbook</a></li>
+<li><a href="#in-person-learning" class="nav-link" data-scroll-target="#in-person-learning">In-Person Learning</a></li>
+<li><a href="#assessment" class="nav-link" data-scroll-target="#assessment">Assessment</a></li>
+<li><a href="#homework-assignments" class="nav-link" data-scroll-target="#homework-assignments">Homework Assignments</a></li>
+<li><a href="#midterm-exam" class="nav-link" data-scroll-target="#midterm-exam">Midterm Exam</a></li>
+<li><a href="#cumulative-course-project" class="nav-link" data-scroll-target="#cumulative-course-project">Cumulative Course Project</a></li>
+</ul></li>
+<li><a href="#beyond-math-168" class="nav-link" data-scroll-target="#beyond-math-168">Beyond Math 168</a>
+<ul class="collapse">
+<li><a href="#the-hidden-curriculum" class="nav-link" data-scroll-target="#the-hidden-curriculum">The Hidden Curriculum</a></li>
+<li><a href="#prioritizing-your-wellbeing" class="nav-link" data-scroll-target="#prioritizing-your-wellbeing">Prioritizing Your Wellbeing</a></li>
+<li><a href="#research-opportunities" class="nav-link" data-scroll-target="#research-opportunities">Research Opportunities</a></li>
+<li><a href="#advice-and-letters-of-recommendation" class="nav-link" data-scroll-target="#advice-and-letters-of-recommendation">Advice and Letters of Recommendation</a></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header id="title-block-header" class="quarto-title-block default">
+
+<div class="quarto-title"><h1 class="title d-none d-lg-block display-7">Syllabus</h1></div></header>
+
+<section id="nice-to-meet-you" class="level2">
+<h2 class="anchored" data-anchor-id="nice-to-meet-you">Nice to Meet You!</h2>
+<p>I’m Dr.&nbsp;<a href="https://www.philchodrow.com">Phil Chodrow</a>, a visiting assistant professor in the Department of Mathematics at UCLA. My pronouns are <em>he/him/his</em>. I grew up in Virginia, did undergrad at Swarthmore College in Pennsylvania, and did my PhD (after a few years traveling and working) at MIT. Then I came here to UCLA!</p>
+<p>I love applied math, ethical data science, Star Trek, penguins, cooking, tea, Studio Ghibli movies, traditional martial arts, and effective pedagogy.</p>
+<section id="how-to-address-me" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-address-me">How to Address Me</h3>
+<p>If you’re not sure, please call me “Professor Chodrow.” I usually invite Learning Assistants and student research collaborators to address me as “Phil.”</p>
+<p>Please remember to address all your professors respectfully and according to their preferences. As argued in a <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6048538/pdf/pnas.201805284.pdf">recent study</a>, many of us have harmful, gendered biases about when we use earned titles like “Dr.” or “Professor.” A small, simple thing you can do to make academia a more equitable place is to check your own potential biases. If you’re not sure, “Professor X” or “Dr.&nbsp;X” is always a safe choice — but even better is to just ask what your instructor prefers! My own personal preference is related to <a href="https://pressfolios-production.s3.amazonaws.com/uploads/story/story_pdf/254906/2549061489249557.pdf">this short poem</a> by Susan Harlan.</p>
+</section>
+<section id="more-faqs" class="level3">
+<h3 class="anchored" data-anchor-id="more-faqs">More FAQs</h3>
+<p>I’ve collected a bunch of FAQs about myself and various things that don’t quite fit into a course syllabus <a href="https://www.philchodrow.com/for-students/">here</a>.</p>
+</section>
+</section>
+<section id="guiding-principles" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="guiding-principles">Guiding Principles</h2>
+<ol type="1">
+<li><strong>I want you to succeed.</strong> The purpose of this course is for you to build a set of analytical tools for thinking critically about the many connected systems we encounter in the modern world. Along the way, you’ll learn some new mathematics and build some interesting, creative projects. I view it as part of my job to help you along the way. I’m not succeeding as a teacher unless you are succeeding as a student. I will do my best to proactively remove barriers to your learning in this course, and I hope that you’ll communicate with me if you see opportunities for me to help you out.</li>
+<li><strong>It’s still tough out there.</strong> Although some parts of our lives might be returning to normal, other parts remain affected by the COVID-19 pandemic. My main aims in designing this course are to (a) offer you flexibility to adapt to changing circumstances and (b) encourage you to support and be supported by your classmates. <strong>Network science is fun</strong>. I hope that this course can be a positive part of your experience during these challenging times.</li>
+<li><strong>Your wellbeing comes first.</strong> If your wellbeing or that of a loved one comes into conflict with course obligations, I hope that you will prioritize the former. I’ve included a considerable amount of flexibility in this course. If you anticipate extended difficulties related to participation or assignments, reach out to me at the earliest opportunity. We’ll find a path that prioritizes your wellbeing while still enabling you to succeed in the course. I’ve given some examples below about some situations in which I hope you’ll reach out.</li>
+<li><strong>We’ve got your back.</strong> As the instructor, I’m available to you through multiple channels. Your TA and peers are all here to help you in your learning journey.</li>
+</ol>
+</section>
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+<p>In this course:</p>
+<ol type="1">
+<li>You will relate mathematical definitions of network measures to intuitive, English-language descriptions of their meanings.</li>
+<li>You will use “large graph limit” arguments to reason about the qualitative behavior of random and real-world graphs.</li>
+<li>You will write programs to compute network measures, sample from random network models, simulate processes evolving on networks, and perform network data science tasks.</li>
+<li>You will write both formal proofs and heuristic arguments to prove properties of network algorithms and models.</li>
+<li>You will read and summarize classical and recent research papers in several distinct areas of network science.</li>
+<li><strong>Beyond math</strong>: You will analyze, reflect on, and write about questions of bias, fairness, and justice in networked settings.<br>
+</li>
+<li><strong>Beyond math</strong>: You will describe the abstractions and accompanying limitations of network models as descriptions of real-world phenomena.</li>
+</ol>
+<section id="official-course-description" class="level3">
+<h3 class="anchored" data-anchor-id="official-course-description">Official Course Description</h3>
+<p><em>Introduction to network science (including theory, computation, and applications), which can be used to study complex systems of interacting agents. Study of networks in technology, social, information, biological, and mathematics involving basic structural features of networks, generative models of networks, network summary statistics, centrality, random graphs, clustering, and dynamical processes on networks. Introduction to advanced topics as time permits. P/NP or letter grading.</em></p>
+</section>
+<section id="your-preparation" class="level3">
+<h3 class="anchored" data-anchor-id="your-preparation">Your Preparation</h3>
+<p>The official prerequisites for MATH 168 are upper-division linear algebra (MATH 115A) and upper-division probability (MATH 170E or similar). I am expecting you to be able to write proofs and arguments that rely on material covered in these classes. That said, I don’t need you to be ready to take a 115A exam at a moment’s notice.</p>
+<p>Briefly, my expectation is that, when you have access to books, notes, and the internet, you <strong>won’t get stuck</strong> on problems involving linear algebra or probability content. In a bit more detail:</p>
+<blockquote class="blockquote">
+<p>When confronted with a problem whose solution requires linear algebra or probability, you are able to:</p>
+<ul>
+<li>Identify the general topic needed for the problem (e.g.&nbsp;“eigenvalues of matrices,” “Chebyshev’s inequality”).</li>
+<li>Rapidly identify where you need to look to find the result that you need in books, previous course notes, or online.</li>
+<li>Recognize and use this result in a careful, insightful, and correct way in your solutions.</li>
+</ul>
+</blockquote>
+<p>I’ll also expect you to write code to perform simulations, experiments, and data analyses. There will be coding problems in homework, and you are also likely to want to write code for your course project. Python, R, and Julia are all good choices. If you don’t have prior experience in computing, my recommendation is Python. I have gathered some <a href="../appendices/additional_resources.html#python-resources">Python resources</a> to help you get started, and we’ll see some additional examples in lecture and discussion.</p>
+</section>
+<section id="course-environment" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="course-environment">Course Environment</h3>
+<div class="rmdimportant">
+<p><strong>Diversity</strong><br> You deserve to be welcomed and celebrated by our community. We embrace diversity of age, background, beliefs, ethnicity, gender, gender identity, gender expression, national origin, religious affiliation, sexual orientation, and other visible and non-visible categories. Discrimination is not tolerated in my classroom.</p>
+</div>
+<div class="rmdwarning">
+<p><strong>Title IX</strong><br> You deserve a learning environment free from discrimination, sexual harassment, sexual assault, domestic violence, dating violence, and stalking. If you experience these behaviors or otherwise know of a Title IX violation, you have many options for support and/or reporting. The UCLA <a href="https://www.sexualharassment.ucla.edu/">Title IX Office</a> can help you navigate your options.</p>
+</div>
+<div class="rmdtip">
+<p><strong>Accessibility</strong><br> You deserve to fully and equitably participate in our learning environment. I am actively putting effort into ensuring that course materials are screen-reader accessible, and welcome feedback on where I can do better. The UCLA <a href="https://www.cae.ucla.edu/">Center for Accessible Education</a> and <a href="https://dcp.ucla.edu/">Disabilities and Computing Program</a> may be able to help remove barriers to learning.</p>
+</div>
+<div class="rmdcaution">
+<p><strong>Names and Pronouns</strong> <br> You deserve to be addressed in the manner that reflects who you are. I welcome to tell me your pronouns and/or preferred name at any time, via Zoom, in person, or via email. Conversely, please address your classmates according to their correct pronouns.</p>
+</div>
+</section>
+</section>
+<section id="course-details" class="level2">
+<h2 class="anchored" data-anchor-id="course-details">Course Details</h2>
+<p><strong>Instructor</strong>: Prof.&nbsp;<a href="https://www.philchodrow.com">Phil Chodrow</a> <br> <strong>Teaching Assistant</strong>: <a href="https://www.math.ucla.edu/~graceli/">Grace Li</a></p>
+<p><strong>Lecture Classroom</strong>: Mathematical Sciences 6229 <br> <strong>Time</strong>: 10am-10:50am</p>
+<p><strong>Discussion Classroom</strong>: Mathematical Sciences 6229 (same as lecture).</p>
+<section id="required-textbook" class="level3">
+<h3 class="anchored" data-anchor-id="required-textbook">Required Textbook</h3>
+<p>We will be using the following text:</p>
+<blockquote class="blockquote">
+<p>Mark Newman (2018), <em>Networks</em>, <strong>2nd edition</strong>.<span class="citation" data-cites="newman2018networks">(<a href="../appendices/references.html#ref-newman2018networks" role="doc-biblioref">Newman 2018</a>)</span></p>
+</blockquote>
+<p>Please note that we will be studying problems and topics from the <strong>2nd edition</strong>. The 1st edition can also be found, but if you buy it you might end up doing the wrong problems!</p>
+<p>We may also supplement with additional free online resources throughout the course.</p>
+</section>
+<section id="in-person-learning" class="level3">
+<h3 class="anchored" data-anchor-id="in-person-learning">In-Person Learning</h3>
+<p>I believe that you learn better and that we form a more cohesive learning journey when students attend class in person. Provided that UCLA policy encourages in-person attendance, <strong>my expectation is that most students will attend class live</strong>.</p>
+<p>That said, I am also aware that some of you may be concerned about your health or the health of your loved ones. Others of you may be unable to reach campus in time for class. While I can’t offer you an experience on par with those who attend live, I do intend to make things work for you.</p>
+<p>Concretely, here’s how things are going to work:</p>
+<ol type="1">
+<li>Lectures and Discussions will take place live, at our scheduled time and in our scheduled room.</li>
+<li>Lectures and Discussions which feature extensive presentation by me or the TA will be recorded using the in-room recording setup. Sessions that primarily feature student discussion or activities may not be recorded.</li>
+<li>Provided that live attendance remains high, I plan to make the recordings public to all students.</li>
+</ol>
+<p>The primary purpose of posting recordings is to make it possible for students who feel unsafe to be able to participate with the course. Recordings are not intended to act as a substitute for attendance for most students. <strong>I reserve the right to restrict access to recordings</strong> if attendance during class periods drops off.</p>
+</section>
+<section id="assessment" class="level3">
+<h3 class="anchored" data-anchor-id="assessment">Assessment</h3>
+<p>Your grade in MATH 168 will be calculated using the following categories:</p>
+<ul>
+<li><strong>Homework</strong>: 40 points.</li>
+<li><strong>Midterm Exam</strong>: 15 points.</li>
+<li><strong>Cumulative Project</strong>: 50 points.</li>
+</ul>
+<p>Your final score in the class is the sum of your scores on homework, midterm, and cumulative project. Letter grades will then be assigned using the straight scale as a floor. For example, any final score above 90 is enough to guarantee at least an A-, but I reserve the right to grant an A instead according to my judgment.</p>
+<p>The only exception to this policy is the A+ grade, which is not guaranteed by any final score. I grant these by discretion.</p>
+<p>You’ll notice that there is a total of 105 possible points. That gives you 5 points which you can drop without consequence. In practice, I expect most folks to use this flexibility by skipping some homework problems. However, this is ultimately up to you.</p>
+</section>
+<section id="homework-assignments" class="level3">
+<h3 class="anchored" data-anchor-id="homework-assignments">Homework Assignments</h3>
+<p>We’ll have a total of 8 homework assignments throughout the quarter. These 8 assignments will contain a total of at least 40 problems. (There may be a few more than 40 problems available, but only 40 of them will count toward your grade).</p>
+<p>The computation of your overall homework score is simple: your homework score is the number of problems for which you’ve received credit, up to a maximum of 40. Have you received credit for 38 problems throughout the quarter? Then your homework score is 38/40.</p>
+<section id="specifications-grading" class="level4">
+<h4 class="anchored" data-anchor-id="specifications-grading">Specifications Grading</h4>
+<p>I’m going to say something that’s going to sound scary:</p>
+<blockquote class="blockquote">
+<p>There is no partial credit on homework problems in MATH 168.</p>
+</blockquote>
+<p>A solution can either meet specifications, in which case it receives credit, or not yet meet specifications, in which case it does not receive credit (yet).</p>
+<p>Instead of partial credit, you have <em>multiple attempts.</em> If on your first try your solution does not meet specs, you’ll get it back from the TA with a comment on what’s in need of improvement. You can then <em>revise and resubmit the solution.</em> The TA will take another look: if you’ve met the specifications, you now get full credit. Nice job! One point toward your final grade in the course.</p>
+<p>There will be a due date on your first submission, but you can submit revised second versions at any time prior to the end of the quarter.</p>
+<p>Here is a list of the <a href="#standard-specifications">standard specifications</a>. These are the specifications that will be used in the vast majority of assigned homework problems. There may be a few problems with custom specifications, which will be supplied with the problem statement.</p>
+</section>
+<section id="late-and-partial-attempts" class="level4">
+<h4 class="anchored" data-anchor-id="late-and-partial-attempts">Late and Partial Attempts</h4>
+<p>Please note that you can only resubmit a problem for full credit if you have already submitted a good effort <em>by the stated due date.</em> If you did not submit a first draft by the due date, or if your first draft doesn’t show sufficient progress toward the problem, then your problem will be marked “Late/Partial Attempt.” A problem with this mark will receive 0.5 points (instead of 1 point) if all specifications are met in the second submission.</p>
+<p>In this policy, the phrase “sufficient progress” means roughly that you are at least half-way toward a solution. The judgement of whether a first submission demonstrates sufficient progress is fully at the discretion of the TA.</p>
+<p>The purpose of this policy is to keep you moving at a good speed and to save the TA from large piles of submissions and resubmissions at the end of the quarter.</p>
+</section>
+<section id="the-resubmission-process" class="level4">
+<h4 class="anchored" data-anchor-id="the-resubmission-process">The Resubmission Process</h4>
+<p>So you got back your first assignment, and you didn’t get credit on a few problems. What should you do?</p>
+<ol type="1">
+<li>Breathe. I know it feels like getting a 0, and you’re not used to that! But, you still have the opportunity to get full credit, and you have feedback from the TA on how to do so.</li>
+<li>Carefully review your feedback from the TA on Gradescope. Think of the feedback as a checklist – revise those items to a high standard, and you’ll get credit.</li>
+<li>Revise your solutions. You only need to revise the problems for which you didn’t get credit the first time.</li>
+<li>You can submit your revision at any time during the quarter, although I strongly suggest doing it quickly so that you don’t get bogged down. <strong>You should submit all revised problems on the same assignment at once.</strong> For example, if you need to revise your solutions to Problems 3 and 5 on HW0, then you should do so and submit one document containing the revisions for both of these problems.</li>
+</ol>
+<p>We’ll make an announcement with the detailed mechanics of where and how to submit your revisions after HW0 comes out.</p>
+</section>
+<section id="how-many-resubmissions" class="level4">
+<h4 class="anchored" data-anchor-id="how-many-resubmissions">How Many Resubmissions?</h4>
+<p>You can always expect to have <strong>one</strong> opportunity to resubmit on homework problems.</p>
+<p>In some cases, the TA <em>may</em> invite you to make a second resubmission if your first resubmission was <em>very close</em> but not quite there in some trivial way. For example, maybe your calculation was correct except for a factor of 2 that you forgot to cancel in the very last line.</p>
+<p>Whether you get more resubmissions is <em>fully at the discretion of the TA</em> and <em>not subject to negotiation</em>. Requests for more resubmissions are unlikely to receive a response from the TA.</p>
+<p>If you made sufficient progress in your first submission (usually, getting “at least halfway there”), then your resubmitted problems can receive full credit when they meet all the specifications. If your problem was marked Late/Insufficient Progress, then you your problems can receive half credit when they meet all the specifications.</p>
+</section>
+</section>
+<section id="midterm-exam" class="level3">
+<h3 class="anchored" data-anchor-id="midterm-exam">Midterm Exam</h3>
+<p>The midterm exam will likely take place during Week 6 or early in Week 7. The exam is currently expected to be a 50-minute in-person exam during a class period. You’ll be permitted to bring any quantity of hand-written notes to the exam, but not any other resources.</p>
+<p>This plan may change in response to evolving circumstances surrounding the pandemic.</p>
+</section>
+<section id="cumulative-course-project" class="level3">
+<h3 class="anchored" data-anchor-id="cumulative-course-project">Cumulative Course Project</h3>
+<p>There will be a cumulative course project that you will complete in groups over the course of the quarter. The bulk of the work for this project will take place in Weeks 5-10. There will be a number of milestones due throughout the course, including short essays, progress reports, and presentations.</p>
+</section>
+</section>
+<section id="beyond-math-168" class="level2">
+<h2 class="anchored" data-anchor-id="beyond-math-168">Beyond Math 168</h2>
+<p>This section collects some considerations about “being a student” that go beyond the specific details of this particular course.</p>
+<section id="the-hidden-curriculum" class="level3">
+<h3 class="anchored" data-anchor-id="the-hidden-curriculum">The Hidden Curriculum</h3>
+<p>The <em>hidden curriculum</em> refers to the implicit knowledge and habits—not usually taught explicitly—that students pick up “along the way” in their education. These often relate to asking for help, using available resources, and planning work. Often, students with college-educated parents are more comfortable in the hidden curriculum than first-generation college students. I’d like to make sure that <strong>everyone</strong> knows the following about my class.</p>
+<ul>
+<li><strong>It’s never wrong to ask me for help.</strong> <br> It is literally my job to help you succeed in this class. If at any time you’re concerned about your ability to keep up the pace, just reach out and we’ll see what we can do. I won’t always be able to give you exactly the support you request, but I will do my best. I’m more able to help you out if you <strong>approach me early</strong>, as soon as issues come up.</li>
+<li><strong>Your wellbeing comes first.</strong> <br> If you are experiencing circumstances that make it difficult for you to complete your work for this class—especially if those circumstances are health-related—please let me know. There is flexibility already built into this course, and I’m happy to work with you when circumstances make it difficult for you to focus on your learning. “I didn’t manage my time well this week” isn’t usually a reason I’ll grant additional flexibility, but “I am sick,” “my internet is unreliable,” “I am changing housing,” etc. etc. are all appropriate.</li>
+<li><strong>Student Hours are for you.</strong> <br> Student Hours, also called Office Hours, are <strong>your time</strong>. Come by to ask questions, chat with me, or just work on homework. You don’t need a “reason” to come to Student Hours, and you shouldn’t worry about disturbing me. Again, it’s <strong>your time.</strong> I’ll be very happy to see you.</li>
+<li><strong>You can ask me to advocate for you.</strong> <br> This is most commonly related to letters of recommendation (see section “Advice and Letters of Recommendation”), but if there’s another way in which I can use my position to help you, let me know.</li>
+<li><strong>If something is hard for you, that’s ok.</strong> <br> Maybe you’re struggling on a problem. That’s good! I know it feels frustrating, but <em>that is where learning happens.</em> If you are having a hard time on a problem, please remember:
+<ul>
+<li>You are not the only one. I promise.</li>
+<li>You are not a bad student.</li>
+<li>You can still succeed in this class and in future endeavors involving programming.</li>
+<li>Ask for help! You’ve got me, the TA, and your classmates. We are all here for you.</li>
+</ul></li>
+<li><strong>It’s ok—actually, it’s awesome—to collaborate with your peers on homework.</strong> <br> It’s not cheating to work together on homeworks (at least in this class). Make sure to credit your collaborators at the top of your assignment and write a bit about how they contributed to your learning in each problem. You should also make sure that your submitted solution is written in your own words, and reflects your effort to understand the solution for yourself.</li>
+</ul>
+<p>To expand on one of the points above: if you are a first-gen student, I especially encourage you to reach out to me. I’ll offer you what tips I can about navigating your time at UCLA.</p>
+</section>
+<section id="prioritizing-your-wellbeing" class="level3">
+<h3 class="anchored" data-anchor-id="prioritizing-your-wellbeing">Prioritizing Your Wellbeing</h3>
+<p>One of the guiding principles of this course is that <strong>your wellbeing comes first.</strong> If your wellbeing comes into conflict with the course obligations, I hope that you’ll prioritize your wellbeing and reach out to me.</p>
+<ul>
+<li>If you or someone you love is experiencing a <strong>health crisis</strong>, prioritize your wellbeing. You can use some of your drops to take a break from assignments, or you can also ask me for an extension or other accommodation.</li>
+<li>If some aspect of the course is causing undue <strong>stress or anxiety</strong>, feel free to let me know. I regularly make adjustments to the course to promote student mental health while still meeting course learning objectives.</li>
+<li>If you do not have <strong>reliable internet</strong> or other resources needed to access class resources, let me know and we’ll see what we can do.</li>
+<li>If you are having trouble <strong>managing your time</strong>, feel free to ask me for advice. I don’t usually grant accommodations for this reason, but I may be able to help you use your time more efficiently in the future.</li>
+</ul>
+<p>These examples are not exhaustive. If you are in any situation in which you feel that your obligations to MATH 168 are detrimental to your wellbeing or the wellbeing of someone you love, <strong>please consider contacting me.</strong> Please also remember that the sooner you approach me, the better I can help you.</p>
+</section>
+<section id="research-opportunities" class="level3">
+<h3 class="anchored" data-anchor-id="research-opportunities">Research Opportunities</h3>
+<p>Sorry y’all – I will not be taking any more student research collaborators at UCLA. I need to focus on completing my various open projects as I prepare to transition to my next position.</p>
+</section>
+<section id="advice-and-letters-of-recommendation" class="level3">
+<h3 class="anchored" data-anchor-id="advice-and-letters-of-recommendation">Advice and Letters of Recommendation</h3>
+<section id="advice" class="level4">
+<h4 class="anchored" data-anchor-id="advice">Advice</h4>
+<p>I am always happy to talk with you about your future plans, including internships, REUs, and graduate school applications. Because I am a creature of the academy, I am less knowledgeable about industry jobs, although you are welcome to ask about those too.</p>
+</section>
+<section id="letters-of-recommendation" class="level4">
+<h4 class="anchored" data-anchor-id="letters-of-recommendation">Letters of Recommendation</h4>
+<p>If you have completed a course with me or are currently enrolled, you are welcome to request a letter from me. If I feel that I am not able to write you a strong letter, I will tell you – but if you still want a letter from me, I will still write it.</p>
+<p>Please keep in mind that I can write stronger letters for students whom I see more frequently, such as in lecture or office hours. If you’d like a letter, talking to me in these contexts, or scheduling another meeting time, is highly recommended.</p>
+<p>To request a letter, fill out <a href="https://forms.gle/tL79wtFrfHC5Vspw7">this request form</a>! Please give me at least one month of advance notice when possible.</p>
+</section>
+<section id="when-i-wont-write-a-letter" class="level4">
+<h4 class="anchored" data-anchor-id="when-i-wont-write-a-letter">When I Won’t Write a Letter</h4>
+<p>As a matter of moral principle, I will not write letters of recommendation for programs or jobs involving any of the following:</p>
+<ul>
+<li>Policing (including but not limited to predictive policing, development of algorithms that predict recidivism, etc.);</li>
+<li>Military applications (such as internships at the Department of Defense or any of its international counterparts);</li>
+<li>Weapons manufacturing, broadly construed;</li>
+<li>Intelligence gathering (such as internships at the NSA, FBI, or any international counterpart).</li>
+</ul>
+<p>I am very happy to discuss this policy with any student who has questions. Conversations about when and how mathematics, data science, and programming should be used are lacking in our community. If you’d like to engage me in such a conversation, that would be great! However, this policy is non-negotiable. Therefore, if I refuse to write you a letter on these grounds, please know that it doesn’t reflect on your ability to succeed in PIC16B, your career potential, your worth as a person, or whether I like you.</p>
+<p>The <a href="https://www.justmathematicscollective.net/">Just Mathematics Collective</a> has compiled a list of resources for students on making ethical career decisions, which is available <a href="https://justmathematicscollective.net/career_resources.html">here</a>. The text of this section is lightly modified from their <a href="https://www.justmathematicscollective.net/letter_writing.html">suggested text</a> on letter-writing.</p>
+
+
+
+</section>
+</section>
+</section>
+</main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Network Science</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../syllabus/specifications.html" class="pagination-link">
+        <span class="nav-page-text">Standard Specifications</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+</body></html>
