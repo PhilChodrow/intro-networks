@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="quarto-0.9.165">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Math 168: Introduction to Networks - 1&nbsp; Measuring Networks</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+
+  <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+  <script src="../site_libs/quarto-nav/headroom.min.js"></script>
+  <script src="../site_libs/clipboard/clipboard.min.js"></script>
+  <meta name="quarto:offset" content="../">
+  <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+  <script src="../site_libs/quarto-search/fuse.min.js"></script>
+  <script src="../site_libs/quarto-search/quarto-search.js"></script>
+  <link href="../chapters/random_graphs.html" rel="next">
+  <link href="../chapters/intro.html" rel="prev">
+  <script src="../site_libs/quarto-html/quarto.js"></script>
+  <script src="../site_libs/quarto-html/popper.min.js"></script>
+  <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+  <script src="../site_libs/quarto-html/anchor.min.js"></script>
+  <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+  <link id="quarto-text-highlighting-styles" href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+  <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+  <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+  <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script id="quarto-search-options" type="application/json">{
+    "location": "sidebar",
+    "copy-button": false,
+    "collapse-after": 3,
+    "panel-placement": "start",
+    "type": "textbox",
+    "limit": 20,
+    "language": {
+      "search-no-results-text": "No results",
+      "search-matching-documents-text": "matching documents",
+      "search-copy-link-title": "Copy link to search",
+      "search-hide-matches-text": "Hide additional matches",
+      "search-more-match-text": "more match in this document",
+      "search-more-matches-text": "more matches in this document",
+      "search-clear-button-title": "Clear",
+      "search-detached-cancel-button-title": "Cancel",
+      "search-submit-button-title": "Submit"
+    }
+  }</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body class="floating slimcontent">
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Measuring Networks</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Math 168: <br><b>Introduction to Networks</b></a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Figure Code</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="../syllabus/syllabus.html" class="sidebar-item-text sidebar-link">Syllabus</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus/specifications.html" class="sidebar-item-text sidebar-link">Standard Specifications</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus/resources.html" class="sidebar-item-text sidebar-link">Health, Wellbeing, and Equity</a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="../chapters/intro.html" class="sidebar-item-text sidebar-link">Lecture Notes</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/measurement.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Measuring Networks</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/random_graphs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Random Graphs: Erdős–Rényi</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/degree_sequences.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Random Graphs: Degree Sequences</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/interlude_research_survey.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interlude: A Rapid Survey of Research Questions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/ranking_centrality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ranking and Centrality</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/clustering_community.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Clustering and Community Detection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/social_responsibility.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Networks and Social Responsibility</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/dynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dynamics on Networks</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Appendices</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/additional_resources.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Network Science Resources</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/acknowledgements.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Acknowledgements</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Table of contents</h2>
+<ul>
+<li><a href="#networks-and-matrices" class="nav-link active" data-scroll-target="#networks-and-matrices"> <span class="header-section-number">1.1</span> Networks and Matrices</a>
+<ul class="collapse">
+<li><a href="#the-adjacency-matrix" class="nav-link" data-scroll-target="#the-adjacency-matrix">The Adjacency Matrix</a></li>
+<li><a href="#a-linear-algebra-interlude" class="nav-link" data-scroll-target="#a-linear-algebra-interlude">A Linear Algebra Interlude</a></li>
+<li><a href="#degrees" class="nav-link" data-scroll-target="#degrees">Degrees</a></li>
+<li><a href="#the-laplacian" class="nav-link" data-scroll-target="#the-laplacian">The Laplacian</a></li>
+<li><a href="#many-more-matrices" class="nav-link" data-scroll-target="#many-more-matrices">Many More Matrices…</a></li>
+<li><a href="#directed-and-weighted-graphs" class="nav-link" data-scroll-target="#directed-and-weighted-graphs">Directed and Weighted Graphs</a></li>
+</ul></li>
+<li><a href="#measures-and-metrics" class="nav-link" data-scroll-target="#measures-and-metrics">Measures and Metrics</a>
+<ul class="collapse">
+<li><a href="#ideas-connected-to-walks" class="nav-link" data-scroll-target="#ideas-connected-to-walks">Ideas Connected to Walks</a></li>
+<li><a href="#triadic-closure-transitivity" class="nav-link" data-scroll-target="#triadic-closure-transitivity">Triadic Closure (Transitivity)</a></li>
+<li><a href="#community-structure-and-graph-cuts" class="nav-link" data-scroll-target="#community-structure-and-graph-cuts">Community Structure and Graph Cuts</a></li>
+<li><a href="#looking-ahead" class="nav-link" data-scroll-target="#looking-ahead">Looking Ahead</a></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+<header id="title-block-header" class="quarto-title-block default">
+
+<div class="quarto-title"><h1 class="title display-7"><span id="sec-measurement" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Measuring Networks</span></span></h1></div></header>
+
+<p><em>These lecture notes are based on Chapters 6 and 7 of Newman. They are a short set of highlights, and are not a substitute for actually reading these chapters! There will be content not covered in these notes that you’ll need for homework problems.</em></p>
+<section id="networks-and-matrices" class="level2 page-columns page-full" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="networks-and-matrices"><span class="header-section-number">1.1</span> Networks and Matrices</h2>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-graph" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.1 (Undirected Graph) </strong></span></p>
+<p>An <strong>undirected graph</strong> <span class="math inline">\(G = (N, E)\)</span> is a set of nodes <span class="math inline">\(N\)</span> and a set of edges <span class="math inline">\(E\subseteq N\times N\)</span>. Each element of <span class="math inline">\(E\)</span> is an <em>unordered</em> pair of nodes in <span class="math inline">\(N\)</span>. An element of <span class="math inline">\(E\)</span> can be written <span class="math inline">\((i,j)\)</span>, where <span class="math inline">\(i, j \in N\)</span>. In a <strong>simple</strong> undirected graph, <span class="math inline">\(i \neq j\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<p>When <span class="math inline">\(i = j\)</span> for some element of <span class="math inline">\(E\)</span>, this is called a <em>self-loop</em>. Simple graphs contain no self-loops.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>See Newman 6.2 for discussion of self-loops and other ways graphs can be non-simple.</p>
+</div></div><p>Matrices are fundamental tools for studying networks. Why is that? The key point is that a graph is a collection of pairwise relationships encoded by <span class="math inline">\(E\)</span>, and matrices are really good for describing pairwise relationships!</p>
+<section id="the-adjacency-matrix" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="the-adjacency-matrix">The Adjacency Matrix</h3>
+<p>Easily the most fundamental of the matrices associated to a graph <span class="math inline">\(G\)</span> is the adjacency matrix</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-adjacency-matrix" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.2 (Adjacency Matrix) </strong></span></p>
+<p>The <strong>adjacency matrix</strong> <span class="math inline">\(\mathbf{A}\)</span> of a graph <span class="math inline">\(G = (N,E)\)</span> is an <span class="math inline">\(n \times n\)</span> matrix, where <span class="math inline">\(n = \left|N\right|\)</span>. Its entries are <span class="math display">\[
+a_{ij} =
+\begin{cases}
+    1 &amp;\quad (i,j) \in E \\
+    0 &amp;\quad \mathrm{otherwise.}
+\end{cases}
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+<p>The reason the adjacency matrix is so important is that it is a lossless representation of the graph structure – given knowledge of <span class="math inline">\(\mathbf{A}\)</span>, you can fully reconstruct the graph. Not all matrices have this property.</p>
+<section id="walks" class="level4 unnumbered page-columns page-full">
+<h4 class="unnumbered anchored" data-anchor-id="walks">Walks</h4>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-walks" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.3 </strong></span>A <strong>walk</strong> of length <span class="math inline">\(k \geq 2\)</span>* in a graph is a set of edges <span class="math inline">\((i_1,j_1), (i_2,j_2), \ldots, (i_k,j_k)\)</span> with the property that <span class="math inline">\(i_\ell = j_{\ell-1}\)</span> for each <span class="math inline">\(2 \leq \ell \leq k\)</span>. We say that this is a walk <em>from <span class="math inline">\(i_1\)</span> to <span class="math inline">\(j_k\)</span></em>.</p>
+<p>A single edge <span class="math inline">\((i,j)\)</span> is always considered a walk of length 1 from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<p>A question that pops up a lot in network analysis is:</p>
+<blockquote class="blockquote">
+<p>How many walks of length <span class="math inline">\(k\)</span> exist between nodes <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>?</p>
+</blockquote>
+<p>The adjacency matrix gives a concise way to address this question. First, let’s consider <span class="math inline">\(k = 1\)</span>. That’s just the number of edges between nodes <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, which is exactly <span class="math inline">\(a_{ij}\)</span>. Said another way,</p>
+<blockquote class="blockquote">
+<p>The <span class="math inline">\(ij\)</span> th entry of <span class="math inline">\(\mathbf{A}^1\)</span> counts the number of walks of length <span class="math inline">\(1\)</span> between nodes <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>.</p>
+</blockquote>
+<p>This turns out to generalize smoothly by induction.</p>
+<div class="callout-tip callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The <span class="math inline">\(ij\)</span>-th entry of the matrix <span class="math inline">\(\mathbf{A}^k\)</span> contains the number of walks of length <span class="math inline">\(k\)</span> from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span>.</p>
+</div>
+</div>
+</div>
+<p>Here’s a sketch of the proof. Suppose that <span class="math inline">\(\mathbf{W}(k)\)</span> is a matrix whose entry <span class="math inline">\(w_{ij}(k)\)</span> contains the number of walks between nodes <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> of length <span class="math inline">\(k\)</span>. Then, <span class="math inline">\(\mathbf{W}(k+1) = \mathbf{W}(k)\mathbf{A}\)</span> has entries <span class="math inline">\(w_{ij}(k+1)\)</span> containing the number of walks of length <span class="math inline">\(k+1\)</span>. To see this, expand the matrix product:</p>
+<p><span class="math display">\[[\mathbf{W}(k)\mathbf{A}]_{ij} = \sum_{\ell \in N}w_{i\ell}(k)a_{\ell j}\;.\]</span></p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>cf.&nbsp;Newman’s eq. 6.22</p>
+</div></div><div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Exercise</strong>: What’s a <em>very fast</em> argument that this sum does indeed express the number of walks of length <span class="math inline">\(k+1\)</span> from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span>?</p>
+</div>
+</div>
+</div>
+<p>Working through this exercise and applying induction, you can see that <span class="math inline">\(\mathbf{W}(k) = \mathbf{A}^k\)</span>, which completes the proof.</p>
+</section>
+</section>
+<section id="a-linear-algebra-interlude" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="a-linear-algebra-interlude">A Linear Algebra Interlude</h3>
+<p>What kind of information does the matrix <span class="math inline">\(\mathbf{A}\)</span> hold about the graph? Well, one answer is “all of it,” because <span class="math inline">\(\mathbf{A}\)</span> determines the graph up to permutations of node labels. But there’s a more useful answer as well. When we as about the information contained in a matrix, we often look at the <em>eigenvalues</em> and <em>eigenvectors.</em> The eigenvalues and eigenvectors of the adjacency matrix can contain some useful information about the graph structure. Let’s see an example.</p>
+<p>Let</p>
+<p><span class="math display">\[
+\mathbf{K}_n = \left[\begin{matrix}
+    0 &amp; 1 &amp; 1 &amp; \cdots &amp; 1 \\
+    1 &amp; 0 &amp; 1 &amp; \cdots &amp; 1 \\
+    1 &amp; 1 &amp; 0 &amp; \cdots &amp; 1 \\
+    \vdots &amp; \vdots &amp;\vdots &amp;\ddots &amp; \vdots \\
+    1 &amp; 1 &amp; 1 &amp; 0 \cdots &amp; 0
+\end{matrix}\right]\;.
+\]</span></p>
+<p>There are <span class="math inline">\(n\)</span> rows and <span class="math inline">\(n\)</span> columns.</p>
+<p>The is the adjacency matrix of an <em>n-clique</em>: a graph on <span class="math inline">\(n\)</span> nodes in which all nodes are connected to each other.</p>
+<p>Let’s now consider the matrix <span class="math display">\[
+\mathbf{A}_{2n} = \left[\begin{matrix}
+    \mathbf{K}_n &amp; \mathbf{I}_n \\
+    \mathbf{I}_n &amp; \mathbf{K}_n
+\end{matrix}\right]\;.
+\]</span></p>
+<p>Here, <span class="math inline">\(\mathbf{I}_n\)</span> is the <span class="math inline">\(n\times n\)</span> identity matrix.</p>
+<p>Now, <span class="math inline">\(\mathbf{A}_n\)</span> is the matrix of two cliques that have been “paired”, with each node in one clique connected to exactly one node in the other clique. A small example is shown in <a href="#fig-paired-cliques">Figure&nbsp;<span>1.1</span></a>.</p>
+<div class="cell page-columns page-full" data-hash="measurement_cache/html/fig-paired-cliques_0fa4f70c0855dae52668b2f8d511fd57">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#f5b895"</span>, <span class="st">"#0f4c81"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="fu">create_complete</span>(n)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> K <span class="sc">%&gt;%</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">ifelse</span>(<span class="fu">row_number</span>() <span class="sc">&lt;=</span> <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">ifelse</span>(<span class="fu">row_number</span>() <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>G <span class="ot">&lt;-</span> <span class="fu">bind_graphs</span>(K, K) <span class="sc">%&gt;%</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">ifelse</span>(id <span class="sc">&gt;</span> n, x <span class="sc">+</span> <span class="dv">2</span>, x),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="fu">round</span>((<span class="fu">row_number</span>() <span class="sc">&lt;=</span> n)),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="fu">factor</span>(group)) </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>G <span class="ot">&lt;-</span> G <span class="sc">%&gt;%</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_edges</span>(<span class="fu">tibble</span>(<span class="at">from =</span> <span class="dv">1</span><span class="sc">:</span>(n), <span class="at">to =</span> <span class="dv">1</span><span class="sc">:</span>(n) <span class="sc">+</span> n))</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>G <span class="sc">%&gt;%</span> </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggraph</span>() <span class="sc">+</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_edge_link</span>(<span class="at">start_cap =</span> <span class="fu">circle</span>(<span class="dv">3</span>, <span class="st">'mm'</span>),</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                   <span class="at">end_cap =</span> <span class="fu">circle</span>(<span class="dv">4</span>, <span class="st">'mm'</span>), </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>                   <span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">factor</span>(group),  <span class="at">shape =</span> <span class="fu">factor</span>(group)),  <span class="at">size =</span> <span class="dv">10</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">21</span>, <span class="dv">22</span>)) <span class="sc">+</span> </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors) <span class="sc">+</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>, <span class="at">shape =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>),</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+<div class="no-row-height column-margin column-container page-columns page-full"><div class="cell-output-display page-columns page-full">
+<div id="fig-paired-cliques" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="measurement_files/figure-html/fig-paired-cliques-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 1.1: A visualization of the ‘paired cliques’ example with 10 total nodes. Nodes in the first clique are represented by orange circles, and nodes in the second clique by blue squares.</figcaption><p></p>
+</figure>
+</div>
+</div></div></div>
+<p>What kinds of information are contained in the first few eigenvectors of <span class="math inline">\(\mathbf{A}_{2n}\)</span>?</p>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Exercise</strong>: The vector of ones <span class="math inline">\(\mathbf{1}_{2n}\)</span> is an eigenvector of <span class="math inline">\(\mathbf{A}_{2n}\)</span>. What is its eigenvalue? How do we know whether it is the largest one?</p>
+</div>
+</div>
+</div>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Exercise</strong>: The vector <span class="math inline">\(\mathbf{v} = (\mathbf{1}_n, - \mathbf{1}_n)\)</span> is another eigenvector of <span class="math inline">\(\mathbf{A}_{2n}\)</span>. What is its eigenvalue?</p>
+</div>
+</div>
+</div>
+<p>In fact, these are the two largest eigenvalues of <span class="math inline">\(\mathbf{A}\)</span>. The first one isn’t very interesting, but note that the second one actually separates the two cliques!</p>
+<p>So, suppose we were given a graph where:</p>
+<ul>
+<li>We knew that the graph had the paired-clique structure, but</li>
+<li>We didn’t know which node belonged to which clique.</li>
+</ul>
+<p>A way to solve this problem would be to compute the <em>second eigenvector</em> <span class="math inline">\(\mathbf{v}\)</span>. The signs of <span class="math inline">\(\mathbf{v}\)</span> separate the two cliques. This idea is the foundation of many <em>spectral graph clustering</em> algorithms.</p>
+<p>In fact, the adjacency matrix isn’t usually the optimal matrix to use for spectral algorithms. This is a deep and important story related to <em>random matrix theory</em>, which has many connections to network science.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><span class="citation" data-cites="nadakuditi2012graph">(<a href="../appendices/references.html#ref-nadakuditi2012graph" role="doc-biblioref">Nadakuditi and Newman 2012</a>)</span></p>
+</div></div></section>
+<section id="degrees" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="degrees">Degrees</h3>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-degree" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.4 (Degree) </strong></span></p>
+<p>The <em>degree</em> <span class="math inline">\(k_i\)</span> of a node <span class="math inline">\(i\)</span> is the number of edges attached to it. <span class="math display">\[
+k_i = \lvert \left\{j:(i,j) \in E\right\}\rvert\;.
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+<p>The degree is a fundamental quantity in many network analyses. Especially the <em>distribution of degrees</em> in the network can play a major role in both theory and applications.</p>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Exercise</strong>: show that the diagonal entries of <span class="math inline">\(\mathbf{A}^2\)</span> give the degree of each node.</p>
+</div>
+</div>
+</div>
+<p>We often collect the degrees into a diagonal matrix <span class="math inline">\(\mathbf{D}\)</span> whose diagonal entry <span class="math inline">\(d_{ii} = k_i\)</span> contains the degree of node <span class="math inline">\(i\)</span>.</p>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Exercise</strong>: Show that <span class="math inline">\(\sum_{i = 1}^n d_i = 2m\)</span>, where <span class="math inline">\(m\)</span> is the number of edges in <span class="math inline">\(G\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-laplacian" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="the-laplacian">The Laplacian</h3>
+<p>Another very important matrix for network representations is the <em>graph Laplacian matrix</em>. Actually, there are multiple matrices with claim to this name, but the one we’ll usually focus on is the combinatorial Laplacian.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-laplacian" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.5 (Combinatorial Graph Laplacian) </strong></span></p>
+<p>The <strong>combinatorial Laplacian</strong> <span class="math inline">\(\mathbf{L}\)</span> of a graph with adjacency matrix <span class="math inline">\(\mathbf{A}\)</span> is <span class="math inline">\(\mathbf{L} = \mathbf{D} - \mathbf{A}\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Exercise</strong>: Given knowledge of the combinatorial Laplacian <span class="math inline">\(\mathbf{L}\)</span>, is it possible to exactly reconstruct the graph?</p>
+</div>
+</div>
+</div>
+<p>The Laplacian is often used to represent <em>(diffusive) flows</em> of quantities between nodes. To see why, suppose that I have some amount of water <span class="math inline">\(x_i\)</span> on each node <span class="math inline">\(i\)</span>, and that I collect this into a vector <span class="math inline">\(\mathbf{x}\)</span>. Now, consider the vector <span class="math inline">\(\mathbf{L}\mathbf{x}\)</span>.</p>
+<p><span class="math display">\[
+\begin{align}
+    [\mathbf{L}\mathbf{x}]_i &amp;= \sum_{j} \left(d_{ij}x_j - a_{ij}x_j \right) \\
+    &amp;= \underbrace{k_ix_i}_{\text{flow out of }i} - \underbrace{\sum_{j} a_{ij}x_j}_{\text{flow into }i}\;.
+\end{align}
+\]</span></p>
+<p>The first term distributes the water <span class="math inline">\(x_i\)</span> at node <span class="math inline">\(i\)</span> to each of <span class="math inline">\(i\)</span>’s <span class="math inline">\(k_i\)</span> neighbors, while the second term allows water to flow into node <span class="math inline">\(i\)</span> from each neighbor along each edge connecting them.</p>
+<p>The Laplacian matrix <span class="math inline">\(\mathbf{L}\)</span> will appear in several places throughout this course, when we consider random walks, graph partitioning, and dynamical systems.</p>
+</section>
+<section id="many-more-matrices" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="many-more-matrices">Many More Matrices…</h3>
+<p>There are LOTS of matrices that can be associated to networks. There’s no “right” one – some are more useful than others for certain jobs. Throughout this course, we’ll see examples of matrices that are well-suited to certain specific tasks, like ranking or clustering. If you’re interested in searching around a bit, some other fun matrices are:</p>
+<ul>
+<li>The <em>nonbacktracking</em> or <em>Hashimoto</em> matrix.</li>
+<li>The <em>modularity</em> matrix.</li>
+<li>The <em>random-walk transition</em> matrix.</li>
+<li>The random-walk and symmetric <em>normalized Laplacian</em> matrices.</li>
+<li>The <em>PageRank</em> matrix.</li>
+<li>The <em>node-edge incidence</em> matrix.</li>
+</ul>
+<p>And the list goes on!</p>
+</section>
+<section id="directed-and-weighted-graphs" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="directed-and-weighted-graphs">Directed and Weighted Graphs</h3>
+<p>Newman Chapter 6 contains a nice introductory discussion of directed and weighted graphs. We won’t spend a lot of time on these at this stage of the course, but it’s worthwhile reading this material as it may be of interest as you think about projects.</p>
+</section>
+</section>
+<section id="measures-and-metrics" class="level2 unnumbered page-columns page-full">
+<h2 class="unnumbered anchored" data-anchor-id="measures-and-metrics">Measures and Metrics</h2>
+<p>There are <strong>lots</strong> of questions we can ask about network data. Even in the setting of simple graphs, there are some very interesting questions with surprisingly complex answers. In this section, we’ll consider some (not all) of the most important things to <em>measure</em> in networks.</p>
+<section id="ideas-connected-to-walks" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="ideas-connected-to-walks">Ideas Connected to Walks</h3>
+<p>Walks are a fundamental idea in networks. If we imagine networks as connecting things together, walks and walk counts are direct quantifications of how “connected” the network really is. Here are a few things we can measure about networks using walks.</p>
+<section id="connected-components" class="level4">
+<h4 class="anchored" data-anchor-id="connected-components">Connected Components</h4>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-connected" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.6 (Connected Components) </strong></span></p>
+<p>Two nodes <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are <strong>path-connected</strong> if there exists a path <span class="math inline">\(i \leftrightarrow j\)</span>. The set of nodes <span class="math inline">\(j\)</span> such that <span class="math inline">\(i\)</span> is path-connected to <span class="math inline">\(j\)</span> is called the <strong>connected component</strong> of <span class="math inline">\(i\)</span>. A network is <strong>connected</strong> if it has only one connected component.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Exercise</strong>: Show that the relation “<span class="math inline">\(i\)</span> is path-connected to <span class="math inline">\(j\)</span>” is an equivalence relation on the set of nodes <span class="math inline">\(N\)</span>.</p>
+</div>
+</div>
+</div>
+<p>Intuitively, a disconnected network is fragmented into two or more pieces. Almost all network analysis problems are most interesting and challenging when the network is connected, and so we’ll often assume this in data analysis applications. Mathematically, however, the question of when certain models of networks become connected has a very rich theory that we’ll see a small part of.</p>
+</section>
+<section id="geodesics-and-graph-diameter" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="geodesics-and-graph-diameter">Geodesics and Graph Diameter</h4>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-geodesic-path" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.7 (Geodesic Paths) </strong></span></p>
+<p>The <strong>length</strong> of a walk is the number of edges it contains. A <strong>geodesic path</strong> (also called a <strong>shortest path</strong>) from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span> is a walk fom <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span> of minimum length; i.e.&nbsp;a walk such that no other walk has shorter length. The length of a geodesic path is called the <strong>(geodeisc) distance</strong> between <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>. If two nodes are not path-connected, their geodesic distance is undefined.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/unnamed-chunk-3_0f3eb815b15a14b4c75fcfb9722cea50">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">erdos.renyi.game</span>(<span class="dv">20</span>, <span class="dv">40</span>, <span class="at">type =</span> <span class="st">"gnm"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tbl_graph</span>()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">shortest_paths</span>(g, <span class="dv">5</span>, <span class="dv">12</span>)<span class="sc">$</span>vpath</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(g, <span class="at">path=</span>path[[<span class="dv">1</span>]])<span class="sc">$</span>on_path <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> g <span class="sc">%&gt;%</span> </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tbl_graph</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">activate</span>(edges) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">on_path =</span> <span class="sc">!</span><span class="fu">is.na</span>(on_path))</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>g <span class="sc">%&gt;%</span> </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggraph</span>() <span class="sc">+</span> </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="fu">aes</span>(<span class="at">width =</span> on_path), <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#73b9ee"</span>) <span class="sc">+</span> </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span> </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_edge_width_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(.<span class="dv">3</span>, <span class="dv">2</span>)) <span class="sc">+</span>  </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">edge_color =</span> <span class="st">"none"</span>, <span class="at">edge_width =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="measurement_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">A graph with 20 nodes and 40 edges. While it can be difficult to navigate through even small graphs, note that some nodes are clearly close together, while others are far apart. <br><br> A geodesic (shortest path) is shown between two selected nodes. <br><br>There is one node that is not connected to any of its neighbors, and its distance to them is undefined. As a result, this graph has undefined diameter.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The <strong>diameter</strong> of a graph is the longest length of geodesic paths across all pairs of nodes. If the graph is disconnected, the diameter is undefined.</p>
+</div>
+</div>
+</div>
+<p>Another way to say this is that, in a connected graph, the diameter is the distance between the two nodes that are farthest away.</p>
+</section>
+<section id="betweenness-centrality" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="betweenness-centrality">Betweenness Centrality</h4>
+<p>How <em>important</em> is a node? We’ll come back to this question several times in the course. The idea of geodesic paths allows us to consider one approach to this question:</p>
+<div class="callout-caution callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Idea</strong>: A node is important if you frequently have to go <em>through</em> it to get to other nodes.</p>
+</div>
+</div>
+</div>
+<p>This idea leads us to the idea of betweenness centrality.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-betweenness" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.8 (Betweenness Centrality) </strong></span></p>
+<p>The <strong>betweenness centrality</strong> <span class="math inline">\(b_i\)</span> of a node <span class="math inline">\(i\)</span> is the number of geodesic paths in the graph that pass through node <span class="math inline">\(i\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<p><a href="#fig-betweenness">Figure&nbsp;<span>1.2</span></a> shows a network with nodes sized according to their betweenness centrality.</p>
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/fig-betweenness_8ce051dfe07561a3a79d06605dc9d274">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraphdata)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(karate)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> karate <span class="sc">%&gt;%</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tbl_graph</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">btwn =</span> <span class="fu">centrality_betweenness</span>())</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>g <span class="sc">%&gt;%</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggraph</span>() <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_edge_link</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> btwn), <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#73b9ee"</span>) <span class="sc">+</span> </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span> </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">size =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-betweenness" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="measurement_files/figure-html/fig-betweenness-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 1.2: The famous Zachary Karate Club network <span class="citation" data-cites="zachary1977information">(<a href="../appendices/references.html#ref-zachary1977information" role="doc-biblioref">Zachary 1977</a>)</span>. The size of each node reflects its betweenness centrality.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="katz-centrality" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="katz-centrality">Katz Centrality</h4>
+<p>Here’s another centrality concept that is going to draw on our linear algebra skills a bit.</p>
+<p>Recall that <span class="math inline">\(\mathbf{A}^k\)</span> has entries that count the total number of walks of length <span class="math inline">\(k\)</span> between two nodes. Here’s an alternative idea of node importance:</p>
+<div class="callout-caution callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>A node <span class="math inline">\(i\)</span> is important when there are lots of short walks in the graph that lead to <span class="math inline">\(i\)</span>.</p>
+</div>
+</div>
+</div>
+<p>This idea takes a bit more effort to operationalize mathematically.</p>
+<p>First, the number of walks of length <span class="math inline">\(k\)</span> that lead to each node can be computed by the vector <span class="math inline">\(\mathbf{v}(k) = \mathbf{A}^k\mathbf{1}_n\)</span>. Now, <span class="math inline">\(v_i(k)\)</span> gives the total number of <span class="math inline">\(k\)</span>-walks that lead to node <span class="math inline">\(i\)</span>. Now, the total number of walks of length <span class="math inline">\(\ell\)</span> or less leading to <span class="math inline">\(i\)</span> is <span class="math inline">\(\sum_{k = 1}^{\ell} v_i(k)\)</span>.</p>
+<p>Now, if we all <span class="math inline">\(\ell \rightarrow \infty\)</span>, then we’ll find that the total number of walks to <span class="math inline">\(i\)</span> is infinite. But we can make progress if we instead decide that <em>short</em> walks are more important than longer walks. This makes sense – if I have to go on a long walk to find you, then you might be in a relatively remote, out-of-the-way location.</p>
+<p>So, we’ll add a <em>discount factor</em> <span class="math inline">\(\alpha &lt; 1\)</span>. A walk of length <span class="math inline">\(k\)</span> gets a discount of <span class="math inline">\(\alpha^k\)</span>. The weighted number of walks to <span class="math inline">\(i\)</span> is <span class="math inline">\(\sum_{k = 1}^{\infty} \alpha^kv_i(k)\)</span>. The vector containing this information for each node is the vector</p>
+<p><span class="math display">\[
+\mathbf{v}(\alpha) = \sum_{k = 1}^{\infty} \alpha^k\mathbf{v}(k)\;.
+\]</span></p>
+<p>Perhaps surprisingly, we’re not stuck. Recall the definition of <span class="math inline">\(\mathbf{v}(k)\)</span>, which lets us write</p>
+<p><span class="math display">\[
+\mathbf{v}(\alpha) = \sum_{k = 1}^{\infty} \alpha^k\mathbf{A}^k\mathbf{1}_n = \left[\sum_{k = 1}^{\infty} (\alpha\mathbf{A})^k\right]\mathbf{1}_n\;.
+\]</span></p>
+<p>Now we need a matrix trick.</p>
+<div class="callout-tip callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If <span class="math inline">\(\mathbf{B}\in \mathbb{R}^{n\times n}\)</span> is a symmetric matrix and <span class="math inline">\(\left|\lambda\right| &lt; 1\)</span> for any eigenvalue <span class="math inline">\(\lambda\)</span> of <span class="math inline">\(\mathbf{B}\)</span>, then<br>
+<span class="math display">\[
+\sum_{k = 1}^{\infty} \mathbf{B}^k = (\mathbf{I}_n - \mathbf{B})^{-1} - \mathbf{I}_n\;.
+\]</span></p>
+</div>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Compare this theorem to the geometric series formula <span class="math display">\[
+\sum_{k = 1}^{\infty} r^k = (1 - r)^{-1} - 1
+\]</span> for scalar <span class="math inline">\(\left|r \right| &lt; 1\)</span>.</p>
+</div></div><p>We can use this result to compute <span class="math inline">\(\mathbf{v}(\alpha)\)</span>. Provided that <span class="math inline">\(\alpha\)</span> is smaller than <span class="math inline">\(\frac{1}{\left|\lambda\right|}\)</span> for any eigenvalue <span class="math inline">\(\lambda\)</span> of <span class="math inline">\(\mathbf{A}\)</span>, we have the <em>Katz centrality</em>.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-katz" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.9 </strong></span></p>
+<p>The <strong>Katz centrality</strong> <span class="citation" data-cites="katz1953new">(<a href="../appendices/references.html#ref-katz1953new" role="doc-biblioref">Katz 1953</a>)</span> of node <span class="math inline">\(i\)</span> with parameter <span class="math inline">\(\alpha\)</span> is the <span class="math inline">\(i\)</span>th entry of the vector <span class="math display">\[
+\mathbf{v}(\alpha) = ((\mathbf{I}_n - \alpha\mathbf{A})^{-1}  - \mathbf{I}_n)\mathbf{1}_n\;.
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/fig-katz_e0c48936f477b18de40bab05747a6bfe">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraphdata)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(karate)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> karate <span class="sc">%&gt;%</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tbl_graph</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">btwn =</span> <span class="fu">centrality_katz</span>(<span class="at">alpha =</span> .<span class="dv">05</span>))</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>g <span class="sc">%&gt;%</span> </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggraph</span>() <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_edge_link</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> btwn), <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#73b9ee"</span>) <span class="sc">+</span> </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span> </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">size =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-katz" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="measurement_files/figure-html/fig-katz-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 1.3: The Zachary Karate Club network <span class="citation" data-cites="zachary1977information">(<a href="../appendices/references.html#ref-zachary1977information" role="doc-biblioref">Zachary 1977</a>)</span>. The size of each node reflects its Katz centrality with α = 0.05.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As shown in <a href="#fig-katz">Figure&nbsp;<span>1.3</span></a>, the Katz centrality leads to less dramatic results, while still highlighting nodes that appear to be “in the center” of the graph.</p>
+</section>
+</section>
+<section id="triadic-closure-transitivity" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="triadic-closure-transitivity">Triadic Closure (Transitivity)</h3>
+<p>Think of two of your friends. Are they friends with each other? This kind of “coincidence” happens quite frequently in social networks. Let’s look at two ways to quantify this effect.</p>
+<p>In graph terms, when you think of two of your friends, you are thinking of two edges connected to you in your social network, and asking whether there exists a third edge that creates a <em>triangle</em>. So, we have a situation like that shown in <a href="#fig-transitivity">Figure&nbsp;<span>1.4</span></a>.</p>
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/fig-transitivity_6ba636cce7da7166cade4e7e85bd7ce3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_graph</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">edges =</span> <span class="fu">tibble</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">from =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>), </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">to =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">q =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggraph</span>() <span class="sc">+</span> </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_edge_link</span>(<span class="fu">aes</span>(<span class="at">edge_linetype =</span> q), <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">edge_width =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_node_point</span>(<span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#73b9ee"</span>, <span class="at">size =</span> <span class="dv">15</span>) <span class="sc">+</span> </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span> </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">edge_linetype =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-transitivity" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="measurement_files/figure-html/fig-transitivity-1.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 1.4: Triadic closure. The two solid edge form a <em>wedge</em> (a possible triangle). The dashed edge turns the <em>wedge</em> into a (realized) triangle.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When the dotted line “closes the triangle,” we often call this “closing the triangle.* The phrase <em>triadic closure,</em> also sometimes called <em>transitivity</em>, refers to the existence of large numbers of closed triangles in many social networks.</p>
+<p>How do we quantify triadic closure? There’s a simple approach to this:</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-local-clustering" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.10 (Local Clustering) </strong></span>The <strong>local clustering coefficient</strong> <span class="math inline">\(C_i\)</span> measures the proportion of possible triangles connected to <span class="math inline">\(i\)</span> that are realized. If <span class="math inline">\(i \sim j\)</span> means “<span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are connected, then we can write this as</p>
+<p><span class="math display">\[
+C_i = \frac{\sum_{j, \ell \sim i} a_{j\ell}}{\binom{k_i}{2}}
+\]</span></p>
+<p><em>Remember: <span class="math inline">\(k_i\)</span> is the degree (number of neighbors) of node <span class="math inline">\(i\)</span></em>.</p>
+</div>
+</div>
+</div>
+</div>
+<p>In this definition, the denominator is the number of pairs of neighbors of node <span class="math inline">\(i\)</span>. We can think of this as counting the number of <em>possible</em> triangles. The numerator is then the number of <em>realized triangles</em>. The local clustering coefficient is always a number between 0 and 1.</p>
+<div class="callout-caution callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Exercise</strong>: Write the numerator in terms of the adjacency matrix <span class="math inline">\(\mathbf{A}\)</span>.</p>
+<p><em>Hint</em>: a triangle is a special kind of walk of length <span class="math inline">\(3\)</span>.</p>
+</div>
+</div>
+</div>
+<p>The local clustering coefficient tells us about the rate of triadic closure around a specific node <span class="math inline">\(i\)</span>. There is also a <em>global</em> clustering coefficient that quantifies the rate of triadic closure in the entire network. The idea is the same: it’s the proportion of possible triangles that are actualized:</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-global-clustering" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.11 (Global Clustering) </strong></span></p>
+<p>The <strong>global clustering coefficient</strong> of a graph is <span class="math display">\[
+\frac{\text{Number of triangles} \times 3}{\text{Number of wedges}}
+\]</span> Here, a <strong>wedge</strong> is a possible triangle, like the solid lines shown in the figure above.</p>
+</div>
+</div>
+</div>
+</div>
+<p>The reason for the factor of 3 in the numerator is that the same triangle can be formed from 3 different wedges.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>cf.&nbsp;Newman p.&nbsp;184</p>
+</div></div><div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>It is <strong>not</strong> the case that the global clustering coefficient can be obtained by averaging the local clustering coefficients!</p>
+</div>
+</div>
+</div>
+<p>The prevalence of triadic closure in many real-world networks motivated one of the first mega-papers in network science, which proposed a mathematical model of networks that included clustering <span class="citation" data-cites="watts1998collective">(<a href="../appendices/references.html#ref-watts1998collective" role="doc-biblioref">Watts and Strogatz 1998</a>)</span>. A sample from this model is shown in <a href="#fig-small-world">Figure&nbsp;<span>1.5</span></a>. This paper has now been cited 48,000 times over 24 years.</p>
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/fig-small-world_05b3d4930faa741f3179067c7f2d224a">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">sample_smallworld</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="fl">0.05</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>g <span class="sc">%&gt;%</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggraph</span>() <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_edge_link</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_node_point</span>(<span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#73b9ee"</span>, <span class="at">size =</span> <span class="dv">6</span>) <span class="sc">+</span> </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span> </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">size =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-small-world" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="measurement_files/figure-html/fig-small-world-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">Figure 1.5: A small network sampled from the small-world model of <span class="citation" data-cites="watts1998collective">Watts and Strogatz (<a href="../appendices/references.html#ref-watts1998collective" role="doc-biblioref">1998</a>)</span>. This model generates graphs with high clustering coefficients. You can likely pick out a large number of triangles by eye.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="community-structure-and-graph-cuts" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="community-structure-and-graph-cuts">Community Structure and Graph Cuts</h3>
+<p>Many networks display what is sometimes called <strong>community structure</strong>. There isn’t really a formal definition of community structure, but it refers broadly to the idea that a graph can often be divided into multiple parts. Here’s an example of a graph with community structure:</p>
+<div class="cell page-columns page-full" data-layout-align="center" data-hash="measurement_cache/html/unnamed-chunk-9_039b1c57372a145c3fcea9e7582ed639">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R code</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">play_islands</span>(<span class="dv">2</span>, <span class="dv">10</span>, <span class="fl">0.7</span>, <span class="dv">2</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>g <span class="sc">%&gt;%</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggraph</span>() <span class="sc">+</span> </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#73b9ee"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="measurement_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption margin-caption">A network with 20 nodes. This network displays one of many common properties in real-world networks, called <em>community structure</em>. In this case, the network is clustered into two densely interconnected ‘communities’ that are only loosely connected to each other. Community structure often accompanies phenomena such as echo chambers in online media.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You might be able to visually separate this graph into two pieces. Heuristically, what we’re looking for is lots of edges <strong>within</strong> each piece, but few edges <strong>between</strong> the pieces.</p>
+<p>Let’s formalize this a bit.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-clustering" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.12 (Clustering) </strong></span>A <strong>clustering</strong> <span class="math inline">\((C_1,\ldots,C_\ell)\)</span> of a graph is a partition of the nodes:</p>
+<p><span class="math display">\[
+N = \bigcup_{j = 1}^{\ell} C_j\;, \quad C_j \cap C_{j'} = \emptyset\;.
+\]</span></p>
+<p>We’ll write the cluster holding node <span class="math inline">\(i\)</span> as <span class="math inline">\(c_i\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<p><em>Note</em>: “clustering” here is confusingly and totally unrelated to the “clustering coefficients” from before.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="def-cut" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.13 (Cut Size) </strong></span>The <strong>cut size</strong> of a clustering is the number of edges that connect nodes in different clusters:</p>
+<p><span class="math display">\[
+\mathrm{Cut}(C_1,\ldots,C_\ell) = \frac{1}{2}\sum_{i \neq j} a_{ij}\mathbb{1}[c_i \neq c_j]
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+<p>The reason for the factor <span class="math inline">\(1/2\)</span> is that we don’t need to count the edges <span class="math inline">\((i,j)\)</span> and <span class="math inline">\((j,i)\)</span> separately – it’s the same edge!</p>
+<p>An important special case arises when we aim to partition a graph into two clusters. In this case, we can write the cut size in terms of our friend, the combinatorial graph Laplacian.</p>
+<p>Let <span class="math inline">\(\mathbf{s} \in \mathbb{R}^n\)</span> be the vector with entries</p>
+<p><span class="math display">\[
+s_i = \begin{cases}+1 &amp;\quad i \in C_1 \\ -1 &amp;\quad i \in C_2\end{cases}\;.
+\]</span></p>
+<div class="callout-tip callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="thm-cut" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1.1 (Laplacian Formula for Cuts) </strong></span></p>
+<p>We have <span class="math inline">\(\mathrm{Cut}(C_1,C_2) = \frac{1}{4}\mathbf{s}^T\mathbf{L}\mathbf{s}\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-tip callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>To prove this, let’s start by just computing <span class="math inline">\(\mathbf{x}^T\mathbf{L}\mathbf{x}\)</span> for arbitrary <span class="math inline">\(\mathbf{x} \in \mathbb{R}^n\)</span>. We need to recall the definition of <span class="math inline">\(\mathbf{L}\)</span> from <a href="#def-laplacian">Definition&nbsp;<span>1.5</span></a>. We have <span class="math display">\[
+\begin{aligned}
+\mathbf{x}^T\mathbf{L}\mathbf{x} &amp;= \mathbf{x}^T(\mathbf{D} - \mathbf{A})\mathbf{x} \\
+&amp;= \mathbf{x}^T\mathbf{D}\mathbf{x}^T - \mathbf{x}^T\mathbf{A}\mathbf{x} \\
+&amp;= \sum_{i\in N} k_{i} x_i^2 - \sum_{i,j \in N} a_{ij}x_ix_j \\
+&amp;= \frac{1}{2}\left(\sum_{i\in N} k_{i} x_i^2 - 2\sum_{i,j \in N} a_{ij}x_ix_j - \sum_{j\in N} k_{j} x_j^2\right) \\
+&amp;= \frac{1}{2}\left(\sum_{i,j\in N} a_{ij} x_i^2 - 2\sum_{i,j \in N} a_{ij}x_ix_j - \sum_{i,j\in N} a_{ij} x_j^2\right) \\
+&amp;= \frac{1}{2}\sum_{i,j \in N}a_{ij}(x_i - x_j)^2\;.
+\end{aligned}
+\]</span></p>
+<p>Let’s use this formula to evaluate <span class="math inline">\(\mathbf{s}^T\mathbf{L}\mathbf{s}\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbf{s}^T\mathbf{L}\mathbf{s} &amp;= \sum_{i,j \in N}a_{ij}(s_i - s_j)^2 \\
+&amp;= \sum_{i,j \in N}a_{ij}(s_i - s_j)^2 \\
+&amp;= 4 \sum_{i,j \in N}a_{ij}\mathbb{1}[c_i \neq c_j]\;.
+\end{aligned}
+\]</span></p>
+<p>In that last line, we’ve used the fact that <span class="math display">\[
+(s_i - s_j)^2 = \begin{cases}
+    2^2 &amp;\quad c_i \neq c_j \\
+    0 &amp;\quad \text{otherwise}
+\end{cases} \quad = \mathbb{1}[c_i \neq c_j]\;.
+\]</span></p>
+<p>So, we’re done!</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="looking-ahead" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="looking-ahead">Looking Ahead</h3>
+<p>An important question to ask about many of these metrics is:</p>
+<blockquote class="blockquote">
+<p><em>What counts as a large, surprising, or meaningful</em> value of a given metric?</p>
+</blockquote>
+<p>One way to address this question is to take some value and compare it to one that we believe to be small, unsurprising, or not meaningful. We often operationalize this by saying that “a random graph” would have some property, such as a low clustering coefficient. So, a high clustering coefficient is surprising, and suggests that the graph might not be “random.” This motivation takes directly to the study of random graphs, which is one of the mathematical foundations of network science.</p>
+
+
+
+</section>
+</section>
+</main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Lecture Notes</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/random_graphs.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Random Graphs: Erdős–Rényi</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+</body></html>
