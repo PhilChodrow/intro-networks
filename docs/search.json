@@ -4,14 +4,7 @@
     "href": "index.html",
     "title": "Math 168: Introduction to Networks",
     "section": "",
-    "text": "Welcome! This is the course website for MATH 168: Introduction to Networks at UCLA, as taught by Dr. Phil Chodrow, in Spring Quarter of 2022. Its primary purpose is to house lecture notes and other course resources.\nIn this course, we’ll study some of the primary questions we can ask about networks from a mathematical point of view. These questions include:\nAlong the way, we’ll build our mathematical toolboxes, especially those related to linear algebra and probability."
-  },
-  {
-    "objectID": "index.html#figure-code",
-    "href": "index.html#figure-code",
-    "title": "Math 168: Introduction to Networks",
-    "section": "Figure Code",
-    "text": "Figure Code\nThis site includes some figures, such as the one above, that I have generated with code. You can click the “Code” button right above the figure to view the code that created it. This code will often be in R, although I will make some effort to demonstrate some techniques with Python and NetworkX as well."
+    "text": "This is the course website for MATH 168: Introduction to Networks at UCLA, as taught by Dr. Phil Chodrow, in Spring Quarter of 2022. Its primary purpose is to house lecture notes and other course resources.\nIn this course, we’ll study some of the primary questions we can ask about networks from a mathematical point of view. These questions include:\n\nWhat kind of things is it useful to measure in networks?\nWhat are some properties shared by many real-world networks?\nWhat mathematical models are useful for understanding some of these properties?\nWhat kinds of algorithms can we use to extract insights from network data?\n\nAlong the way, we’ll build our mathematical toolboxes, especially those related to linear algebra and probability."
   },
   {
     "objectID": "syllabus/syllabus.html",
