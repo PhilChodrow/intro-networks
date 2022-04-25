@@ -69,7 +69,9 @@ $$
 $$
 Modularity maximization prefers to merge the two clusters if $\Delta Q > 0$ and prefers to keep them seperate if $\Delta Q < 0$. 
 
-The first term is direct to calculate: if we merge the two clusters, there's exactly one new edge that now lives in a single cluster. So, $e_w - (e_u + e_v) = \frac{1}{2m}$. The second term will require some more detailed algebra. First, since the cliques are the same size and in separate clusters, we have 
+The first term is direct to calculate: if we merge the two clusters, there's exactly one new edge that now lives in a single cluster. The formula for $e_2$ counts each edge twice. So, $e_w - (e_u + e_v) = \frac{2}{2m}$. 
+
+The second term will require some more detailed algebra. First, since the cliques are the same size and in separate clusters, we have 
 $$
 f_u = f_v = \frac{1}{2m}(k^2 - k + 1) \triangleq \frac{1}{2m}s\; ,
 $$
@@ -77,11 +79,11 @@ where we have defined $s = k^2 - k + 1$. The $k^2 - k$ counts all the edges in t
 On the other hand, $f_w = f_v + f_u = 2f_u$, since cluster $w$ has all the edges from clusters $u$ and $v$. 
 So, the inequality $\Delta Q > 0$ reads 
 $$
-\frac{1}{2m} - 4f_u^2 + (f_u^2 + f_u^2) = \frac{1}{2m} - 2f_u^2 > 0\;. 
+\frac{2}{2m} - 4f_u^2 + (f_u^2 + f_u^2) = \frac{1}{2m} - 2f_u^2 > 0\;. 
 $$
 Inserting the definition of $f_u$, this becomes 
 $$
-\frac{1}{2m} > \frac{1}{(2m)^2}s^2
+\frac{2}{2m} > \frac{1}{(2m)^2}s^2
 $$
 or 
 $$
@@ -93,4 +95,10 @@ This says that $\Delta Q > 0$ if and only if $s < \sqrt{2m}$. In other words, if
 How small do the clusters have to be before we start running into the resolution limit? Consider a graph with $n = 5 \times 10^6$  nodes and mean degree $c = 20$, which gives $2m = nc = 10^8$. 
 
 Using the approximation $s = k^2$, we find that the resolution limit occurs at $k < \sqrt[4]{2m} = \sqrt[4]{10^8} = 10^2$. So, in this example, we would expect to be unable to find any communities smaller than 100 nodes using modularity maximization. 
+
+## Louvain Algorithm
+
+Our discussion of the Louvain algorithm in lecture closely follows Newman 14.2.5.
+
+
 

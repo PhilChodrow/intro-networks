@@ -1,3 +1,77 @@
-# Ranking and Centrality
+# Network Exploration
 
-Coming soon!
+Suppose that we have a very large network, and we'd like to explore it. Perhaps we don't even have access to all the edges. This is a common situation in data collection. A webscraper for gathering data, for example, doesn't have access to the entire network of webpages to be scraped; usually it has access to *one page at a time* and the links it contains. At each stage, the webscraper needs to follow a link in order to get the next piece of information. 
+
+There are many ways to explore a network, but the most fundamental one is the *simple random walk*. We'll discuss the simple random walk, highlight some of its core properties, and connect it to some ideas that we've already seen. Then, we'll introduce the *teleporting random walk*, which is the foundation of the internet-changing PageRank algorithm originally used by Google. Finally, we'll take another look network navigation and the small-world phenomenon. 
+
+## The Simple Random Walk
+
+The simple random walk is easier to describe in English than it is to formulate mathematically. In intuitive terms, we imagine a walker who starts at some node $i$ in the graph. The walker then picks one of the neighbors $j$ of $i$ uniformly at random, and moves to $j$. Then, the walker picks one of the neighbors $k$ of $j$ uniformly at random, and moves to $k$, and so on. 
+
+::: {.callout-note}
+::: {#def-simple-random-walk}
+
+## Simple Random Walk (SRW)
+
+A **simple random walk** on a graph $G$ with adjacency matrix $\mathbf{A}\in \mathbb{R}^{n\times n}$ is a countable sequence of random variables $X_1,\ldots,X_t,\ldots$ which take values in the node set $N$ of $G$. We have 
+$$
+\begin{aligned}
+\mathbb{P}(X_{t+1} = i | X_t = j_t, X_{t-1} = j_{t-1},\ldots,X_{1} = j_1) &=  \mathbb{P}(X_{t+1} = i | X_t = j_t) \\ 
+&= \begin{cases}
+        \frac{1}{d_j} &\quad j \text{ is connected to } i \\ 
+        0 &\quad \text{otherwise.}
+    \end{cases} \\ 
+    &= \frac{a_{ij}}{d_j}\;. 
+\end{aligned}
+$$
+:::
+:::
+
+In @def-simple-random-walk, the first equality is the *[Markov property](https://en.wikipedia.org/wiki/Markov_property)*: the future state of the random walk depends only on where it is right now (i.e. the value of $X_t$), not where it's been previously. The second and third equalities give mathematical structure to the idea of "picking a node connected to $j$ uniformly at random." 
+
+[Note: relative to Problem 3 in HW0, I have switched the indices in this matrix in order to better align with Newman's discussion in 6.14.3.]{.aside}
+
+::: {.callout-note}
+::: {#def-transition-matrix}
+## Transition Matrix of a SRW
+
+The **transition matrix** of a simple random walk on a graph $G$ with adjacency matrix $\mathbf{A}$ is $\mathbf{P} = \mathbf{A}\mathbf{D}^{-1}$. Its entries are $p_{ij} = a_{ij}/d_j$. 
+:::
+:::
+
+::: {.callout-caution}
+***Exercise***: Let $p_{ij}$ denote the entries of $\mathbf{P}$. Check that 
+$\sum_{i \in N} p_{ij} = 1$, and interpret this fact. 
+:::
+
+What does the transition matrix do? Well, we can use the law of total probability to write: 
+$$
+\begin{aligned}
+\mathbb{P}(X_{t+1} = i) &= \sum_{j \in N}\mathbb{P}(X_{t+1} = i|X_{t} = j)\mathbb{P}(X_t = j) \\ 
+&= \sum_{j \in N}p_{ij}\mathbb{P}(X_t = j)\;.
+\end{aligned}
+$$
+
+Let $\mathbf{q}(t)$ be the vector with entries $q_i(t) = \mathbb{P}(X_{t} = i)$. We have just shown the most important relation in the study of random walks and their generalizations, Markov chains: 
+
+:::{.callout-tip}
+$$
+\mathbf{q}(t+1) = \mathbf{P}\mathbf{q}(t)
+$${#eq-transition}
+:::
+
+@eq-transition has an immediate consequence: $\mathbf{q}(t) = \mathbf{P}^{t}\mathbf{q}(0)$. So, if we know the *initial distribution* $\mathbf{q}(0)$ describing the location at which the walker begins, we can get all other information we need from the matrix $\mathbf{P}$ and its powers. 
+
+### Stationary Distributions of the SRW
+
+Throughout this section, we assume that the graph $G$ is connected. 
+
+:::{.callout-note}
+We say that an SRW has a *stationary distribution* $\pi \in \mathbb{R}^n$ if $\lim_{t\rightarrow \infty} \mathbf{q}(t) = \mathbf{\pi}$, *regardless of the initial distribution* $\mathbf{q}(0)$. 
+:::
+
+
+
+
+
+
