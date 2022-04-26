@@ -4,7 +4,7 @@ Suppose that we have a very large network, and we'd like to explore it. Perhaps 
 
 There are many ways to explore a network, but the most fundamental one is the *simple random walk*. We'll discuss the simple random walk, highlight some of its core properties, and connect it to some ideas that we've already seen. Then, we'll introduce the *teleporting random walk*, which is the foundation of the internet-changing PageRank algorithm originally used by Google. Finally, we'll take another look network navigation and the small-world phenomenon. 
 
-## The Simple Random Walk
+## The Simple Random Walk {#sec-srw}
 
 The simple random walk is easier to describe in English than it is to formulate mathematically. In intuitive terms, we imagine a walker who starts at some node $i$ in the graph. The walker then picks one of the neighbors $j$ of $i$ uniformly at random, and moves to $j$. Then, the walker picks one of the neighbors $k$ of $j$ uniformly at random, and moves to $k$, and so on. 
 
@@ -129,7 +129,7 @@ So, for simple random walks, $\mathbb{P}(X_t = i)$ when $t$ is large is approxim
 
 ## Exploration and Ranking: PageRank
 
-
+Coming soon!
 
 
 

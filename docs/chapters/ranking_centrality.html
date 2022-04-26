@@ -20,7 +20,7 @@
   <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
   <script src="../site_libs/quarto-search/fuse.min.js"></script>
   <script src="../site_libs/quarto-search/quarto-search.js"></script>
-  <link href="../chapters/social_responsibility.html" rel="next">
+  <link href="../chapters/agent_based_modeling.html" rel="next">
   <link href="../chapters/clustering_community.html" rel="prev">
   <script src="../site_libs/quarto-html/quarto.js"></script>
   <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -148,12 +148,17 @@
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/social_responsibility.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Networks and Social Responsibility</span></a>
+  <a href="../chapters/agent_based_modeling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Agent-Based Modeling on Networks</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/dynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dynamics on Networks</span></a>
+  <a href="../chapters/social_responsibility.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Networks and Social Responsibility</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/dynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Dynamics on Networks</span></a>
   </div>
 </li>
     </ul>
@@ -191,7 +196,7 @@
         <nav id="TOC" role="doc-toc">
 <h2 id="toc-title">Table of contents</h2>
 <ul>
-<li><a href="#the-simple-random-walk" class="nav-link active" data-scroll-target="#the-simple-random-walk"> <span class="header-section-number">6.1</span> The Simple Random Walk</a>
+<li><a href="#sec-srw" class="nav-link active" data-scroll-target="#sec-srw"> <span class="header-section-number">6.1</span> The Simple Random Walk</a>
 <ul class="collapse">
 <li><a href="#stationary-distribution-existence-and-uniqueness" class="nav-link" data-scroll-target="#stationary-distribution-existence-and-uniqueness">Stationary Distribution: Existence and Uniqueness</a></li>
 <li><a href="#stationary-distribution-structure" class="nav-link" data-scroll-target="#stationary-distribution-structure">Stationary Distribution: Structure</a></li>
@@ -208,8 +213,8 @@
 
 <p>Suppose that we have a very large network, and we’d like to explore it. Perhaps we don’t even have access to all the edges. This is a common situation in data collection. A webscraper for gathering data, for example, doesn’t have access to the entire network of webpages to be scraped; usually it has access to <em>one page at a time</em> and the links it contains. At each stage, the webscraper needs to follow a link in order to get the next piece of information.</p>
 <p>There are many ways to explore a network, but the most fundamental one is the <em>simple random walk</em>. We’ll discuss the simple random walk, highlight some of its core properties, and connect it to some ideas that we’ve already seen. Then, we’ll introduce the <em>teleporting random walk</em>, which is the foundation of the internet-changing PageRank algorithm originally used by Google. Finally, we’ll take another look network navigation and the small-world phenomenon.</p>
-<section id="the-simple-random-walk" class="level2 page-columns page-full" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="the-simple-random-walk"><span class="header-section-number">6.1</span> The Simple Random Walk</h2>
+<section id="sec-srw" class="level2 page-columns page-full" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="sec-srw"><span class="header-section-number">6.1</span> The Simple Random Walk</h2>
 <p>The simple random walk is easier to describe in English than it is to formulate mathematically. In intuitive terms, we imagine a walker who starts at some node <span class="math inline">\(i\)</span> in the graph. The walker then picks one of the neighbors <span class="math inline">\(j\)</span> of <span class="math inline">\(i\)</span> uniformly at random, and moves to <span class="math inline">\(j\)</span>. Then, the walker picks one of the neighbors <span class="math inline">\(k\)</span> of <span class="math inline">\(j\)</span> uniformly at random, and moves to <span class="math inline">\(k\)</span>, and so on.</p>
 <div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
@@ -362,6 +367,7 @@
 </section>
 <section id="exploration-and-ranking-pagerank" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="exploration-and-ranking-pagerank"><span class="header-section-number">6.2</span> Exploration and Ranking: PageRank</h2>
+<p>Coming soon!</p>
 
 
 
@@ -450,8 +456,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/social_responsibility.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Networks and Social Responsibility</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/agent_based_modeling.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Agent-Based Modeling on Networks</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

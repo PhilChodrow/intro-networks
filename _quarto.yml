@@ -22,6 +22,7 @@ book:
         - chapters/interlude_research_survey.qmd
         - chapters/clustering_community.qmd
         - chapters/ranking_centrality.qmd
+        - chapters/agent_based_modeling.qmd
         - chapters/social_responsibility.qmd
         - chapters/dynamics.qmd
   appendices: 
@@ -44,6 +45,9 @@ format:
     reference-location: margin
     citation-location: margin
     cap-location: margin
+    highlight-style: tango
+
+jupyter: conda-env-teaching-py
 
 execute: 
   cache: true
