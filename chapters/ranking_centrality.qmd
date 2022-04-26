@@ -33,9 +33,10 @@ In @def-simple-random-walk, the first equality is the *[Markov property](https:/
 
 ::: {.callout-note}
 ::: {#def-transition-matrix}
+
 ## Transition Matrix of a SRW
 
-The **transition matrix** of a simple random walk on a graph $G$ with adjacency matrix $\mathbf{A}$ is $\mathbf{P} = \mathbf{A}\mathbf{D}^{-1}$. Its entries are $p_{ij} = a_{ij}/d_j$. 
+The **transition matrix** of a simple random walk on a graph $G$ with adjacency matrix $\mathbf{A}$ is $\mathbf{P} = \mathbf{A}\mathbf{K}^{-1}$. Its entries are $p_{ij} = a_{ij}/k_j$, where $k_j$ is the degree of node $j$ and $\mathbf{K}$ is the diagonal matrix whose $jj$th entry is $k_j$. 
 :::
 :::
 
@@ -62,13 +63,75 @@ $${#eq-transition}
 
 @eq-transition has an immediate consequence: $\mathbf{q}(t) = \mathbf{P}^{t}\mathbf{q}(0)$. So, if we know the *initial distribution* $\mathbf{q}(0)$ describing the location at which the walker begins, we can get all other information we need from the matrix $\mathbf{P}$ and its powers. 
 
-### Stationary Distributions of the SRW
+### Stationary Distribution: Existence and Uniqueness
 
 Throughout this section, we assume that the graph $G$ is connected. 
 
 :::{.callout-note}
 We say that an SRW has a *stationary distribution* $\pi \in \mathbb{R}^n$ if $\lim_{t\rightarrow \infty} \mathbf{q}(t) = \mathbf{\pi}$, *regardless of the initial distribution* $\mathbf{q}(0)$. 
 :::
+
+:::{.callout-note}
+:::{#def-periodic}
+
+A graph is *aperiodic* if the greatest common divisor of lengths of its cyclse is 1. A graph is *periodic* if it is not aperiodic. 
+:::
+:::
+
+A simple example of a periodic graph is a $k$-cycle. 
+A less simple example is a *bipartite graph*, in which each node can be separated into one of two classes $S_1$ and $S_2$ such that nodes in $S_1$ only connect to nodes in $S_2$ (and not to any other nodes in $S_1$). 
+You can check that bipartiteness implies that every cycle has length divisible by 2, so the graph is periodic. 
+
+:::{.callout-tip}
+:::{#thm-stationary}
+Suppose that $G$ is connected and aperiodic. Then, 
+
+- $G$ has a stationary distribution $\pi$. 
+- This stationary distribution is unique. 
+- The stationary distribution is the unique eigenvector of the transition matrix $\mathbf{P}$ with eigenvalue $1$. 
+:::
+:::
+
+@thm-stationary is actually a theorem about discrete-time finite-state Markov chains in general, and its full proof is beyond the scope of this course. Here's a sketch:
+
+1. The condition that $G$ is connected implies that the matrix $\mathbf{P}$ is [irreducible](https://en.wikipedia.org/wiki/Perron%E2%80%93Frobenius_theorem#Classification_of_matrices).
+2. This allows us to apply the [Perron-Frobenius theorem](https://en.wikipedia.org/wiki/Perron–Frobenius_theorem) to conclude that $\mathbf{P}$ has a unique eigenvector with strictly positive entries, which we'll call $\pi$. Since $\mathbf{P}$ has rows that sum to 1, a direct calculation shows that the corresponding eigenvector of $\pi$ is unity, and we have $\pi = \mathbf{P}\pi$. 
+3. One further shows that $\lim_{t \rightarrow \infty}\mathbf{P}^t$ exists and that its rows become equal to the eigenvector $\pi$ (this is related to power iteration). 
+4. Because each row of limiting matrix describe the long-run behavior of the random walk from a given starting node, one infers that $\pi$ is indeed a stationary state. Because all the rows agree in the limit, one infers that $\pi$ is the only such stationary state. 
+
+### Stationary Distribution: Structure
+
+We know from @thm-stationary that there is a unique stationary distribution for the simple random walk, and that this distribution describes, in the long-term, the amount of time that the walker spends on a node. What actually *is* the stationary distribution? For many Markov chains, including more complicated random walks, it can be difficult to describe the stationary distribution exactly. In this case the answer is surprisingly simple, although it's one of those things that's much easier to check than it is to find in the first place. 
+
+:::{.callout-note}
+:::{#thm-degree}
+## Stationary Distribution of an SRW
+
+The stationary distribution of an SRW is $\pi = \frac{1}{2m}\mathbf{k}$, where $\mathbf{k}$ is the vector of node degrees. 
+:::
+:::
+
+:::{.proof}
+We can do a direct calculation:
+
+$$
+\begin{aligned}
+\mathbf{P}\pi = \mathbf{A}\mathbf{K}^{-1}\left(\frac{1}{2m}\mathbf{k}\right) = \frac{1}{2m}\mathbf{A}\mathbf{1} 
+= \frac{1}{2m}\mathbf{k}
+= \pi\;. 
+\end{aligned}
+$$
+
+For the second equality we have used the quickly-checked identity $\mathbf{K}^{-1}\mathbf{k} = \mathbf{1}$, while for the third we have used the formula $\mathbf{k} = \mathbf{A}\mathbf{1}$. 
+:::
+
+So, for simple random walks, $\mathbb{P}(X_t = i)$ when $t$ is large is approximately $k_i/2m$, proportional to the degree of node $i$. The intuition here is that the amount of time I spend in state is directly proportional to the number of ways that I can enter that state. 
+
+## Exploration and Ranking: PageRank
+
+
+
+
 
 
 

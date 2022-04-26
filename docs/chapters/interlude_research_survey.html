@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="quarto-0.9.165">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Math 168: Introduction to Networks - 4&nbsp; Interlude: A Rapid Survey of Research Questions</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+
+  <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+  <script src="../site_libs/quarto-nav/headroom.min.js"></script>
+  <script src="../site_libs/clipboard/clipboard.min.js"></script>
+  <meta name="quarto:offset" content="../">
+  <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+  <script src="../site_libs/quarto-search/fuse.min.js"></script>
+  <script src="../site_libs/quarto-search/quarto-search.js"></script>
+  <link href="../chapters/clustering_community.html" rel="next">
+  <link href="../chapters/degree_sequences.html" rel="prev">
+  <script src="../site_libs/quarto-html/quarto.js"></script>
+  <script src="../site_libs/quarto-html/popper.min.js"></script>
+  <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+  <script src="../site_libs/quarto-html/anchor.min.js"></script>
+  <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+  <link id="quarto-text-highlighting-styles" href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+  <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+  <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+  <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script id="quarto-search-options" type="application/json">{
+    "location": "sidebar",
+    "copy-button": false,
+    "collapse-after": 3,
+    "panel-placement": "start",
+    "type": "textbox",
+    "limit": 20,
+    "language": {
+      "search-no-results-text": "No results",
+      "search-matching-documents-text": "matching documents",
+      "search-copy-link-title": "Copy link to search",
+      "search-hide-matches-text": "Hide additional matches",
+      "search-more-match-text": "more match in this document",
+      "search-more-matches-text": "more matches in this document",
+      "search-clear-button-title": "Clear",
+      "search-detached-cancel-button-title": "Cancel",
+      "search-submit-button-title": "Submit"
+    }
+  }</script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body class="floating">
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interlude: A Rapid Survey of Research Questions</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Math 168: <br><b>Introduction to Networks</b></a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Welcome!</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="../syllabus/syllabus.html" class="sidebar-item-text sidebar-link">Syllabus</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus/specifications.html" class="sidebar-item-text sidebar-link">Standard Specifications</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus/resources.html" class="sidebar-item-text sidebar-link">Health, Wellbeing, and Equity</a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="../chapters/intro.html" class="sidebar-item-text sidebar-link">Lecture Notes</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/measurement.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Measuring Networks</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/random_graphs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Random Graphs: Erdős–Rényi</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/degree_sequences.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Random Graphs: Degree Sequences</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/interlude_research_survey.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interlude: A Rapid Survey of Research Questions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/clustering_community.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Clustering and Community Detection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/ranking_centrality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Network Exploration</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/social_responsibility.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Networks and Social Responsibility</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/dynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dynamics on Networks</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Appendices</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/additional_resources.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Network Science Resources</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/acknowledgements.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Acknowledgements</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Table of contents</h2>
+<ul>
+<li><a href="#network-data-science" class="nav-link active" data-scroll-target="#network-data-science"> <span class="header-section-number">4.1</span> Network Data Science</a>
+<ul class="collapse">
+<li><a href="#community-detection" class="nav-link" data-scroll-target="#community-detection">Community Detection</a></li>
+<li><a href="#ranking-and-centrality" class="nav-link" data-scroll-target="#ranking-and-centrality">Ranking and Centrality</a></li>
+<li><a href="#link-prediction" class="nav-link" data-scroll-target="#link-prediction">Link Prediction</a></li>
+<li><a href="#node-attribute-prediction" class="nav-link" data-scroll-target="#node-attribute-prediction">Node Attribute Prediction</a></li>
+<li><a href="#where-to-get-data" class="nav-link" data-scroll-target="#where-to-get-data">Where to get data?</a></li>
+</ul></li>
+<li><a href="#network-modeling" class="nav-link" data-scroll-target="#network-modeling"> <span class="header-section-number">4.2</span> Network Modeling</a>
+<ul class="collapse">
+<li><a href="#processes-evolving-on-networks" class="nav-link" data-scroll-target="#processes-evolving-on-networks">Processes Evolving on Networks</a></li>
+<li><a href="#adaptive-networks" class="nav-link" data-scroll-target="#adaptive-networks">Adaptive Networks</a></li>
+<li><a href="#agent-based-modeling" class="nav-link" data-scroll-target="#agent-based-modeling">Agent-Based Modeling</a></li>
+</ul></li>
+<li><a href="#fancy-networks" class="nav-link" data-scroll-target="#fancy-networks"> <span class="header-section-number">4.3</span> “Fancy” Networks</a></li>
+</ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header id="title-block-header" class="quarto-title-block default">
+
+<div class="quarto-title"><h1 class="title d-none d-lg-block display-7"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interlude: A Rapid Survey of Research Questions</span></h1></div></header>
+
+<p>In this short set of lecture notes, we’ll give a <em>very</em> brief tour of some of the most common research questions and methodologies posed in the network science literature. The purpose of these notes is to help you develop your project ideas and connect them with concrete data sources, models, and methodologies.</p>
+<p>These notes are <em>nonexhaustive.</em> If you’re interested in a topic or methodology not covered here, that’s ok! Network science is a big place. Feel free to ask me about your ideas and we’ll chat.</p>
+<section id="network-data-science" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="network-data-science"><span class="header-section-number">4.1</span> Network Data Science</h2>
+<p>In many research settings, we aim to perform a data analysis or prediction task using a real-world network data set.</p>
+<section id="community-detection" class="level3">
+<h3 class="anchored" data-anchor-id="community-detection">Community Detection</h3>
+<p>The <em>community detection</em> (also called <em>graph clustering</em>) task asks us to partition a graph into clusters of related nodes. We’ve already talked a bit about community detection using the minimum-cut methodology, and we’ll see more sophisticated methods in <a href="clustering_community.html">Section&nbsp;<span>5</span></a> (see also Chapter 14 in Newman).</p>
+</section>
+<section id="ranking-and-centrality" class="level3">
+<h3 class="anchored" data-anchor-id="ranking-and-centrality">Ranking and Centrality</h3>
+<p>Ranking and centrality measures are often used to determine nodes that are <em>important</em>, <em>central</em>, <em>powerful</em>, or <em>influential</em> in a graph. We saw examples of centrality measures based on counting walks in <a href="measurement.html">Section&nbsp;<span>1</span></a>: betweenness centrality and Katz centrality.</p>
+<p>We often talk about <em>centrality</em> in undirected graphs and <em>rank</em> in directed graphs, although this is not a hard-and-fast distinction.</p>
+<p>Newman 7.1 has discussions of several types of centrality in networks.</p>
+</section>
+<section id="link-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="link-prediction">Link Prediction</h3>
+<p>In the <em>link prediction</em> problem, we are given some <em>partial</em> information about the edges in a network, and we would like to make a prediction about edges that we haven’t yet observed. For example, companies like Facebook and Twitter would love to know how to predict which users will become friends or followers of other users.</p>
+<p>There are <em>many</em> ways to perform link prediction. A very classical pipeline looks like this:</p>
+<ol type="1">
+<li>For each node, compute some array of <em>features</em>. Examples of features commonly used in network analysis include:
+<ul>
+<li>Any metadata attached to the node (demographics, expressed preferences).</li>
+<li>The degree of the node.</li>
+<li>The centrality of the node, using any centrality method.</li>
+<li>Average demographics of the <em>neighbors</em> of the node.</li>
+<li>And lots more!</li>
+</ul></li>
+<li>Using this array of features, train a statistical or machine learning model on all pairs of nodes to classify whether an edge is present or not, using the computed features.</li>
+<li>Finally, use this model to make predictions about unseen possible edges.</li>
+</ol>
+<p>Link prediction is often used as a way to “validate” other kinds of network data science tasks, such as community detection and centrality. When clusters or centrality scores are predictive of future or unseen edges, this can be a reasonable sign that those measures give real insight into the structure or function of the network.</p>
+</section>
+<section id="node-attribute-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="node-attribute-prediction">Node Attribute Prediction</h3>
+<p>In a rather infamous study, <span class="citation" data-cites="jernigan2009gaydar">Jernigan and Mistree (<a href="../appendices/references.html#ref-jernigan2009gaydar" role="doc-biblioref">2009</a>)</span> found that publicly available information on Facebook could be used to predict sexual orientation. The idea is very simple: they found that gay male users were likely to be friends with other gay male users, and therefore the percentage of a male user’s friends who identify as gay men can be used to predict the orientation of the user himself. This study raises grave concerns about the effective involuntary disclosure of one’s sexual orientation through social networks. Such disclosure can have consequences for one’s social life, political rights, or ability to live safely in many parts of the world.</p>
+<p>From a technical standpoint, this study was an early and influential example of <em>node attribute prediction</em>. In the node attribute prediction problem, the aim is to predict some unknown information about a node, given information about some other nodes in the network. Often, a good way to do this is by computing average values of features of nodes connected to the target node. <a href="https://distill.pub/2021/gnn-intro/">Graph neural networks</a> are also an increasingly popular way to perform node attribute prediction tasks.</p>
+</section>
+<section id="where-to-get-data" class="level3">
+<h3 class="anchored" data-anchor-id="where-to-get-data">Where to get data?</h3>
+<p>I’ve listed links to several repositories of network data in the appendix. There are lots of other good ways to get data. In many cases, if you see a paper on a topic that interests you, you can find a link to a repository containing the data that they used.</p>
+</section>
+</section>
+<section id="network-modeling" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="network-modeling"><span class="header-section-number">4.2</span> Network Modeling</h2>
+<p>In many cases, it may be expensive, unethical, or scientifically impossible to obtain exactly the data that we want. In such cases, we often turn to mathematical or computer models of networks. We can also approach these problems with explicitly mathematical interest, aiming to prove theorems about them in certain special cases. You’ve seen some flavor of this approach in the recent course content on random graphs. A third reason to study mathematical models of networks is that some, such as the stochastic blockmodel which we will study in <a href="clustering_community.html">Section&nbsp;<span>5</span></a>, are foundations for important network algorithms.</p>
+<section id="processes-evolving-on-networks" class="level3">
+<h3 class="anchored" data-anchor-id="processes-evolving-on-networks">Processes Evolving on Networks</h3>
+<section id="opinion-dynamics" class="level4">
+<h4 class="anchored" data-anchor-id="opinion-dynamics">Opinion Dynamics</h4>
+<p>In <em>opinion dynamics,</em> nodes have an opinion about some topic which changes in response to interaction with other nodes. The opinion of each node is often either binary (0 or 1, as in the <a href="https://en.wikipedia.org/wiki/Voter_model">voter model</a>) or real-valued (as in the <a href="https://en.wikipedia.org/wiki/DeGroot_learning">DeGroot</a> and <a href="https://www.jasss.org/5/3/2/2.pdf">bounded confidence</a> models).</p>
+</section>
+<section id="epidemic-spread" class="level4">
+<h4 class="anchored" data-anchor-id="epidemic-spread">Epidemic Spread</h4>
+<p>Epidemic spreading models are similar in some ways to opinion models, with nodes changing states in response to interactions to other nodes. The primary difference is that the states are more complicated. There is a wide range of different modeling assumptions to consider, some of which may be more appropriate for certain kinds of disease. Epidemic models were first considered as differential equations (the perspective emphasized <a href="https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology">here</a>), but much recent work has studied them on social networks (see Newman, Chapter 16).</p>
+<p>Recently, there’s been a lot of interest in the topic of <em>misinformation spreading.</em> Many techniques from epidemic modeling have been used in this area as well.</p>
+</section>
+</section>
+<section id="adaptive-networks" class="level3">
+<h3 class="anchored" data-anchor-id="adaptive-networks">Adaptive Networks</h3>
+<p>In the models described in the previous section, what changes over time is a property of the nodes. In adaptive network models, the structure of the network can also change. Adaptive network models have become very popular in modeling epidemic spread. For example, suppose that when a node becomes infected, it also practices <strong>physical distancing</strong>. We might model this as a temporary reduction in that nodes’ connectivity to the rest of the network, and would hope that this behavior could reduce overall epidemic severity.</p>
+</section>
+<section id="agent-based-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="agent-based-modeling">Agent-Based Modeling</h3>
+<p>Many of the models we study in the context of social networks can be viewed as <em>agent-based models.</em> An <a href="https://en.wikipedia.org/wiki/Agent-based_model">agent-based model</a> consists of a set of agents and a collection of rules determining how those agents interact with each other. Many agent-based models assume that the agents are situated in a network, and interact only with their neighbors on the network. Arbitrarily complex decision-making rules can be expressed through the agent-based modeling framework. The <a href="https://mesa.readthedocs.io/en/latest/">Mesa</a> package for Python is one of many frameworks for implementing agent-based models in programming languages.</p>
+</section>
+</section>
+<section id="fancy-networks" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="fancy-networks"><span class="header-section-number">4.3</span> “Fancy” Networks</h2>
+<p>So far in this course, we’ve focused on simple, undirected networks. However, lots of networks have more structure than this, and motivate different kinds of analyses.</p>
+<ul>
+<li><strong>Multilayer</strong> networks have edges of different categories <span class="citation" data-cites="kivela2014multilayer">(<a href="../appendices/references.html#ref-kivela2014multilayer" role="doc-biblioref">Kivelä et al. 2014</a>)</span>. An example of a multilayer network is an urban transportation network, which might include layers for both streets and subways. Another kind of multilayer network is the social network of UCLA, where edges of different types could represent relationships like friendship, co-membership in clubs, enmity, collaboration on a project, etc. etc.<br>
+</li>
+<li><strong>Temporal</strong> networks have edges that evolve over time <span class="citation" data-cites="holme2012temporal">(<a href="../appendices/references.html#ref-holme2012temporal" role="doc-biblioref">Holme and Saramäki 2012</a>)</span>. Often, these edges represent timestamped interactions. For example, in a network of email communications, each email was sent at a certain time, and the timing of emails is important to the flow of information through the graph.</li>
+<li><strong>Directed</strong> networks have edges which express asymmetric relationships between nodes. For example, in animal behavior networks, an edge could represent a fight between two animals in a colony, with the edge “pointing” at the winner and away from the loser.</li>
+</ul>
+<p>Some networks are multilayer, temporal, <em>and</em> directed. For example, consider Twitter.</p>
+<ul>
+<li><strong>Multilayer</strong>: Multiple types of networked interaction are possible on Twitter, including following, retweeting, blocking, and replying.</li>
+<li><strong>Temporal</strong>: Following and retweeting are specific actions that take place at a specific time. The timing of these actions can be important for their interpretation.</li>
+<li><strong>Directed</strong>: interactions like following and retweeting are asymmetric – if I follow you, that doesn’t imply that you follow me.</li>
+</ul>
+<p>Another important kind of fancy network is a <strong>polyadic</strong> or <strong>higher-order</strong> network. In polyadic networks, edges can join more than two nodes simultaneously. Polyadic networks are most commonly represented using hypergraphs and simplicial complexes. <span class="citation" data-cites="bick2021higher">Bick et al. (<a href="../appendices/references.html#ref-bick2021higher" role="doc-biblioref">2021</a>)</span> give a good overview of many of the math and modeling questions associated with these kinds of models.</p>
+
+
+
+</section>
+</main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/degree_sequences.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Random Graphs: Degree Sequences</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/clustering_community.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Clustering and Community Detection</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+</body></html>
