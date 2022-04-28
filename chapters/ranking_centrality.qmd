@@ -1,3 +1,8 @@
+---
+jupyter: conda-env-teaching-py
+code-fold: false
+---
+
 # Network Exploration
 
 Suppose that we have a very large network, and we'd like to explore it. Perhaps we don't even have access to all the edges. This is a common situation in data collection. A webscraper for gathering data, for example, doesn't have access to the entire network of webpages to be scraped; usually it has access to *one page at a time* and the links it contains. At each stage, the webscraper needs to follow a link in order to get the next piece of information. 
@@ -21,7 +26,7 @@ $$
         \frac{1}{d_j} &\quad j \text{ is connected to } i \\ 
         0 &\quad \text{otherwise.}
     \end{cases} \\ 
-    &= \frac{a_{ij}}{d_j}\;. 
+    &= \frac{a_{ij}}{k_j}\;. 
 \end{aligned}
 $$
 :::
@@ -129,12 +134,202 @@ So, for simple random walks, $\mathbb{P}(X_t = i)$ when $t$ is large is approxim
 
 ## Exploration and Ranking: PageRank
 
-Coming soon!
+PageRank is the algorithm that originally made Google a dominant player in the domain of web search.[@brin1998anatomy]{.aside} The idea of PageRank is again to explore the graph using a random exploration process. The underlying process is closely related to the simple random walk that we described earlier. However, there are two important differences. 
+
+1. First, PageRank works on *directed* graphs. This matches the original application area; the web can be viewed as a *directed* network of links between pages. The reason directedness is so important is that, if $i \rightarrow j$ ($i$ links to $j$), it doesn't follow that $j\rightarrow i$. Capturing these kinds of asymmetric relationships is very important for reasonable ranking procedures. 
+2. Unlike the SRW, PageRank is able to explore graphs that are non-ergodic. 
+
+So, suppose we have a *directed* graph with adjacency matrix $\mathbf{A}$. The important thing to remember is that now $\mathbf{A}$ is not required to be symmetric. We interpret the entries of the adjacency matrix so that $a_{ij} = 1$ if $j \rightarrow i$. Since $\mathbf{A}$ need not be symmetric, $a_{ij} \neq a_{ji}$ in general. 
+
+The definition of a random walk on a directed graph is very similar to the definition on an undirected graph. It is again a sequence of random variables with the Markov property; only the transition probabilities differ. 
+
+:::{.callout-note}
+:::{#def-directed-SRW}
+
+## Simple Random Walk on a Directed Graph
+
+The SRW on a directed graph has transition probabilities 
+$$
+\mathbb{P}(X_{t+1} = i | X_t = j) = \frac{a_{ij}}{k_j^{\mathrm{out}}}\;,
+$$
+where $k_j^{\mathrm{out}} = \sum_{i \in N}a_{ij}$ is the number of outgoing links from node $j$. The transition matrix of this walk is 
+$$
+\mathbf{P} = \mathbf{A}(\mathbf{K}^{\mathrm{out}})^{-1}\;.
+$$
+:::
+:::
+
+:::{.callout-caution}
+Because $\mathbf{A}$ is not symmetric, we can also define $k_j^{\mathrm{in}} = \sum_{j \in N}a_{ij}$, the number of incoming links to node $j$. Importantly, $k_j^{\mathrm{in}} \neq k_j^{\mathrm{out}}$ in general. 
+:::
+
+Many of the same considerations from the undirected setting carry over to the directed setting. 
+
+:::{.callout-tip}
+:::{#thm-stationary-directed}
+
+## Stationary Distributions of Directed Random Walks
+
+Suppose that:
+
+1. There exists some integer power $t > 0$ such that every entry of $\mathbf{A}^t$ is positive. 
+2. The greatest common divisor of the *directed* cycles in $G$ is 1. 
+
+Then, the SRW on $G$ has a stationary distribution $\pi$, which is a solution of the eigenproblem 
+$$
+\pi = \mathbf{P}\pi\;.
+$$
+:::
+:::
+
+Condition (1) in @thm-stationary-directed is essentially a connectedness condition: it says that there has to be a directed path from every node to every other node in the network. So, as you might reasonably expect, the directed random walk doesn't really overcome the need for the graph to be connected. This can be a problem for network exploration, as it's more common for directed networks to not be connected in this way.[A bit more subtly, directed graphs that are *almost* disconnected are subject to *slow mixing* of the random walk, which implies very inefficient exploration of the network.] PageRank overcomes this limitation by allowing the walker to randomly hop to new nodes, independent of the network structure. 
+
+:::{.callout-note}
+:::{#def-pagerank-walk}
+
+## PageRank Random Walk
+
+The **PageRank random walk** has two parameters: 
+
+- The *teleportation vector* $\mathbf{v} \in \mathbb{R}^n_+$, which we assume to satisfy $\sum_{i\in N}v_i = 1$. 
+- The *teleportation rate* $\alpha\in [0,1]$. 
+
+This walk has transition probabilities 
+$$
+\mathbb{P}(X_{t+1} = i|X_{t}=j) = (1-\alpha)\frac{a_{ij}}{k_j^{\mathrm{out}}} + \alpha v_i\;. 
+$${#eq-pagerank-transition}
+
+Its transition matrix is 
+
+$$
+\mathbf{P} = (1-\alpha) \mathbf{A}(\mathbf{K}^{\mathrm{out}})^{-1} + \alpha \mathbf{V}\;,
+$$
+
+$$
+\mathbf{V} = \left[\begin{matrix}
+    - & \mathbf{v} & - \\
+    - & \mathbf{v} & - \\ 
+    \vdots & \vdots & \vdots \\ 
+    - & \mathbf{v} & - 
+\end{matrix}\right]\;.
+$$
+
+:::
+:::
+
+Here's the intuitive way to think about this walk. At each time step, the walker flips a weighted coin with probability of heads equal to $\alpha$. 
+
+- If heads, the walker chooses to sample from the probability distribution encoded by $\mathbf{v}$. That is, the walker chooses from among all the nodes in $N$, and picks node $i$ with probability $v_i$. 
+- If tails, the walker instead follows a link, just like in the directed random walk. 
+
+This is why there are two terms in the transition probability in @eq-pagerank-transition. The first term corresponds to the "tails" scenario in which the walker does a step corresponding to the directed random walk, while the second term corresponds to teleportation. 
+
+The standard choice of the teleportation vector is $\mathbf{v} = \frac{1}{n}\mathbf{1}$, so each node has an equal probability of being chosen for teleportation. However, it's also possible to take other approaches, as we'll see in a moment. 
+
+:::{.callout-note}
+:::{#thm-pagerank}
+
+## Stationary Distribution of PageRank
+
+Suppose that there exists an integer power $t$ such that $\mathbf{P}^t$ has all entries strictly positive. Then, the PageRank random walk has a unique stationary distribution, and this distribution may again be found by solving $\pi = \mathbf{P}\pi$. 
+:::
+:::
+
+:::{.callout-caution}
+**Exercise**: Show that, when $\mathbf{v} = \frac{1}{n}\mathbf{1}$, @thm-pagerank implies that the PageRank walk always has a stationary distribution, regardless of the graph. 
+:::
+
+:::{.callout-caution}
+**Challenge**: Give a necessary and sufficient condition in terms of $\mathbf{A}$ and $\mathbf{v}$ for PageRank to have a stationary distribution. 
+:::
 
 
+### Implementation
+
+Let's code up a quick example to visualize PageRank. We'll use the Hamilton Mentions graph: 
+
+```{python}
+import networkx as nx
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv("https://philchodrow.github.io/PIC16A/homework/HW3-hamilton-data.csv", 
+names = ["mentioner", "mentioned"])
+
+df = df[df["mentioner"] != df["mentioned"]]
+
+G = nx.from_pandas_edgelist(df, 
+                            source = "mentioner", 
+                            target = "mentioned", 
+                            edge_attr=None, 
+                            create_using=nx.DiGraph())
+```
+
+There are a few nodes in this network with no outgoing edges. while there are modifications we can make to handle this kind of case, we can also just remove them from the graph. 
+
+```{python}
+for i in range(2):
+    G = G.subgraph([name for name, val in G.out_degree() if val > 0])
+```
+
+Now we can write our PageRank function. We'll compute the transition matrix $\mathbf{P}$ and find its leading eigenvector. 
+
+```{python}
+def pagerank(G, v, alpha = 0.15):
+
+    assert np.isclose(v.sum(), 1.0)
+
+    # construct the PR transition matrix
+    A  = nx.to_numpy_array(G).T
+    K  = np.diag(A.sum(axis = 0))     # K^out
+    P_ = A@np.linalg.inv(K)           # random walk matrix
+    V  = np.outer(v, np.ones(len(v))) # teleportation matrix
+    P = (1-alpha)*P_ + alpha*V        # overall transition matrix
+
+    # grab the eigenvector with eigenvalue 1, normalize it and return. 
+    eigs = np.linalg.eig(P)        
+    pi = eigs[1][:,np.isclose(eigs[0], 1.0)]
+    pi = np.abs(pi) / np.abs(pi).sum()
+    return pi
+```
+
+```{python}
+
+def draw_pagerank(G, v,  layout, alpha = 0.15):
+
+    pi = pagerank(G, v, alpha = alpha)
+    nx.draw(G, layout, 
+            node_size = 5000*pi, 
+            with_labels = True,
+            edge_color = "lightgray", 
+            node_color = "lavender",
+            edgecolors  = "darkgray")
+
+```
+
+Now we can visualize the PageRank stationary distribution for different choices of the teleportation vector $\mathbf{v}$ and the teleportation rate $\alpha$: 
+
+```{python}
+layout = nx.fruchterman_reingold_layout(G)
+
+n = len(G.nodes())
+v = 1/n*np.ones(n)
+draw_pagerank(G, v, layout, alpha = 0.1)
+```
 
 
+## Seeded PageRank
 
+A useful feature of the way we've defined PageRank is that we can choose different teleportation vectors $\mathbf{v}$ in order to explore different parts of the graph. For example, suppose that we are especially interested in the part of the network surrouding certain characters. We can just change the teleportation vector $\mathbf{v}$ to highlight those specific characters. This approach is often called "personalized" or "seeded" PageRank. 
+
+```{python}
+v = np.array([1 if i == "kingGeorge" else 0 for i in list(G.nodes())])
+draw_pagerank(G, v, layout, alpha = 0.1)
+```
+
+This time, we've highlighted the node corresponding to the character King George. Whereas when using the "basic" version of PageRank Hamilton, Burr, Washington, and Jefferson are all very important characters, in the personalized versio, Washington emerges as clearly the most important. 
+
+This kind of idea is often applied in marketing and search. Suppose we know that a user is interested in site $A$. Then, if that user searches for something online, we can use that information by computing a PageRank ranking and returning the top nodes, *using a biased teleportation vector*. This would allow us to balance the objectives of returning webpages that are relevant *overall* and webpages that are especially relevant *for that user*.
 
 
 
