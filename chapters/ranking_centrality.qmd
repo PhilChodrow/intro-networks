@@ -207,10 +207,9 @@ $$
 
 $$
 \mathbf{V} = \left[\begin{matrix}
-    - & \mathbf{v} & - \\
-    - & \mathbf{v} & - \\ 
-    \vdots & \vdots & \vdots \\ 
-    - & \mathbf{v} & - 
+    | & | & \cdots & | \\ 
+    \mathbf{v} & \mathbf{v} & \cdots & \mathbf{v} \\ 
+    | & | & \cdots & |
 \end{matrix}\right]\;.
 $$
 
