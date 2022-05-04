@@ -422,12 +422,12 @@
     <tr>
       <th>1</th>
       <th>Anakin Graphwalker</th>
-      <td>Favourite</td>
+      <td>Eponine</td>
     </tr>
     <tr>
       <th>2</th>
       <th>Anakin Graphwalker</th>
-      <td>Dahlia</td>
+      <td>Thenardier</td>
     </tr>
     <tr>
       <th>3</th>
@@ -437,12 +437,12 @@
     <tr>
       <th>4</th>
       <th>Anakin Graphwalker</th>
-      <td>Zephine</td>
+      <td>Listolier</td>
     </tr>
     <tr>
       <th>5</th>
       <th>Anakin Graphwalker</th>
-      <td>Tholomyes</td>
+      <td>Fantine</td>
     </tr>
   </tbody>
 </table>
@@ -457,11 +457,11 @@
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>freqs.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display" data-execution_count="7">
 <pre><code>node
-Anzelma       0.00578
-Babet         0.01928
-Bahorel       0.02323
-Bamatabois    0.01618
-BaronessT     0.00417
+Anzelma       0.00564
+Babet         0.02030
+Bahorel       0.02334
+Bamatabois    0.01638
+BaronessT     0.00446
 dtype: float64</code></pre>
 </div>
 </div>
@@ -485,7 +485,7 @@ dtype: float64</code></pre>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display" data-execution_count="9">
-<pre><code>&lt;matplotlib.legend.Legend at 0x7fd9c1750670&gt;</code></pre>
+<pre><code>&lt;matplotlib.legend.Legend at 0x7f952133daf0&gt;</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="agent_based_modeling_files/figure-html/cell-10-output-2.png" class="" width="597" height="432"></p>
@@ -505,7 +505,7 @@ dtype: float64</code></pre>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>):</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.random.rand() <span class="op">&lt;</span> <span class="va">self</span>.alpha:     <span class="co"># teleport</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            options <span class="op">=</span> <span class="bu">list</span>(model.grid.G.nodes.keys())</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            options <span class="op">=</span> <span class="bu">list</span>(<span class="va">self</span>.model.grid.G.nodes.keys())</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:                              <span class="co"># standard RW step</span></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>            options <span class="op">=</span> <span class="va">self</span>.model.grid.get_neighbors(<span class="va">self</span>.pos, </span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                                                include_center <span class="op">=</span> <span class="va">False</span>)</span>
