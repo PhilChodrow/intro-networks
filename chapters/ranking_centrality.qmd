@@ -160,7 +160,7 @@ $$
 :::
 
 :::{.callout-caution}
-Because $\mathbf{A}$ is not symmetric, we can also define $k_j^{\mathrm{in}} = \sum_{j \in N}a_{ij}$, the number of incoming links to node $j$. Importantly, $k_j^{\mathrm{in}} \neq k_j^{\mathrm{out}}$ in general. 
+Because $\mathbf{A}$ is not symmetric, we can also define $k_i^{\mathrm{in}} = \sum_{j \in N}a_{ij}$, the number of incoming links to node $j$. Importantly, $k_i^{\mathrm{in}} \neq k_i^{\mathrm{out}}$ in general. 
 :::
 
 Many of the same considerations from the undirected setting carry over to the directed setting. 
