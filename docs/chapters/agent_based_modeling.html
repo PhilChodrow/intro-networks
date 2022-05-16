@@ -303,7 +303,7 @@
 <h2 data-number="7.2" class="anchored" data-anchor-id="first-example-simple-random-walk"><span class="header-section-number">7.2</span> First Example: Simple Random Walk</h2>
 <p>For our first agent-based model, we are going to code up an agent-based implementation of the simple random walk. There are lots of reasonable ways to do this, and Mesa is actually a bit of overkill for this particular problem. Still, we’ll learn some important techniques and concepts along the way.</p>
 <p>Let’s start by importing several tools that we’ll use.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode" id="cb2"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mesa <span class="im">import</span> Model, Agent                 <span class="co"># core mesa classes</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mesa.space <span class="im">import</span> NetworkGrid             </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mesa.time <span class="im">import</span> BaseScheduler           </span>
@@ -314,7 +314,7 @@
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt          <span class="co"># visualizing output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Since this is a networks class, we’ll use a network-based grid. We imported the capability to do that above as the <code>mesa.space.NetworkGrid</code> class. Of course, we need a network to use. For this example, we’ll use the famous Zachary Karate Club, which is built in to NetworkX:</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode" id="cb3"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.les_miserables_graph()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We’ll soon use this to create our model.</p>
@@ -331,7 +331,7 @@
 <li>What happens in a single time-step of the model, via the <code>step()</code> method.</li>
 </ul>
 <p>The model class actually has a lot more functionality than this. Fortunately, we don’t usually need to define this functionality, because the model class we create inherits the needed functionality from <code>mesa.Model</code> (which we imported above). Here’s our <code>SRWModel</code> class. The syntax can look a little complicated whenever we work with a new package, but what’s going on is fundamentally simple.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode" id="cb4"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RWModel(Model):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># model setup</span></span>
@@ -372,7 +372,7 @@
 <section id="the-agent-class" class="level3">
 <h3 class="anchored" data-anchor-id="the-agent-class">The Agent Class</h3>
 <p>Now we’re ready to define what the agent is supposed to do! In the SRW, the agent looks at all nodes adjacent to theirs, chooses one of them uniformly at random, and moves to it. We need to implement this behavior in the <code>step()</code> method. While there are some more mesa functions involved that you may not have seen before, the approach is very simple.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode" id="cb5"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SRWAgent(Agent):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>):</span>
@@ -392,14 +392,14 @@
 <section id="experiment" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="experiment">Experiment</h3>
 <p>Phew, that’s it! Once we’ve defined our model class, we can then run it for a bunch of timesteps:</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode" id="cb6"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> RWModel(G, SRWAgent)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100000</span>):</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can get data on the behavior of the simulation using the <code>collector</code> attribute of the model. We programmed the collector to gather only the position of the walker. There are lots of other possibilities we could have chosen instead.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode" id="cb7"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>walk_report <span class="op">=</span> model.collector.get_agent_vars_dataframe()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>walk_report.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display" data-execution_count="6">
@@ -422,27 +422,27 @@
     <tr>
       <th>1</th>
       <th>Anakin Graphwalker</th>
-      <td>Gillenormand</td>
+      <td>Eponine</td>
     </tr>
     <tr>
       <th>2</th>
       <th>Anakin Graphwalker</th>
-      <td>Marius</td>
+      <td>Thenardier</td>
     </tr>
     <tr>
       <th>3</th>
       <th>Anakin Graphwalker</th>
-      <td>Joly</td>
+      <td>Fantine</td>
     </tr>
     <tr>
       <th>4</th>
       <th>Anakin Graphwalker</th>
-      <td>Gavroche</td>
+      <td>Listolier</td>
     </tr>
     <tr>
       <th>5</th>
       <th>Anakin Graphwalker</th>
-      <td>Montparnasse</td>
+      <td>Fantine</td>
     </tr>
   </tbody>
 </table>
@@ -451,27 +451,27 @@
 </div>
 <div class="page-columns page-full"><p>Now let’s ask: is the simulation we just did lined up with what we know about the theory of the simple random walk?  Recall that the <em>stationary distribution</em> <span class="math inline">\(\pi\)</span> of the SRW is supposed to describe the long-term behavior of the walk, with <span class="math inline">\(\pi_i\)</span> giving the limiting probability that the walker is on node <span class="math inline">\(i\)</span>. Recall further that the stationary distribution for the SRW is actually known in closed form: it’s <span class="math inline">\(\pi_i = k_i / 2m\)</span>, where <span class="math inline">\(k_i\)</span> is the degree of node <span class="math inline">\(i\)</span>. So, we would expect this to be a good estimate of the fraction of time that the walker spent on node <span class="math inline">\(i\)</span>. Let’s check this!</p><div class="no-row-height column-margin column-container"><span class="aside">We derived this theory in <a href="ranking_centrality.html#sec-srw">Section&nbsp;<span>6.1</span></a>.</span></div></div>
 <p>First, we can compute the fraction of time that the agent spent on each node:</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode" id="cb8"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> walk_report.groupby(<span class="st">"node"</span>).size()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>freqs <span class="op">=</span> counts <span class="op">/</span> <span class="bu">sum</span>(counts)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>freqs.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display" data-execution_count="7">
 <pre><code>node
-Anzelma       0.00599
-Babet         0.01967
-Bahorel       0.02346
-Bamatabois    0.01613
-BaronessT     0.00397
+Anzelma       0.00564
+Babet         0.02030
+Bahorel       0.02334
+Bamatabois    0.01638
+BaronessT     0.00446
 dtype: float64</code></pre>
 </div>
 </div>
 <p>Now we can compute the degree sequence and stationary distribution of the underlying graph:</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode" id="cb10"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>degs <span class="op">=</span> [G.degree(i) <span class="cf">for</span> i <span class="kw">in</span> freqs.index]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>stationary_dist <span class="op">=</span> degs <span class="op">/</span> np.<span class="bu">sum</span>(degs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, we can plot and see whether the prediction lines up with the observation:</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode" id="cb11"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="fl">.12</span>], </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>         [<span class="dv">0</span>, <span class="fl">.12</span>], </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         color <span class="op">=</span> <span class="st">"black"</span>, label <span class="op">=</span> <span class="st">"prediction"</span>)</span>
@@ -485,7 +485,7 @@ dtype: float64</code></pre>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display" data-execution_count="9">
-<pre><code>&lt;matplotlib.legend.Legend at 0x7f9cc8f55be0&gt;</code></pre>
+<pre><code>&lt;matplotlib.legend.Legend at 0x7f952133daf0&gt;</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="agent_based_modeling_files/figure-html/cell-10-output-2.png" class="" width="597" height="432"></p>
@@ -496,7 +496,7 @@ dtype: float64</code></pre>
 <section id="variation-pagerank" class="level3">
 <h3 class="anchored" data-anchor-id="variation-pagerank">Variation: PageRank</h3>
 <p>The reason that we parameterized the <code>RWModel</code> class with the argument <code>agent_class</code> is that we can now implement PageRank just by modifying the agent behavior. Let’s now make a new kind of agent that does the PageRank step:</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode" id="cb13"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PageRankAgent(Agent):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, agent_id, model, alpha):</span>
@@ -515,14 +515,14 @@ dtype: float64</code></pre>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model.grid.move_agent(<span class="va">self</span>, new_node)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>That’s all we need to do in order to implement PageRank in this graph. Let’s go ahead and run PageRank</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode" id="cb14"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pagerank_model <span class="op">=</span> RWModel(G, PageRankAgent, alpha <span class="op">=</span> <span class="fl">0.15</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100000</span>):</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    pagerank_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>That’s it! Now we could check the match with the stationary distribution like we did last time. Instead, let’s simply draw the graph.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode" id="cb15"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>walk_report <span class="op">=</span> pagerank_model.collector.get_agent_vars_dataframe()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> walk_report.groupby(<span class="st">"node"</span>).size()</span>
@@ -540,7 +540,7 @@ dtype: float64</code></pre>
 <section id="multi-agent-models" class="level2 page-columns page-full" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="multi-agent-models"><span class="header-section-number">7.3</span> Multi-Agent Models</h2>
 <div class="page-columns page-full"><p>Now let’s consider our first multi-agent model, the <em>voter model</em>. </p><div class="no-row-height column-margin column-container"><span class="aside">In fact, there are many different models that are all called “the” voter model. The one we’ll discuss here is the simplest and most common.</span></div></div>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode" id="cb16"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mesa.time <span class="im">import</span> RandomActivation           </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CompartmentalModel(Model):</span>
@@ -567,7 +567,7 @@ dtype: float64</code></pre>
 <span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.schedule.step()</span>
 <span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.collector.collect(<span class="va">self</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode" id="cb17"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CompartmentalAgent(Agent):</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, agent_id, model, state):</span>
@@ -584,7 +584,7 @@ dtype: float64</code></pre>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.state <span class="op">=</span> adopt_from.state</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="16">
 <div class="sourceCode" id="cb18"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> run <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    voter_model <span class="op">=</span> CompartmentalModel(G, CompartmentalAgent, [<span class="dv">0</span>, <span class="dv">1</span>], [<span class="fl">0.5</span>, <span class="fl">0.5</span>])</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">50</span>):</span>
