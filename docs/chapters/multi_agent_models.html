@@ -83,7 +83,7 @@
   <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
   <script src="../site_libs/quarto-search/fuse.min.js"></script>
   <script src="../site_libs/quarto-search/quarto-search.js"></script>
-  <link href="../chapters/social_responsibility.html" rel="next">
+  <link href="../chapters/prediction_feedback_loops.html" rel="next">
   <link href="../chapters/agent_based_modeling.html" rel="prev">
   <script src="../site_libs/quarto-html/quarto.js"></script>
   <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -221,12 +221,7 @@
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/social_responsibility.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Networks and Social Responsibility</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/dynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Dynamics on Networks</span></a>
+  <a href="../chapters/prediction_feedback_loops.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Link Prediction and Feedback Loops</span></a>
   </div>
 </li>
     </ul>
@@ -369,7 +364,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <section id="consensus-dynamics-1" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="consensus-dynamics-1">Consensus Dynamics</h3>
 <p>As usual, we need to import several items from the Mesa modeling framework. The only new one relative to our <a href="../chapters/agent_based_modeling.html">previous notes</a> is the <code>SimultaneousActivation</code> scheduler, which allows each node to perform its behavior at exactly the same time, as described by our <em>synchronous</em> dynamics.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode" id="cb1"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mesa <span class="im">import</span> Model, Agent                 <span class="co"># core mesa classes</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mesa.space <span class="im">import</span> NetworkGrid             </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mesa.time <span class="im">import</span> SimultaneousActivation           </span>
@@ -381,7 +376,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we’ll define the opinion model class. The overall approach is pretty similar to last time. The main difference is that we are going to place down multiple agents on the graph during the <code>__init__()</code> method of the model.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode" id="cb2"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> OpinionModel(Model):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># model setup</span></span>
@@ -413,7 +408,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 </div>
 <p>Now we’ll implement the first agent class for our model. The <code>OpinionAgent</code> has an instance variable <code>x</code> that stores its opinion. It also has <code>step()</code> method like before that updates its opinion in response to the opinions of its neighbors. For now, we’re going to be very vague about how exactly it does this, wrapping it in a function <code>F</code> as in <a href="#eq-dynamics-general">Equation&nbsp;<span>8.1</span></a>. This function needs to accept the updating node, all its neighbors, and then any parameters we supply as well.</p>
 <p>A special requirement of the synchronous scheduler <code>SimultaneousActivation</code> is that we need to separate the computation of the new opinion (in <code>self.step()</code>) from actually updating the new opinion (in a new method called <code>self.advance</code>).</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode" id="cb3"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> OpinionAgent(Agent):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, agent_id, model, x, F, <span class="op">**</span>kwargs):</span>
@@ -439,7 +434,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.x <span class="op">=</span> <span class="va">self</span>.x_next</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In order to complete our specification of the model, we now simply need to define the update function <span class="math inline">\(F\)</span>. Here’s how it looks for consensus dynamics:</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode" id="cb4"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> F_consensus(center, neighbors, beta <span class="op">=</span> <span class="dv">1</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    neighbor_opinions <span class="op">=</span> [a.x <span class="cf">for</span> a <span class="kw">in</span> neighbors]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(neighbor_opinions) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
@@ -449,7 +444,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> center.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s write one last function to partially automate our simulation and visualization:</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode" id="cb5"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> opinion_dynamics_experiment(G, F, x0, beta, <span class="op">**</span>kwargs):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> OpinionModel(G, OpinionAgent, x0 <span class="op">=</span> x0, beta <span class="op">=</span> beta, F <span class="op">=</span> F, <span class="op">**</span>kwargs)</span>
@@ -468,7 +463,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    plt.gca().set_xscale(<span class="st">"log"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s try it out! We’ll grab a graph, initialize an <code>OpinionModel</code> with a vector of initial conditions, take 1,000 steps, and collect the results in a data frame.</p>
-<div class="cell page-columns page-full" data-execution_count="6">
+<div class="cell page-columns page-full" data-execution_count="7">
 <div class="sourceCode" id="cb6"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.les_miserables_graph()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(G.nodes())</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> np.sort(<span class="dv">2</span><span class="op">*</span>np.random.rand(n) <span class="op">-</span> <span class="dv">1</span>)</span>
@@ -486,7 +481,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 </div>
 <p>As predicted by the theory, we can see the agents converging to consensus.</p>
 <p>Suppose, on the other hand, that we were dealing with a disconnected graph. This time, although consensus is reached on each of the two connected components, the opinions reached on each component differ.</p>
-<div class="cell page-columns page-full" data-execution_count="7">
+<div class="cell page-columns page-full" data-execution_count="8">
 <div class="sourceCode" id="cb7"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> nx.disjoint_union(G, G)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>n_ <span class="op">=</span> <span class="bu">len</span>(H.nodes())</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -508,7 +503,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <section id="zealot-nodes" class="level3">
 <h3 class="anchored" data-anchor-id="zealot-nodes">Zealot Nodes</h3>
 <p>We can perform an experiment with zealot nodes, who never change their opinions, simply by setting <span class="math inline">\(\beta_i = 0\)</span> for some of the nodes <span class="math inline">\(i\)</span>.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode" id="cb8"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> np.sort(<span class="dv">2</span><span class="op">*</span>np.random.rand(n) <span class="op">-</span> <span class="dv">1</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">0.5</span><span class="op">*</span>np.ones(n)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -525,7 +520,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <section id="bounded-confidence-1" class="level3">
 <h3 class="anchored" data-anchor-id="bounded-confidence-1">Bounded Confidence</h3>
 <p>Now let’s implement the bounded confidence update. Relative to the consensus dynamics update, there’s just a small change: we need to include in the mean only the nodes which are distance less than <span class="math inline">\(c\)</span> from the central node. If no nodes satisfy this criterion, we stipulate that the central node doesn’t update at all.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode" id="cb9"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> F_bounded_confidence(center, neighbors, beta <span class="op">=</span> <span class="dv">1</span>, c <span class="op">=</span> np.Inf):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    neighbor_opinions <span class="op">=</span> [a.x <span class="cf">for</span> a <span class="kw">in</span> neighbors <span class="cf">if</span> np.<span class="bu">abs</span>(a.x <span class="op">-</span> center.x) <span class="op">&lt;</span> c]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(neighbor_opinions) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
@@ -535,7 +530,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> center.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s try it out! In the run below, we see that consensus is almost reached – just a single node is left out and is no longer able to influence or be influenced by the other nodes.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode" id="cb10"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> np.sort(<span class="dv">2</span><span class="op">*</span>np.random.rand(n) <span class="op">-</span> <span class="dv">1</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">0.5</span><span class="op">*</span>np.ones(n)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>opinion_dynamics_experiment(G, F_bounded_confidence, x0, beta, c <span class="op">=</span> <span class="fl">0.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -544,7 +539,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 </div>
 </div>
 <p>Unlike in the case of consensus dynamics, the long-term behavior of bounded confidence dynamics is very sensitive to initial conditions. For example, in the following run (same parameters!), we see the emergence of two polarized communities, as well as a few isolated nodes.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode" id="cb11"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> np.sort(<span class="dv">2</span><span class="op">*</span>np.random.rand(n) <span class="op">-</span> <span class="dv">1</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>opinion_dynamics_experiment(G, F_bounded_confidence, x0, beta, c <span class="op">=</span> <span class="fl">0.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -592,7 +587,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <li>If <span class="math inline">\(i\)</span> is currently <em>Infected</em>, then <span class="math inline">\(i\)</span> flips a coin with probability of heads <span class="math inline">\(\gamma\)</span>. If this coin comes up heads, then <span class="math inline">\(i\)</span> recovers and is now <em>Susceptible</em> again.</li>
 </ol>
 <p>This is already a complete model that we can code up. In fact, our <code>CompartmentalModel</code> and <code>CompartmentalAgent</code> are <em>very</em> similar to our opinion model from the previous section.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode" id="cb12"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CompartmentalModel(Model):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># model setup</span></span>
@@ -624,7 +619,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.collector.collect(<span class="va">self</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Our <code>CompartmentalAgent</code> class also has a very similar structure:</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode" id="cb13"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CompartmentalAgent(Agent):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, agent_id, model, state, F, <span class="op">**</span>kwargs):</span>
@@ -644,7 +639,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> advance(<span class="va">self</span>):</span>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.state <span class="op">=</span> <span class="va">self</span>.state_next</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="16">
 <div class="sourceCode" id="cb14"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> F_SIS(center, neighbors, beta <span class="op">=</span> <span class="fl">0.01</span>, beta_background <span class="op">=</span> <span class="fl">0.0001</span>, gamma <span class="op">=</span> <span class="fl">0.1</span>):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> center.state <span class="op">==</span> <span class="st">"S"</span>:</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.random.rand() <span class="op">&lt;</span> beta_background: </span>
@@ -661,7 +656,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"S"</span> </span>
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"I"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="17">
 <div class="sourceCode" id="cb15"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.les_miserables_graph()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> CompartmentalModel(G, CompartmentalAgent, p_infected <span class="op">=</span> <span class="fl">0.01</span>,  F <span class="op">=</span> F_SIS, beta <span class="op">=</span> <span class="fl">0.01</span>, beta_background <span class="op">=</span> <span class="fl">0.001</span>, gamma <span class="op">=</span> <span class="fl">0.1</span>)</span>
@@ -683,7 +678,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <h3 class="anchored" data-anchor-id="incorporating-global-policy">Incorporating Global Policy</h3>
 <p>Suppose now that we consider a decision-maker with the ability to reduce the rate of transmission through measures such as mask mandates, shelter-in-place orders, or similar measures. We’re going to model this as saying that the decision-maker has the ability to control the transmission rate <span class="math inline">\(\beta\)</span>. We’re going to assume that they impose mitigation measures when they observe a rate of infection above a certain point, and remove these mitigation measures when they observe a rate of infection below a certain point. However, we’re going to assume that their information is <em>lagged</em>: their most recent data is actually <span class="math inline">\(k\)</span> days in the past. We’re going to study what the impact of <span class="math inline">\(k\)</span> is.</p>
 <p>The way we implement this behavior in code is by having the model <em>change</em> <span class="math inline">\(\beta\)</span> when it observes the (lagged) data telling it that this is possible. This requires only that we (a) store the possible values of <span class="math inline">\(\beta\)</span> as instance variables and (b) that we add some additional behavior to the model’s <code>step()</code> method to toggle between the two of them.</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="18">
 <div class="sourceCode" id="cb16"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CompartmentalModel(Model):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># model setup</span></span>
@@ -729,7 +724,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.beta <span class="op">=</span> <span class="va">self</span>.beta_high</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Because we implemented our <code>Agent</code> class to work with the model’s value of <span class="math inline">\(\beta\)</span>, we don’t actually need to make any more changes to our agents: we are ready for experiments!</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode" id="cb17"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> experiment(lag):</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.les_miserables_graph()</span>
@@ -745,7 +740,7 @@ F(x_i(t), x_{\partial i}(t)) = (1-\alpha)x_i(t) + \alpha \frac{1}{k_i(c)} \sum_{
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(percentages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s visualize the progress of 5 different simulations, with different values of the lag.</p>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="21">
 <div class="sourceCode" id="cb18"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fig, axarr <span class="op">=</span> plt.subplots(<span class="dv">5</span>, figsize <span class="op">=</span> (<span class="dv">5</span>, <span class="dv">8</span>))</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>lags <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>]</span>
@@ -867,8 +862,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/social_responsibility.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Networks and Social Responsibility</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/prediction_feedback_loops.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Link Prediction and Feedback Loops</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

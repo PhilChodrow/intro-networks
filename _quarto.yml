@@ -27,8 +27,9 @@ book:
         - chapters/ranking_centrality.qmd
         - chapters/agent_based_modeling.qmd
         - chapters/multi_agent_models.qmd
-        - chapters/social_responsibility.qmd
-        - chapters/dynamics.qmd
+        - chapters/prediction_feedback_loops.qmd
+        # - chapters/social_responsibility.qmd
+        # - chapters/dynamics.qmd
   appendices: 
     - appendices/additional_resources.qmd
     - appendices/acknowledgements.qmd
